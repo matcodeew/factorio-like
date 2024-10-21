@@ -3,21 +3,29 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField] private List<TileData> tiles;
+    [SerializeField] private Dictionary<Vector3, TileData> tiles = new Dictionary<Vector3, TileData>();
+    private PlayerController playerRay;
     private void Awake()
     {
-        tiles = new List<TileData>(FindObjectsOfType<TileData>());
-        for (int i = 0; i < tiles.Count; i++)
+        List<TileData> list = new List<TileData>(FindObjectsOfType<TileData>());
+        
+        for (int i = 0; i < list.Count; i++)
         {
-            tiles[i].ID = i;
+            TileData data = list[i];
+            data.ID = i;
+            tiles.Add(data.transform.position, data);
         }
     }
 
     private void Update()
     {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 100f;
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        
+
         if(Input.GetMouseButtonDown(0))
         {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);            
         }
     }
 }
