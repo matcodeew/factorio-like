@@ -45,7 +45,6 @@ public class CameraController : MonoBehaviour
         if (_cam != null)
         {
             Vector3 newPosition = _cam.transform.position;
-
             // Droite
             if (Input.mousePosition.x >= Screen.width - _border)
             {
