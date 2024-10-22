@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField] private Dictionary<Vector3, TileData> tiles = new Dictionary<Vector3, TileData>();
-    private PlayerController playerRay;
+    private Dictionary<Vector3, TileData> _tiles = new Dictionary<Vector3, TileData>();
+    private int _chunckSize = 4;
+    private int _mapSize = 32;
     private void Awake()
     {
         List<TileData> list = new List<TileData>(FindObjectsOfType<TileData>());
@@ -13,7 +14,19 @@ public class MapManager : MonoBehaviour
         {
             TileData data = list[i];
             data.ID = i;
-            tiles.Add(data.transform.position, data);
+            _tiles.Add(data.transform.position, data);
+        }
+        print("list count : " + list.Count);
+    }
+
+    private void AddToChunk()
+    {
+        for(int y = 0;  y < _mapSize / _chunckSize; y++)
+        {
+            for(int x = 0;  x < _mapSize / _chunckSize; x++)
+            {
+
+            }
         }
     }
 
