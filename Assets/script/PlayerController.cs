@@ -40,18 +40,9 @@ public class PlayerController : MonoBehaviour
 
     public void MovingPlayer()
     {
-        Vector3 directionToTarget = _targetPosition - transform.position;
-        directionToTarget.y = 0;
+        transform.LookAt(_targetPosition);
+        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, speed * Time.deltaTime);
 
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-        if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
-        {
-            transform.LookAt(_targetPosition);
-            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, speed * Time.deltaTime);
-        }
 
         if (transform.position == _targetPosition)
             _isMoving = false;
