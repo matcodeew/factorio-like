@@ -14,13 +14,13 @@ public class TileData : MonoBehaviour
         {
             return state = TileState.cleaned;
         }
-        return state;
+        return state = TileState.contaminated;
     }
 }
-
 
 public enum TileState
 {
     contaminated,
-    cleaned
+    cleaned,
+    none,
 }

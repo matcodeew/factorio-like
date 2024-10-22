@@ -3,37 +3,53 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    private Dictionary<Vector3, TileData> _tiles = new Dictionary<Vector3, TileData>();
-    private int _chunckSize = 4;
+    private Dictionary<Vector2, Chunck> _chuncks = new Dictionary<Vector2, Chunck>();
+    [SerializeField] private GameObject _TilePrefab;
+    public static MapManager Instance;
+
     private int _mapSize = 32;
-    private void Awake()
+    private int _chunckSize = 4;
+
+    private void Start()
     {
-        List<TileData> list = new List<TileData>(FindObjectsOfType<TileData>());
-        
-        for (int i = 0; i < list.Count; i++)
-        {
-            TileData data = list[i];
-            data.ID = i;
-            _tiles.Add(data.transform.position, data);
-        }
-        print("list count : " + list.Count);
+        SetChunck();
     }
 
-    private void AddToChunk()
+    private void SetChunck()
     {
-        for(int y = 0;  y < _mapSize / _chunckSize; y++)
+        for(int x = 0; x < _mapSize - 1; x++)
         {
-            for(int x = 0;  x < _mapSize / _chunckSize; x++)
+            for (int y = 0; y < _mapSize - 1; y++)
             {
+                GameObject newTile = Instantiate(_TilePrefab);
+                newTile.transform.position = new Vector3(x, 0, y);
 
+                int i = x / _chunckSize;
+                int j = y / _chunckSize;
+
+                if (!_chuncks.ContainsKey(new Vector2(i, j)))
+                    _chuncks.Add(new Vector2(i,j), new Chunck());
+
+                _chuncks[new Vector2(i, j)]._tileInChunk.Add(new Vector2(x, y), newTile.GetComponent<TileData>());
             }
         }
     }
 
+    public Chunck GetChunckThanksToTile(TileData _useTile)
+    {
+        if(_useTile!=null)
+        {
+            if(_chuncks.ContainsKey(_useTile.transform.position))
+            {
+                return _chuncks[_useTile.transform.position];
+            }
+        }
+        return null;
+    }
     private void Update()
     {
         Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 100f;
+        mousePos.y = 100f;
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
         
 
