@@ -4,7 +4,9 @@ using UnityEngine;
 public class MapManager : MonoBehaviour
 {
     private Dictionary<Vector2, Chunck> _chuncks = new Dictionary<Vector2, Chunck>();
+
     [SerializeField] private GameObject _TilePrefab;
+    [SerializeField] private GameObject _GroundParent;
     public static MapManager Instance;
 
     private int _mapSize = 32;
@@ -13,6 +15,7 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         SetChunck();
+
     }
 
     private void SetChunck()
@@ -23,6 +26,7 @@ public class MapManager : MonoBehaviour
             {
                 GameObject newTile = Instantiate(_TilePrefab);
                 newTile.transform.position = new Vector3(x, 0, y);
+                newTile.transform.parent = _GroundParent.transform;
 
                 int i = x / _chunckSize;
                 int j = y / _chunckSize;
@@ -45,16 +49,5 @@ public class MapManager : MonoBehaviour
             }
         }
         return null;
-    }
-    private void Update()
-    {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.y = 100f;
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        
-
-        if(Input.GetMouseButtonDown(0))
-        {
-        }
     }
 }
