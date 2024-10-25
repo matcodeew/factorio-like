@@ -4,14 +4,23 @@ using UnityEngine;
 public class TileData : MonoBehaviour
 {
     public int ID;
-    public bool isOccupied;
-    public TileState state = TileState.contaminated;
-    public float progressValue = 0;
+    public bool IsOccupied;
+    public TileState State = TileState.Contaminated;
+    public float ProgressValue = 0;
+    //private void OnMouseEnter()
+    //{
+
+    //}
+
+    //private void OnMouseExit()
+    //{
+
+    //}
 }
 
 public enum TileState
 {   
-    contaminated,
-    cleaned,
-    none,
+    Contaminated,
+    Cleaned,
+    None,
 }
