@@ -28,6 +28,7 @@ public class MapManager : MonoBehaviour
                 GameObject newTile = Instantiate(_TilePrefab);
                 newTile.transform.position = new Vector3(x, 0, y);
                 newTile.transform.parent = _GroundParent.transform;
+                newTile.name = "Tile (" + x + " , "+ y + ")";
                 newTile.GetComponent<TileData>().ID = _ID;
 
                 int i = x / _chunckSize;
@@ -54,9 +55,7 @@ public class MapManager : MonoBehaviour
 
         if (_chuncks.TryGetValue(chunkPos, out Chunck chunk))
             return chunk;
-
-        Debug.LogWarning("Chunk non trouvé pour la position : " + _clikedPos);
-        return null;
+        else return null;
     }
 
     public TileData AccessTileByPos(Vector3 _clikedPos)
@@ -67,10 +66,8 @@ public class MapManager : MonoBehaviour
         int z = Mathf.FloorToInt(_clikedPos.z);
         Vector3 tilePos = new Vector3(x, 0, z);
 
-        if (_chunkSelect != null && _chunkSelect._tileInChunk.TryGetValue(tilePos, out TileData tileData))
+        if(_chunkSelect._tileInChunk.TryGetValue(tilePos, out TileData tileData))
             return tileData;
-
-        Debug.LogWarning("Tile non trouvée dans le chunk pour la position : " + _clikedPos);
-        return null;
+        else return null;
     }
 }

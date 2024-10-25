@@ -536,7 +536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   rotationSpeed: 100
-  _allChunk: {fileID: 900344938}
+  _mapManager: {fileID: 900344938}
 --- !u!135 &765065720
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -617,7 +617,7 @@ Transform:
   m_GameObject: {fileID: 765065718}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8, y: 14.06, z: 3}
+  m_LocalPosition: {x: 8, y: 2, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
