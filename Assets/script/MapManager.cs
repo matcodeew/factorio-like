@@ -28,7 +28,7 @@ public class MapManager : MonoBehaviour
                 GameObject newTile = Instantiate(_TilePrefab);
                 newTile.transform.position = new Vector3(x, 0, y);
                 newTile.transform.parent = _GroundParent.transform;
-                newTile.name = "Tile (x: " + x + " , z: "+ y + ")";
+                newTile.name = "Tile (" + x + " , "+ y + ")";
                 newTile.GetComponent<TileData>().ID = _ID;
 
                 int i = x / _chunckSize;
