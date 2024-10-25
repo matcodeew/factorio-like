@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
+    public float Speed;
 
-    public float rotationSpeed;
+    public float RotationSpeed;
 
     private Vector3 _targetPosition;
     private Vector3 _clikedTarget;
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     public void MovingPlayer()
     {
         transform.LookAt(_targetPosition);
-        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, Speed * Time.deltaTime);
 
 
         if (transform.position == _targetPosition)

@@ -2,17 +2,15 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private float _speed = 30f;
-    private float _border = 50.0f;
-
-    public float zoomSpeed;
-
-    public float minZoom;
-    public float maxZoom;
-    public float minX, maxX, minY, maxY;
+    public float ZoomSpeed;
+    public float MinZoom;
+    public float MaxZoom;
+    public float MinX, MaxX, MinY, MaxY;
 
     private float _maxSpeed = 50f;     
     private float _accelerationRate = 20f;
+    private float _speed = 30f;
+    private float _border = 50.0f;
     private float _accelerationX = 5f;  
     private float _accelerationY = 5f;
 
@@ -30,13 +28,13 @@ public class CameraController : MonoBehaviour
 
         if (_cam.orthographic)
         {
-            _cam.orthographicSize -= scrollInput * zoomSpeed;
-            _cam.orthographicSize = Mathf.Clamp(_cam.orthographicSize, minZoom, maxZoom);
+            _cam.orthographicSize -= scrollInput * ZoomSpeed;
+            _cam.orthographicSize = Mathf.Clamp(_cam.orthographicSize, MinZoom, MaxZoom);
         }
         else
         {
-            _cam.fieldOfView -= scrollInput * zoomSpeed;
-            _cam.fieldOfView = Mathf.Clamp(_cam.fieldOfView, minZoom, maxZoom);
+            _cam.fieldOfView -= scrollInput * ZoomSpeed;
+            _cam.fieldOfView = Mathf.Clamp(_cam.fieldOfView, MinZoom, MaxZoom);
         }
     }
 
@@ -86,8 +84,8 @@ public class CameraController : MonoBehaviour
             {
                 _accelerationY = 0f;
             }
-            newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
-            newPosition.y = Mathf.Clamp(newPosition.y, minY, maxY);
+            newPosition.x = Mathf.Clamp(newPosition.x, MinX, MaxX);
+            newPosition.y = Mathf.Clamp(newPosition.y, MinY, MaxY);
 
             _cam.transform.position = newPosition;
         }

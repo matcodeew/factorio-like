@@ -1,109 +1,111 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragUIItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DragUIElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [SerializeField] private GameObject PrefabToInstantiate;
-    [SerializeField] private RectTransform UIDragElement;
-    [SerializeField] private RectTransform Canvas;
+    [SerializeField] private GameObject _prefabToInstantiate; 
+    [SerializeField] private RectTransform _cancelBuild;
+    [SerializeField] private RectTransform _uiDragElement;
+    [SerializeField] private RectTransform _uiInventory;
+    [SerializeField] private RectTransform _canvas;
 
-    private GameObject previewInstance; 
-    private Vector2 mOriginalLocalPointerPosition;
-    private Vector3 mOriginalPanelLocalPosition;
-    private Vector2 mOriginalPosition;
-    private CanvasGroup uiElementCanvasGroup; 
+    private Vector2 _originalPointerPosition;
+    private Vector3 _originalPanelPosition;
+    private Vector2 _originalElementPosition;
+
+    private GameObject _previewInstance; 
+    private CanvasGroup _uiCanvasGroup; 
 
     private void Start()
     {
-        mOriginalPosition = UIDragElement.localPosition;
-        uiElementCanvasGroup = UIDragElement.GetComponent<CanvasGroup>();
-        if (uiElementCanvasGroup == null)
+        _originalElementPosition = _uiDragElement.localPosition;
+        if (_uiCanvasGroup == null)
         {
-            uiElementCanvasGroup = UIDragElement.gameObject.AddComponent<CanvasGroup>();
+            _uiCanvasGroup = _uiDragElement.gameObject.AddComponent<CanvasGroup>();
+            _uiCanvasGroup = _uiInventory.gameObject.AddComponent<CanvasGroup>();
         }
+
     }
 
-    public void OnBeginDrag(PointerEventData data) // drag select UI in panel inventory
+    public void OnBeginDrag(PointerEventData data) // take 2d object in inventory
     {
-        mOriginalPanelLocalPosition = UIDragElement.localPosition;
+        _originalPanelPosition = _uiDragElement.localPosition;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            Canvas,
+            _canvas,
             data.position,
             data.pressEventCamera,
-            out mOriginalLocalPointerPosition);
+            out _originalPointerPosition);
 
-        // Instantiate the preview object
-        if (PrefabToInstantiate != null)
+        if (_prefabToInstantiate != null)
         {
-            previewInstance = Instantiate(PrefabToInstantiate);
-            var renderer = previewInstance.GetComponent<Renderer>();
-            if (renderer != null)
-            {
-                Color color = renderer.material.color;
-                color.a = 0.5f; 
-                renderer.material.color = color;
-            }
-            FadeUIElement(0f); 
+            _previewInstance = Instantiate(_prefabToInstantiate);
         }
+        FadeUIElement(0f);
     }
 
-    public void OnDrag(PointerEventData data) //press drag ui
+    public void OnDrag(PointerEventData data) // mouse press
     {
-        Vector2 localPointerPosition;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            Canvas,
+            _canvas,
             data.position,
             data.pressEventCamera,
-            out localPointerPosition))
+            out Vector2 localPointerPosition))
         {
-            Vector3 offsetToOriginal = localPointerPosition - mOriginalLocalPointerPosition;
+            Vector3 offset = localPointerPosition - _originalPointerPosition;
+            _uiDragElement.localPosition = _originalPanelPosition + offset;
 
-            // Update preview position
-            if (previewInstance != null)
+            if (_previewInstance != null)
             {
-                Ray ray = Camera.main.ScreenPointToRay(data.position);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 1000.0f))
-                {
-                    Vector3 newPosition = hit.point;
-                    newPosition.y = previewInstance.transform.position.y; 
-                    previewInstance.transform.position = newPosition;
-                }
+                UpdatePreviewPosition(data);
             }
         }
     }
 
-    public void OnEndDrag(PointerEventData eventData) // world Drag
+    public void OnEndDrag(PointerEventData eventData)
     {
-        UIDragElement.localPosition = mOriginalPosition;
+        _uiDragElement.localPosition = _originalElementPosition;
 
-        if (previewInstance != null)
+        if (_previewInstance != null)
         {
-            Ray ray = Camera.main.ScreenPointToRay(eventData.position);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 1000.0f))
-            {
-                Vector3 worldPoint = hit.point;
-                CreateObject(worldPoint);
-            }
-            Destroy(previewInstance);
+            TryPlaceObject(eventData);
+            Destroy(_previewInstance);
         }
-        FadeUIElement(1f); 
+        FadeUIElement(1f);
     }
 
-    public void CreateObject(Vector3 position) // create object
+    private void UpdatePreviewPosition(PointerEventData data)
     {
-        if (PrefabToInstantiate == null)
+        Ray ray = Camera.main.ScreenPointToRay(data.position);
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f))
         {
-            Debug.Log("No prefab to instantiate");
-            return;
+            Vector3 snappedPosition = SnapToGrid(hit.point);
+            _previewInstance.transform.position = snappedPosition;
         }
+    }
 
+    private Vector3 SnapToGrid(Vector3 position) // place object into grid
+    {
+        int x = Mathf.RoundToInt(position.x);
+        int z = Mathf.RoundToInt(position.z);
+        return new Vector3(x, _previewInstance.transform.position.y, z);
+    }
+
+    private void TryPlaceObject(PointerEventData eventData) // place object in world
+    {
+        Ray ray = Camera.main.ScreenPointToRay(eventData.position);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f))
+        {
+            Vector3 snappedPosition = SnapToGrid(hit.point);
+            CreateObject(snappedPosition);
+        }
+    }
+
+    private void CreateObject(Vector3 position) // placed object
+    {
         if (PositionWithinCell(position))
         {
-            GameObject obj = Instantiate(PrefabToInstantiate, position, Quaternion.identity);
+            Instantiate(_prefabToInstantiate, position, Quaternion.identity);
         }
     }
 
@@ -112,11 +114,31 @@ public class DragUIItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         return true;
     }
 
-    private void FadeUIElement(float targetAlpha) // fade panel
+    private void FadeUIElement(float targetAlpha)
     {
-        if (uiElementCanvasGroup != null)
+        if (_uiCanvasGroup != null)
         {
-            uiElementCanvasGroup.alpha = targetAlpha; 
+            _uiCanvasGroup.alpha = targetAlpha; // Set the alpha to the target value
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject)
+            Destroy(collision.gameObject);
+
+    }
+
+    public void OnDelete(PointerEventData data) // take 2d object in inventory
+    {
+        _originalPanelPosition = _cancelBuild.localPosition;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            _canvas,
+            data.position,
+            data.pressEventCamera,
+            out _originalPointerPosition);
+
+        Debug.Log("MEOW");
+
     }
 }
