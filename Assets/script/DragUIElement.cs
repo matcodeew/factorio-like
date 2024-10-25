@@ -12,7 +12,7 @@ public class DragUIItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     private Vector2 mOriginalLocalPointerPosition;
     private Vector3 mOriginalPanelLocalPosition;
     private Vector2 mOriginalPosition;
-    private CanvasGroup uiElementCanvasGroup;
+    private CanvasGroup uiElementCanvasGroup; 
 
     private void Start()
     {
@@ -24,7 +24,7 @@ public class DragUIItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         }
     }
 
-    public void OnBeginDrag(PointerEventData data)
+    public void OnBeginDrag(PointerEventData data) // drag select UI in panel inventory
     {
         mOriginalPanelLocalPosition = UIDragElement.localPosition;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -33,6 +33,7 @@ public class DragUIItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             data.pressEventCamera,
             out mOriginalLocalPointerPosition);
 
+        // Instantiate the preview object
         if (PrefabToInstantiate != null)
         {
             previewInstance = Instantiate(PrefabToInstantiate);
@@ -47,7 +48,7 @@ public class DragUIItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         }
     }
 
-    public void OnDrag(PointerEventData data)
+    public void OnDrag(PointerEventData data) //press drag ui
     {
         Vector2 localPointerPosition;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -58,6 +59,7 @@ public class DragUIItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         {
             Vector3 offsetToOriginal = localPointerPosition - mOriginalLocalPointerPosition;
 
+            // Update preview position
             if (previewInstance != null)
             {
                 Ray ray = Camera.main.ScreenPointToRay(data.position);
@@ -72,22 +74,7 @@ public class DragUIItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         }
     }
 
-    public IEnumerator Coroutine_MoveUIElement(RectTransform r, Vector2 targetPosition, float duration = 0.1f)
-    {
-        float elapsedTime = 0;
-        Vector2 startingPos = r.localPosition;
-
-        while (elapsedTime < duration)
-        {
-            r.localPosition = Vector2.Lerp(startingPos, targetPosition, (elapsedTime / duration));
-            elapsedTime += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-
-        r.localPosition = targetPosition;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData) // world Drag
     {
         UIDragElement.localPosition = mOriginalPosition;
 
@@ -106,7 +93,7 @@ public class DragUIItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         FadeUIElement(1f); 
     }
 
-    public void CreateObject(Vector3 position)
+    public void CreateObject(Vector3 position) // create object
     {
         if (PrefabToInstantiate == null)
         {
@@ -125,7 +112,7 @@ public class DragUIItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         return true;
     }
 
-    private void FadeUIElement(float targetAlpha)
+    private void FadeUIElement(float targetAlpha) // fade panel
     {
         if (uiElementCanvasGroup != null)
         {
