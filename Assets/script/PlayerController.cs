@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,10 +8,14 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed;
 
     private Vector3 _targetPosition;
+    private Vector3 _clikedTarget;
 
     private bool _isMoving;
 
     const int RIGHT_MOUSE_BUTTON = 1;
+
+    [SerializeField] private MapManager _mapManager;
+
     void Start()
     {
         _targetPosition = transform.position;
@@ -34,6 +39,12 @@ public class PlayerController : MonoBehaviour
 
         if (plane.Raycast(ray, out point))
             _targetPosition = ray.GetPoint(point);
+
+
+        _clikedTarget = _targetPosition;
+        _clikedTarget = new Vector3(_clikedTarget.x, 0, _clikedTarget.z);
+
+        print("tile is : " + _mapManager.AccessTileByPos(_clikedTarget));
 
         _isMoving = true;
     }

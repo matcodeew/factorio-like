@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class Chunck : MonoBehaviour
 {
-    public Dictionary<Vector2, TileData> _tileInChunk = new Dictionary<Vector2, TileData>();
+    public Dictionary<Vector3, TileData> _tileInChunk = new Dictionary<Vector3, TileData>();
 }
+    

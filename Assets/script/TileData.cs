@@ -7,10 +7,11 @@ public class TileData : MonoBehaviour
     public bool isOccupied;
     public TileState state = TileState.contaminated;
     public float progressValue = 0;
+    public Chunck chunck;
 }
 
 public enum TileState
-{
+{   
     contaminated,
     cleaned,
     none,
