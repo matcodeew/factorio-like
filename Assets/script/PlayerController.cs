@@ -43,8 +43,7 @@ public class PlayerController : MonoBehaviour
 
         _clikedTarget = _targetPosition;
         _clikedTarget = new Vector3(_clikedTarget.x, 0, _clikedTarget.z);
-
-        print("tile is : " + _mapManager.AccessTileByPos(_clikedTarget));
+        print(" tile select is : " + _mapManager.AccessTileByPos(_clikedTarget));
 
         _isMoving = true;
     }
