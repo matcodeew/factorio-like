@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdd6940f605d832428031185754f8d05, type: 3}
-  m_Name: Cement
+  m_Script: {fileID: 11500000, guid: d0722afde6c298f439361c99e8c85a1a, type: 3}
+  m_Name: Dumpster
   m_EditorClassIdentifier: 
-  Id: 0
-  Name: Cement
-  Sprite: {fileID: 0}
-  IsPure: 0
-  GrinderOutput: {fileID: 0}
-  DisassemblerOutputs: []
+  AvailableResource: []
+  Quantity: 0
+  MiningTime: 0

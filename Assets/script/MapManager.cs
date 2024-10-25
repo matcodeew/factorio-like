@@ -14,6 +14,12 @@ public class MapManager : MonoBehaviour
     private int _mapSize = 32;
     private int _chunckSize = 4;
 
+    private void Awake()
+    {
+        if(Instance == null)
+            Instance = this;
+    }
+
     private void Start()
     {
         _groundParent.transform.position = Vector3.zero;
@@ -31,6 +37,7 @@ public class MapManager : MonoBehaviour
                 newTile.transform.parent = _groundParent.transform;
                 newTile.name = "Tile (" + x + " , "+ y + ")";
                 newTile.GetComponent<TileData>().ID = _id;
+                newTile.GetComponent <TileData>().TileObstacle = SetRandObstacleOnTile();
 
                 int i = x / _chunckSize;
                 int j = y / _chunckSize;
@@ -43,17 +50,20 @@ public class MapManager : MonoBehaviour
                 _id++;
             }
         }
+
+    }
+
+    private int SetRandObstacleOnTile()
+    {
+        int RandObs = Random.Range(0, 10);
+        return RandObs;
     }
 
     public Chunck AccessChunkByTilePos(Vector3 _clikedPos)
     {
-        int x = Mathf.FloorToInt(_clikedPos.x);
-        int z = Mathf.FloorToInt(_clikedPos.z);
-
-        int i = x / _chunckSize;
-        int j = z / _chunckSize;
+        int i = Mathf.FloorToInt(_clikedPos.x) / _chunckSize;
+        int j = Mathf.FloorToInt(_clikedPos.z) / _chunckSize;
         Vector3 chunkPos = new Vector3(i, 0, j);
-
         if (Chuncks.TryGetValue(chunkPos, out Chunck chunk))
             return chunk;
         else return null;
