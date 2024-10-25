@@ -11,6 +11,7 @@ public class Scriptable_Ressources : ScriptableObject
     public string Name;
     public Sprite Sprite;
     public bool IsPure;
-    public ScriptableObject GrinderOutput;
-    public List<ScriptableObject> DisassemblerOutputs;
+    public Scriptable_Ressources GrinderOutput;
+    public Scriptable_Ressources FurnaceOutput;
+    public List<Scriptable_Ressources> DisassemblerOutputs;
 }
