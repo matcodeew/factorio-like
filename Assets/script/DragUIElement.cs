@@ -3,74 +3,67 @@ using UnityEngine.EventSystems;
 
 public class DragUIElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [SerializeField] private GameObject _prefabToInstantiate; 
-    [SerializeField] private RectTransform _cancelBuild;
-    [SerializeField] private RectTransform _uiDragElement;
-    [SerializeField] private RectTransform _uiInventory;
-    [SerializeField] private RectTransform _canvas;
+    private GameObject _prefabToInstantiate;
+    private GameObject _uiElement;
+    private GameObject _inventoryCase;
+    private GameObject _previewInstance;
 
     private Vector2 _originalPointerPosition;
     private Vector3 _originalPanelPosition;
-    private Vector2 _originalElementPosition;
 
-    private GameObject _previewInstance; 
-    private CanvasGroup _uiCanvasGroup; 
+    private bool _isOverTrash = false;
 
-    private void Start()
+    public void Initialize(GameObject prefabToInstantiate, GameObject uiElement, GameObject inventoryCase)
     {
-        _originalElementPosition = _uiDragElement.localPosition;
-        if (_uiCanvasGroup == null)
-        {
-            _uiCanvasGroup = _uiDragElement.gameObject.AddComponent<CanvasGroup>();
-            _uiCanvasGroup = _uiInventory.gameObject.AddComponent<CanvasGroup>();
-        }
-
+        _prefabToInstantiate = prefabToInstantiate;
+        _uiElement = uiElement;
+        _inventoryCase = inventoryCase;
     }
 
-    public void OnBeginDrag(PointerEventData data) // take 2d object in inventory
+    public void OnBeginDrag(PointerEventData data)
     {
-        _originalPanelPosition = _uiDragElement.localPosition;
+        _originalPanelPosition = _uiElement.transform.localPosition;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            _canvas,
-            data.position,
-            data.pressEventCamera,
-            out _originalPointerPosition);
+            _uiElement.transform as RectTransform, data.position, data.pressEventCamera, out _originalPointerPosition);
 
         if (_prefabToInstantiate != null)
         {
-            _previewInstance = Instantiate(_prefabToInstantiate);
+           _previewInstance = Instantiate(_prefabToInstantiate);
         }
-        FadeUIElement(0f);
+        InventoryManager.Instance.FadeUIElement(0f);
     }
 
-    public void OnDrag(PointerEventData data) // mouse press
+    public void OnDrag(PointerEventData data)
     {
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            _canvas,
-            data.position,
-            data.pressEventCamera,
-            out Vector2 localPointerPosition))
+            _uiElement.transform as RectTransform, data.position, data.pressEventCamera, out Vector2 localPointerPosition))
         {
             Vector3 offset = localPointerPosition - _originalPointerPosition;
-            _uiDragElement.localPosition = _originalPanelPosition + offset;
-
+            _uiElement.transform.localPosition = _originalPanelPosition + offset;
+            InventoryManager.Instance.TrashAreaGameObject.SetActive(true);
             if (_previewInstance != null)
             {
                 UpdatePreviewPosition(data);
+            }
+
+            _isOverTrash = IsPointerOverTrash(data);
+            if (_isOverTrash)
+            {
+                OnEndDrag(data);
             }
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        _uiDragElement.localPosition = _originalElementPosition;
-
+        _uiElement.transform.localPosition = _originalPanelPosition;
+        InventoryManager.Instance.TrashAreaGameObject.SetActive(false);
         if (_previewInstance != null)
         {
             TryPlaceObject(eventData);
             Destroy(_previewInstance);
         }
-        FadeUIElement(1f);
+        InventoryManager.Instance.FadeUIElement(1f);
     }
 
     private void UpdatePreviewPosition(PointerEventData data)
@@ -83,62 +76,27 @@ public class DragUIElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-    private Vector3 SnapToGrid(Vector3 position) // place object into grid
+    private Vector3 SnapToGrid(Vector3 position)
     {
         int x = Mathf.RoundToInt(position.x);
         int z = Mathf.RoundToInt(position.z);
         return new Vector3(x, _previewInstance.transform.position.y, z);
     }
 
-    private void TryPlaceObject(PointerEventData eventData) // place object in world
+    private void TryPlaceObject(PointerEventData eventData)
     {
         Ray ray = Camera.main.ScreenPointToRay(eventData.position);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f))
         {
             Vector3 snappedPosition = SnapToGrid(hit.point);
-            CreateObject(snappedPosition);
+            InventoryManager.Instance.CreateObject(_prefabToInstantiate, snappedPosition);
         }
     }
 
-    private void CreateObject(Vector3 position) // placed object
+    private bool IsPointerOverTrash(PointerEventData data)
     {
-        if (PositionWithinCell(position))
-        {
-            Instantiate(_prefabToInstantiate, position, Quaternion.identity);
-        }
-    }
-
-    private bool PositionWithinCell(Vector3 pos)
-    {
-        return true;
-    }
-
-    private void FadeUIElement(float targetAlpha)
-    {
-        if (_uiCanvasGroup != null)
-        {
-            _uiCanvasGroup.alpha = targetAlpha; // Set the alpha to the target value
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject)
-            Destroy(collision.gameObject);
-
-    }
-
-    public void OnDelete(PointerEventData data) // take 2d object in inventory
-    {
-        _originalPanelPosition = _cancelBuild.localPosition;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            _canvas,
-            data.position,
-            data.pressEventCamera,
-            out _originalPointerPosition);
-
-        Debug.Log("MEOW");
-
+        return RectTransformUtility.RectangleContainsScreenPoint(
+            InventoryManager.Instance.TrashArea, data.position, data.pressEventCamera);
     }
 }
