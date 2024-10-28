@@ -37,7 +37,6 @@ public class MapManager : MonoBehaviour
                 newTile.transform.parent = _groundParent.transform;
                 newTile.name = "Tile (" + x + " , "+ y + ")";
                 newTile.GetComponent<TileData>().ID = _id;
-                newTile.GetComponent <TileData>().TileObstacle = SetRandObstacleOnTile();
 
                 int i = x / _chunckSize;
                 int j = y / _chunckSize;
@@ -50,13 +49,6 @@ public class MapManager : MonoBehaviour
                 _id++;
             }
         }
-
-    }
-
-    private int SetRandObstacleOnTile()
-    {
-        int RandObs = Random.Range(0, 10);
-        return RandObs;
     }
 
     public Chunck AccessChunkByTilePos(Vector3 _clikedPos)
