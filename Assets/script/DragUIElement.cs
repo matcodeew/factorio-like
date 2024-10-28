@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class DragUIElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -54,11 +55,11 @@ public class DragUIElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData , Vector3 position)
     {
         _uiElement.transform.localPosition = _originalPanelPosition;
         InventoryManager.Instance.TrashAreaGameObject.SetActive(false);
-        if (_previewInstance != null)
+        if (_previewInstance != null && MapManager.Instance.AccessTileByPos(position).IsOccupied)
         {
             TryPlaceObject(eventData);
             Destroy(_previewInstance);

@@ -50,13 +50,12 @@ public class InventoryManager : MonoBehaviour
 
     public void CreateObject(GameObject prefab, Vector3 position)
     {
-        if (!MapManager.Instance.AccessTileByPos(position).isOccupied)
+        if (!MapManager.Instance.AccessTileByPos(position).IsOccupied)
         {
             Instantiate(prefab, position, Quaternion.identity, BuildingParent);
-            MapManager.Instance.AccessTileByPos(position).isOccupied = true;
+            MapManager.Instance.AccessTileByPos(position).IsOccupied = true;
         }
     }
-
 
     public void FadeUIElement(float targetAlpha)
     {
