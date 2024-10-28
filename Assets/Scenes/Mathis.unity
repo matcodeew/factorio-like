@@ -536,7 +536,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   rotationSpeed: 100
-  _mapManager: {fileID: 900344938}
 --- !u!135 &765065720
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -702,9 +701,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdeba30c24cabd1409c299c822b4b45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _TilePrefab: {fileID: 2838385887705197276, guid: d95afd866212aab409a4eb1d48720a90,
+  _tilePrefab: {fileID: 2838385887705197276, guid: d95afd866212aab409a4eb1d48720a90,
     type: 3}
-  _GroundParent: {fileID: 949252321}
+  _groundParent: {fileID: 949252321}
 --- !u!4 &900344939
 Transform:
   m_ObjectHideFlags: 0

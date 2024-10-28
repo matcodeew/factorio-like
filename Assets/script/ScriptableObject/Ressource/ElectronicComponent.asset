@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd6940f605d832428031185754f8d05, type: 3}
+  m_Name: ElectronicComponent
+  m_EditorClassIdentifier: 
+  Id: 6
+  Name: Electronic component
+  Sprite: {fileID: 0}
+  IsPure: 0
+  GrinderOutput: {fileID: 11400000, guid: 180b266b46ed01d4eb5eeb38e7c22913, type: 2}
+  DisassemblerOutputs:
+  - {fileID: 11400000, guid: 93e3e1cf7bb79234c87e719af291967e, type: 2}
+  - {fileID: 11400000, guid: 9bb42eb2fa9f53b4cbe61cdee2d7f716, type: 2}
+  - {fileID: 11400000, guid: 07798cfa844b833448217ebc5f3b3d4c, type: 2}
