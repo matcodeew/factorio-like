@@ -29,3 +29,8 @@ public enum TileState
     Cleaned,
     None,
 }
+
+//public enum TileObstacle
+//{
+
+//}
