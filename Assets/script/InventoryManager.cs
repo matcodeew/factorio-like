@@ -5,15 +5,15 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
-    public RectTransform InventoryParent;
-    public RectTransform BuildingParent;
+    public RectTransform InventoryCasesParent;
+    public RectTransform BuildingPrefabItemsParent;
     public RectTransform TrashArea;
 
     public GameObject TrashAreaGameObject;
-    public GameObject InventoryPanelHide;
+    public GameObject InventoryPanel;
 
-    public List<GameObject> _prefabItems = new List<GameObject>(); 
-    public List<GameObject> _inventoryCases = new List<GameObject>();
+   [SerializeField] private List<GameObject> _prefabItems = new List<GameObject>(); 
+   [SerializeField] private List<GameObject> _inventoryCases = new List<GameObject>();
 
     private CanvasGroup _uiCanvasGroup;
 
@@ -23,12 +23,12 @@ public class InventoryManager : MonoBehaviour
     }
 
     void Start()
-    {
+    {   
         InitializeInventory();
 
         if (_uiCanvasGroup == null)
         {
-            _uiCanvasGroup = InventoryPanelHide.gameObject.AddComponent<CanvasGroup>();
+            _uiCanvasGroup = InventoryPanel.gameObject.AddComponent<CanvasGroup>();
         }
     }
 
@@ -36,7 +36,7 @@ public class InventoryManager : MonoBehaviour
     {
         for (int i = 0; i < _inventoryCases.Count; i++)
         {
-            GameObject itemInstance = Instantiate(_inventoryCases[i], InventoryParent);
+            GameObject itemInstance = Instantiate(_inventoryCases[i], InventoryCasesParent);
 
             if (itemInstance.transform.childCount > 0)
             {
@@ -52,7 +52,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (!MapManager.Instance.AccessTileByPos(position).IsOccupied)
         {
-            Instantiate(prefab, position, Quaternion.identity, BuildingParent);
+            Instantiate(prefab, position, Quaternion.identity, BuildingPrefabItemsParent);
             MapManager.Instance.AccessTileByPos(position).IsOccupied = true;
         }
     }

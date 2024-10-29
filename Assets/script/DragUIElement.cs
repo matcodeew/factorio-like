@@ -42,6 +42,7 @@ public class DragUIElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             Vector3 offset = localPointerPosition - _originalPointerPosition;
             _uiElement.transform.localPosition = _originalPanelPosition + offset;
             InventoryManager.Instance.TrashAreaGameObject.SetActive(true);
+
             if (_previewInstance != null)
             {
                 UpdatePreviewPosition(data);
@@ -55,11 +56,11 @@ public class DragUIElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-    public void OnEndDrag(PointerEventData eventData , Vector3 position)
+    public void OnEndDrag(PointerEventData eventData)
     {
         _uiElement.transform.localPosition = _originalPanelPosition;
         InventoryManager.Instance.TrashAreaGameObject.SetActive(false);
-        if (_previewInstance != null && MapManager.Instance.AccessTileByPos(position).IsOccupied)
+        if (_previewInstance != null)
         {
             TryPlaceObject(eventData);
             Destroy(_previewInstance);

@@ -1009,11 +1009,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5c526ffaf20c454c924ae3e6a7bda55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InventoryParent: {fileID: 1087318648}
-  BuildingParent: {fileID: 2083644350}
+  InventoryCasesParent: {fileID: 1087318648}
+  BuildingPrefabItemsParent: {fileID: 2083644350}
   TrashArea: {fileID: 718150138}
   TrashAreaGameObject: {fileID: 718150134}
-  InventoryPanelHide: {fileID: 1205893769}
+  InventoryPanel: {fileID: 1087318647}
   _prefabItems:
   - {fileID: 8806253017590343422, guid: ec2a4a75d5ccc8e43b1103cc216fc1c7, type: 3}
   - {fileID: 942615120019314595, guid: d3564e5776516ff4480783cc78dc272e, type: 3}
