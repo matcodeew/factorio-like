@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 
 public class RessourceTransformer : MonoBehaviour
 {
@@ -17,20 +19,58 @@ public class RessourceTransformer : MonoBehaviour
     [Header("Machine data")]
     [SerializeField] MachineType _machineType;
     [Tooltip("List of Ressources that can be modified by the machine")]
-    [SerializeField] private List<Scriptable_Ressources> _transformationList;
+    [SerializeField] private Scriptable_RessourceList _transformationListHolder;
+    private List<Scriptable_Ressources> _transformationList;
     [SerializeField] private float _processTime;
 
-    private Scriptable_Ressources _input;
-    private Scriptable_Ressources _firstOutput;
-    private Scriptable_Ressources _secondOutput;
-    private Scriptable_Ressources _thirdOutput;
+    [HideInInspector] public Scriptable_Ressources MachineInput;
+    [HideInInspector] public Scriptable_Ressources FirstOutput;
+    [HideInInspector] public Scriptable_Ressources SecondOutput;
+    [HideInInspector] public Scriptable_Ressources ThirdOutput;
+
+
+    [SerializeField] private TransformationUI _ressourceUI;
 
 
     public bool ActionWasCancelled;
 
+    void Start()
+    {
+        _transformationList = _transformationListHolder.RessourceList;
+        // _transformationList = FilterListByMachineType();
+
+        if (_transformationList.Count != 0)
+        {
+            MachineInput = _transformationList[UnityEngine.Random.Range(0, _transformationList.Count - 1)];
+            StartTransformation();
+        }
+    }
+
+    // List<Scriptable_Ressources> FilterListByMachineType()
+    // {
+    //     bool isGrinder = _machineType == MachineType.Grinder;
+    //     bool isList = _machineType == MachineType.Disassembler;
+
+    //     return _transformationList.Where
+    //     (x =>
+    //         (
+    //             isList ?
+    //                 x.DisassemblerOutputs.Count > 0 :
+    //                 (
+    //                     isGrinder ?
+    //                         x.GrinderOutput != null :
+    //                         x.FurnaceOutput != null
+    //                 )
+    //         )
+    //     ).ToList();
+    // }
 
     public void StartTransformation()
     {
+        FirstOutput = null;
+        SecondOutput = null;
+        ThirdOutput = null;
+
         StartCoroutine(HandleProcessTime());
     }
 
@@ -56,38 +96,45 @@ public class RessourceTransformer : MonoBehaviour
             case MachineType.Grinder:
                 {
                     // Grinder is a 1 to 1 machine (it means 1 input, 1 output)
-                    _firstOutput = _input.GrinderOutput;
-                    Debug.Log("Grinded");
+                    if (MachineInput.GrinderOutput != null)
+                    {
+                        FirstOutput = MachineInput.GrinderOutput;
+                        Debug.Log("Grinded " + MachineInput + " into " + FirstOutput);
+                    }
                     break;
                 }
             case MachineType.Disassembler:
                 {
                     // Disassembler is a 1 to 3 machine (it means 1 input, 3 output maximum)
-                    _firstOutput = _input.DisassemblerOutputs[0];
-                    _secondOutput = _input.DisassemblerOutputs[1];
-                    _thirdOutput = _input.DisassemblerOutputs[2];
-                    Debug.Log("Disassembled");
+                    FirstOutput = MachineInput.DisassemblerOutputs[0];
+                    SecondOutput = MachineInput.DisassemblerOutputs[1];
+                    ThirdOutput = MachineInput.DisassemblerOutputs.Count == 3 ? MachineInput.DisassemblerOutputs[2] : null;
+                    Debug.Log("Disassembled  " + MachineInput + " into " + FirstOutput + ", " + SecondOutput + ", " + ThirdOutput);
                     break;
                 }
             case MachineType.Furnace:
                 {
-                    Debug.Log("Smelt");
                     // Furnace is a 1 to 1 machine (it means 1 input, 1 output)
-                    _firstOutput = _input.FurnaceOutput;
-
+                    FirstOutput = MachineInput.FurnaceOutput;
+                    Debug.Log("Smelt " + MachineInput + " into " + FirstOutput);
                     break;
                 }
             case MachineType.None:
-
                 {
                     Debug.Log("Machine type was not specified");
-                    break;
+                    return;
                 }
             default:
                 {
                     Debug.Log("Problem in enum");
-                    break;
+                    return;
                 }
         }
+        MachineInput = null;
+    }
+
+    private void UpdateMachineUI()
+    {
+        // this method will update the ui so the player can interract with it 
     }
 }
