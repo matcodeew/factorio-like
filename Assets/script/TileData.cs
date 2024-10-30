@@ -4,13 +4,11 @@ using UnityEngine;
 public class TileData : MonoBehaviour
 {
     public int ID;
-    public int TileObstacle;
     public bool IsOccupied;
     public GameObject OnTop;
     public TileState State = TileState.Contaminated;
+    public TileObstacle TileObstacle = TileObstacle.None;
     public float ProgressValue = 0;
-
-
 
     //private void OnMouseEnter()
     //{
@@ -30,7 +28,12 @@ public enum TileState
     None,
 }
 
-//public enum TileObstacle
-//{
-
-//}
+public enum TileObstacle
+{
+    Dumpster,
+    building,
+    career,
+    tree,
+    rock,
+    None,
+}

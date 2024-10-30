@@ -706,6 +706,7 @@ MonoBehaviour:
   _allRessorceSpot:
   - {fileID: 11400000, guid: 54da1d3089d597149a816e20a1d1288c, type: 2}
   _groundParent: {fileID: 949252321}
+  PickingRessource: 0
 --- !u!4 &900344939
 Transform:
   m_ObjectHideFlags: 0

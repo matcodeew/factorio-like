@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newRessourceSpot", menuName = "Data/New Ressources Spot")]
@@ -11,13 +12,11 @@ public class Scriptable_RessourceSpot : ScriptableObject
     public float MiningTime;
     public int MaxOnMap;
 
-
-}
-
-[System.Serializable]
-public class RessourceData
-{
-    public int ID;
-    public Scriptable_Ressources Ressources;
-    public int Quantity;
+    [System.Serializable]
+    public struct RessourceData
+    {
+        public int Id;
+        public Scriptable_Ressources Ressources;
+        public int StartQuantity;
+    }
 }

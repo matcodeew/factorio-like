@@ -61,7 +61,12 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: fb0cc4b7446966546a89f6db190186ba,
         type: 3}
       propertyPath: m_Name
-      value: statue_head
+      value: statue_head_Prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb0cc4b7446966546a89f6db190186ba,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -90,3 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94012f9f65f998b4988ab45cb012e4ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: 
+  Prefab: {fileID: 0}
+  AvailableResource: []
+  MiningTime: 0
+  MaxOnMap: 0

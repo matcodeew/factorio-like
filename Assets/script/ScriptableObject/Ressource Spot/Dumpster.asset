@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: Dumpster
   m_EditorClassIdentifier: 
   Name: Dumpster
-  Prefab: {fileID: 827657833508366288, guid: bbbcd873de6dec940846ff0109a76bd5, type: 3}
+  Prefab: {fileID: 7812776980421760279, guid: 438bbcdaedff6ee4e9e7ab45850ef4ab, type: 3}
   AvailableResource:
-  - ID: 0
+  - Id: 0
     Ressources: {fileID: 11400000, guid: 6e09eb3f3eaa2c94aa4bdc172260fea0, type: 2}
-    Quantity: 10
-  - ID: 1
+    StartQuantity: 10
+  - Id: 1
     Ressources: {fileID: 11400000, guid: 67208f63ace2cec4fa935e9e0757a42e, type: 2}
-    Quantity: 30
-  - ID: 2
+    StartQuantity: 30
+  - Id: 2
     Ressources: {fileID: 11400000, guid: 180b266b46ed01d4eb5eeb38e7c22913, type: 2}
-    Quantity: 30
-  - ID: 3
+    StartQuantity: 30
+  - Id: 3
     Ressources: {fileID: 11400000, guid: c32917aeb7d0caf4285e644e8d6c8389, type: 2}
-    Quantity: 10
+    StartQuantity: 10
   MiningTime: 1.5
   MaxOnMap: 10

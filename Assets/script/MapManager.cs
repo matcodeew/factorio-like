@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,20 +12,19 @@ public class MapManager : MonoBehaviour
     [SerializeField] private GameObject _groundParent;
 
     public static MapManager Instance;
+    public bool PickingRessource;
 
     private int _id;
     private int _mapSize = 32;
     private int _chunckSize = 4;
-    private List<TileData> OccupedTiles = new();
-    private RessourseSpot SpotResource;
-    private bool PickingRessource = false;
+    private RessourseSpot _currentMiningSpot;
+    private int _currentPlacedSpot;
 
     private void Awake()
     {
         if(Instance == null)
             Instance = this;
     }
-
     private void Start()
     {
         _groundParent.transform.position = Vector3.zero;
@@ -43,7 +43,7 @@ public class MapManager : MonoBehaviour
                 newTile.name = "Tile (" + x + " , "+ y + ")";
                 newTile.GetComponent<TileData>().ID = _id;
 
-                GetRandomObstacleOnTile(newTile.GetComponent<TileData>());
+                CreateDumpster(newTile.GetComponent<TileData>());
 
                 int i = x / _chunckSize;
                 int j = y / _chunckSize;
@@ -56,8 +56,23 @@ public class MapManager : MonoBehaviour
                 _id++;
             }
         }
-        AddRessourceOnTile();
     }
+    /// <summary>
+ 
+    private void CreateDumpster(TileData tile)
+    {
+        if (_currentPlacedSpot < _allRessorceSpot[(int)TileObstacle.Dumpster].MaxOnMap - 9)
+        {
+            _currentPlacedSpot++;
+            tile.IsOccupied = true;
+            GameObject newSpot = Instantiate(_allRessorceSpot[(int)TileObstacle.Dumpster].Prefab);
+            tile.OnTop = newSpot;
+            newSpot.transform.position = tile.transform.position + new Vector3(0, 1, 0);
+            newSpot.transform.SetParent(_groundParent.transform);
+            newSpot.GetComponent<RessourseSpot>().SetAllParameter(_allRessorceSpot[(int)TileObstacle.Dumpster]);
+        }
+    }
+    /// </summary>
     public Chunck AccessChunkByTilePos(Vector3 _clikedPos)
     {
         int i = Mathf.FloorToInt(_clikedPos.x) / _chunckSize;
@@ -79,62 +94,50 @@ public class MapManager : MonoBehaviour
             return tileData;
         else return null;
     }
-
-
-    private void GetRandomObstacleOnTile(TileData _thisTile)
-    {
-
-            _thisTile.TileObstacle = Random.Range(0, 10);
-        
-
-        if (!OccupedTiles.Contains(_thisTile))
-            OccupedTiles.Add(_thisTile);
-    }
-    private void AddRessourceOnTile()
-    {
-        List<GameObject> spot = new();
-        int _id = 0;
-        foreach (TileData tile in OccupedTiles)
-        {
-            if (tile.TileObstacle == 1 && spot.Count < _allRessorceSpot[0].MaxOnMap)
-            {
-                tile.IsOccupied = true;
-                GameObject newSpot = Instantiate(_allRessorceSpot[0].Prefab); //a remplacer
-                spot.Add(newSpot);
-                newSpot.transform.position = tile.transform.position + new Vector3(0, 1, 0);
-                AccessTileByPos(newSpot.transform.position).OnTop = newSpot;
-                newSpot.name = _allRessorceSpot[0].Name + " " + _id; // a remplacer
-                newSpot.transform.SetParent(_groundParent.transform);
-                newSpot.GetComponent<RessourseSpot>().SetAllParameter(_allRessorceSpot[0]);
-                _id++;
-            }
-        }
-    }
-
-
     public void CheckRessourceOnClick(Vector3 _clikedTarget)
     {
-        if (AccessTileByPos(_clikedTarget).IsOccupied)
-        {
-            RessourseSpot newSpot = AccessTileByPos(_clikedTarget).OnTop.GetComponent<RessourseSpot>();
+        TileData clickedTile = AccessTileByPos(_clikedTarget);
 
-            if (newSpot != null)
+        if (clickedTile != null && clickedTile.IsOccupied)
+        {
+            RessourseSpot newSpot = clickedTile.OnTop.GetComponent<RessourseSpot>();
+
+            if (newSpot != null && _currentMiningSpot != newSpot)
             {
+                StopAllCoroutines();
+                _currentMiningSpot = newSpot;
                 StartCoroutine(StillRessource(newSpot));
             }
+        }
+        else
+        {
+            StopAllCoroutines();
+            PickingRessource = false;
+            _currentMiningSpot = null;
         }
     }
     private IEnumerator StillRessource(RessourseSpot _ressourceSpot)
     {
-        yield return new WaitForSeconds(_ressourceSpot.MiningTime);
-        _ressourceSpot.AvailableResource[_ressourceSpot.PickRandomRessource()].Quantity--;
-
+        PickingRessource = true;
+        while (PickingRessource && _ressourceSpot != null && _ressourceSpot.AvailableResource.Count > 0)
+        {
+            yield return new WaitForSeconds(_ressourceSpot.MiningTime);
+            int resourceIndex = _ressourceSpot.PickRandomRessource();
+            if (resourceIndex != -1)
+            {
+                if (_ressourceSpot.AvailableResource[resourceIndex].Quantity > 0)
+                {
+                    _ressourceSpot.AvailableResource[resourceIndex].Quantity--;
+                }
+                else
+                {
+                    PickingRessource = false;
+                    _currentMiningSpot = null;
+                    StopAllCoroutines();
+                }
+            }
+            else
+                break;
+        }
     }
-
-
-
-
-
-
-
 }
