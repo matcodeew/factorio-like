@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
-public class DragUIElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DragUIElementBuild : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private GameObject _prefabToInstantiate;
-    private GameObject _uiElement;
+    private GameObject _uiElements;
     private GameObject _inventoryCase;
-    private GameObject _previewInstance;
+    private GameObject _previewPrefabToInstantiate;
 
     private Vector2 _originalPointerPosition;
     private Vector3 _originalPanelPosition;
@@ -17,33 +16,33 @@ public class DragUIElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void Initialize(GameObject prefabToInstantiate, GameObject uiElement, GameObject inventoryCase)
     {
         _prefabToInstantiate = prefabToInstantiate;
-        _uiElement = uiElement;
+        _uiElements = uiElement;
         _inventoryCase = inventoryCase;
     }
 
     public void OnBeginDrag(PointerEventData data)
     {
-        _originalPanelPosition = _uiElement.transform.localPosition;
+        _originalPanelPosition = _uiElements.transform.localPosition;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            _uiElement.transform as RectTransform, data.position, data.pressEventCamera, out _originalPointerPosition);
+            _uiElements.transform as RectTransform, data.position, data.pressEventCamera, out _originalPointerPosition);
 
         if (_prefabToInstantiate != null)
         {
-           _previewInstance = Instantiate(_prefabToInstantiate);
+           _previewPrefabToInstantiate = Instantiate(_prefabToInstantiate);
         }
-        InventoryManager.Instance.FadeUIElement(0f);
+        InventoryBuildManager.Instance.FadeUIElement(0f);
     }
 
     public void OnDrag(PointerEventData data)
     {
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            _uiElement.transform as RectTransform, data.position, data.pressEventCamera, out Vector2 localPointerPosition))
+            _uiElements.transform as RectTransform, data.position, data.pressEventCamera, out Vector2 localPointerPosition))
         {
             Vector3 offset = localPointerPosition - _originalPointerPosition;
-            _uiElement.transform.localPosition = _originalPanelPosition + offset;
-            InventoryManager.Instance.TrashAreaGameObject.SetActive(true);
+            _uiElements.transform.localPosition = _originalPanelPosition + offset;
+            InventoryBuildManager.Instance.TrashAreaGameObject.SetActive(true);
 
-            if (_previewInstance != null)
+            if (_previewPrefabToInstantiate != null)
             {
                 UpdatePreviewPosition(data);
             }
@@ -58,14 +57,14 @@ public class DragUIElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        _uiElement.transform.localPosition = _originalPanelPosition;
-        InventoryManager.Instance.TrashAreaGameObject.SetActive(false);
-        if (_previewInstance != null)
+        _uiElements.transform.localPosition = _originalPanelPosition;
+        InventoryBuildManager.Instance.TrashAreaGameObject.SetActive(false);
+        if (_previewPrefabToInstantiate != null)
         {
             TryPlaceObject(eventData);
-            Destroy(_previewInstance);
+            Destroy(_previewPrefabToInstantiate);
         }
-        InventoryManager.Instance.FadeUIElement(1f);
+        InventoryBuildManager.Instance.FadeUIElement(1f);
     }
 
     private void UpdatePreviewPosition(PointerEventData data)
@@ -74,7 +73,7 @@ public class DragUIElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f))
         {
             Vector3 snappedPosition = SnapToGrid(hit.point);
-            _previewInstance.transform.position = snappedPosition;
+            _previewPrefabToInstantiate.transform.position = snappedPosition;
         }
     }
 
@@ -82,7 +81,7 @@ public class DragUIElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         int x = Mathf.RoundToInt(position.x);
         int z = Mathf.RoundToInt(position.z);
-        return new Vector3(x, _previewInstance.transform.position.y, z);
+        return new Vector3(x, _previewPrefabToInstantiate.transform.position.y, z);
     }
 
     private void TryPlaceObject(PointerEventData eventData)
@@ -92,13 +91,13 @@ public class DragUIElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f))
         {
             Vector3 snappedPosition = SnapToGrid(hit.point);
-            InventoryManager.Instance.CreateObject(_prefabToInstantiate, snappedPosition);
+            InventoryBuildManager.Instance.CreateObject(_prefabToInstantiate, snappedPosition);
         }
     }
 
     private bool IsPointerOverTrash(PointerEventData data)
     {
         return RectTransformUtility.RectangleContainsScreenPoint(
-            InventoryManager.Instance.TrashArea, data.position, data.pressEventCamera);
+            InventoryBuildManager.Instance.TrashArea, data.position, data.pressEventCamera);
     }
 }

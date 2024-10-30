@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float Speed;
 
+    public float Speed;
     public float RotationSpeed;
 
     private Vector3 _targetPosition;
@@ -24,10 +25,26 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(RIGHT_MOUSE_BUTTON))
-            SetTargetPosition();
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
 
-        if (_isMoving)
+        if (Input.GetMouseButtonDown(RIGHT_MOUSE_BUTTON))
+        {
+            SetTargetPosition();
+            InventoryBuildManager.Instance.BuildStatPanel.SetActive(false);
+        }
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (Input.GetMouseButtonDown(RIGHT_MOUSE_BUTTON) && hit.collider.CompareTag("Build"))
+            {
+                SetTargetPosition();
+                InventoryBuildManager.Instance.BuildStatPanel.SetActive(true);
+                InventoryBuildManager.Instance.InventoryPanel.SetActive(false);
+                InventoryBuildManager.Instance.BuildInventoryButton.SetActive(true);
+            }
+        }      
+            if (_isMoving)
             MovingPlayer();
     }
 
@@ -39,7 +56,6 @@ public class PlayerController : MonoBehaviour
 
         if (plane.Raycast(ray, out point))
             _targetPosition = ray.GetPoint(point);
-
 
         _clikedTarget = _targetPosition;
         _clikedTarget = new Vector3(_clikedTarget.x, 0, _clikedTarget.z);

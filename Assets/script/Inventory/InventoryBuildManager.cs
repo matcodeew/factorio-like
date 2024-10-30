@@ -1,16 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryBuildManager : MonoBehaviour
 {
-    public static InventoryManager Instance;
+    public static InventoryBuildManager Instance;
 
-    public RectTransform InventoryCasesParent;
-    public RectTransform BuildingPrefabItemsParent;
+    [SerializeField] private RectTransform InventoryCasesParent;
+    [SerializeField] private RectTransform BuildingPrefabItemsParent;
+
     public RectTransform TrashArea;
 
     public GameObject TrashAreaGameObject;
     public GameObject InventoryPanel;
+    public GameObject BuildStatPanel;
+    public GameObject BuildInventoryButton;
 
    [SerializeField] private List<GameObject> _prefabItems = new List<GameObject>(); 
    [SerializeField] private List<GameObject> _inventoryCases = new List<GameObject>();
@@ -24,7 +27,7 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {   
-        InitializeInventory();
+        InitializeBuildInventory();
 
         if (_uiCanvasGroup == null)
         {
@@ -32,7 +35,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private void InitializeInventory()
+    private void InitializeBuildInventory()
     {
         for (int i = 0; i < _inventoryCases.Count; i++)
         {
@@ -42,7 +45,7 @@ public class InventoryManager : MonoBehaviour
             {
                 GameObject child = itemInstance.transform.GetChild(0).gameObject;
 
-                DragUIElement dragComponent = child.AddComponent<DragUIElement>();
+                DragUIElementBuild dragComponent = child.AddComponent<DragUIElementBuild>();
                 dragComponent.Initialize(_prefabItems[i], child, itemInstance);
             }
         }
