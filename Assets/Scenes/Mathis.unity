@@ -703,7 +703,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tilePrefab: {fileID: 2838385887705197276, guid: d95afd866212aab409a4eb1d48720a90,
     type: 3}
+  _allRessorceSpot:
+  - {fileID: 11400000, guid: 54da1d3089d597149a816e20a1d1288c, type: 2}
+  - {fileID: 11400000, guid: 55415d4bdd234564c8e2a70eb67150ac, type: 2}
   _groundParent: {fileID: 949252321}
+  PickingRessource: 0
 --- !u!4 &900344939
 Transform:
   m_ObjectHideFlags: 0

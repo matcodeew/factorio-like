@@ -10,9 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0722afde6c298f439361c99e8c85a1a, type: 3}
-  m_Name: DumpSter
+  m_Name: Dumpster
   m_EditorClassIdentifier: 
-  Name: 
-  Prefab: {fileID: 0}
-  MiningTime: 0
-  Quantity: 0
+  Name: Dumpster
+  Prefab: {fileID: 7812776980421760279, guid: 438bbcdaedff6ee4e9e7ab45850ef4ab, type: 3}
+  AvailableResource:
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: 6e09eb3f3eaa2c94aa4bdc172260fea0, type: 2}
+    StartQuantity: 1
+  - Id: 1
+    Ressources: {fileID: 11400000, guid: 67208f63ace2cec4fa935e9e0757a42e, type: 2}
+    StartQuantity: 1
+  - Id: 2
+    Ressources: {fileID: 11400000, guid: 180b266b46ed01d4eb5eeb38e7c22913, type: 2}
+    StartQuantity: 1
+  - Id: 3
+    Ressources: {fileID: 11400000, guid: c32917aeb7d0caf4285e644e8d6c8389, type: 2}
+    StartQuantity: 1
+  MiningTime: 1.5
+  MaxOnMap: 10

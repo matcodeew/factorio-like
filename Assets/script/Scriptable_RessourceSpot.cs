@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newRessourceSpot", menuName = "Data/New Ressources Spot")]
@@ -9,32 +10,13 @@ public class Scriptable_RessourceSpot : ScriptableObject
     public GameObject Prefab;
     public List<RessourceData> AvailableResource;
     public float MiningTime;
+    public int MaxOnMap;
 
     [System.Serializable]
     public struct RessourceData
     {
-        public int ID;
+        public int Id;
         public Scriptable_Ressources Ressources;
         public int StartQuantity;
-    }
-
-    public RessourceData PickRandomRessource()
-    {
-        int totalQuantity = 0;
-        foreach (var ressource in AvailableResource)
-        {
-            totalQuantity += ressource.StartQuantity;
-        }
-        int randomValue = Random.Range(0, totalQuantity);
-        int cumulative = 0;
-        foreach (var ressource in AvailableResource)
-        {
-            cumulative += ressource.StartQuantity;
-            if (randomValue < cumulative)
-            {
-                return ressource;
-            }
-        }
-        return AvailableResource[0];
     }
 }
