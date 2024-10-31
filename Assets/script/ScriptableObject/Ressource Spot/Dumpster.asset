@@ -17,15 +17,15 @@ MonoBehaviour:
   AvailableResource:
   - Id: 0
     Ressources: {fileID: 11400000, guid: 6e09eb3f3eaa2c94aa4bdc172260fea0, type: 2}
-    StartQuantity: 10
+    StartQuantity: 1
   - Id: 1
     Ressources: {fileID: 11400000, guid: 67208f63ace2cec4fa935e9e0757a42e, type: 2}
-    StartQuantity: 30
+    StartQuantity: 1
   - Id: 2
     Ressources: {fileID: 11400000, guid: 180b266b46ed01d4eb5eeb38e7c22913, type: 2}
-    StartQuantity: 30
+    StartQuantity: 1
   - Id: 3
     Ressources: {fileID: 11400000, guid: c32917aeb7d0caf4285e644e8d6c8389, type: 2}
-    StartQuantity: 10
+    StartQuantity: 1
   MiningTime: 1.5
   MaxOnMap: 10

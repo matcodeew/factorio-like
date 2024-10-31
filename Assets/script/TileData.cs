@@ -9,6 +9,7 @@ public class TileData : MonoBehaviour
     public TileState State = TileState.Contaminated;
     public TileObstacle TileObstacle = TileObstacle.None;
     public float ProgressValue = 0;
+    public ChunkState ChunkState;
 
     //private void OnMouseEnter()
     //{

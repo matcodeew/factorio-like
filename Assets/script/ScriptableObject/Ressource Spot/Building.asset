@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Building
   m_EditorClassIdentifier: 
   Name: Building
-  Prefab: {fileID: 0}
+  Prefab: {fileID: 827657833508366288, guid: bbbcd873de6dec940846ff0109a76bd5, type: 3}
   AvailableResource:
   - Id: 0
     Ressources: {fileID: 11400000, guid: c32917aeb7d0caf4285e644e8d6c8389, type: 2}
