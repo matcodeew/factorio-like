@@ -100,24 +100,42 @@ public class RessourceTransformer : MonoBehaviour
                     {
                         FirstOutput = MachineInput.GrinderOutput;
                         Debug.Log("Grinded " + MachineInput + " into " + FirstOutput);
+                        break;
                     }
-                    break;
+                    else
+                    {
+                        return;
+                    }
                 }
             case MachineType.Disassembler:
                 {
                     // Disassembler is a 1 to 3 machine (it means 1 input, 3 output maximum)
-                    FirstOutput = MachineInput.DisassemblerOutputs[0];
-                    SecondOutput = MachineInput.DisassemblerOutputs[1];
-                    ThirdOutput = MachineInput.DisassemblerOutputs.Count == 3 ? MachineInput.DisassemblerOutputs[2] : null;
-                    Debug.Log("Disassembled  " + MachineInput + " into " + FirstOutput + ", " + SecondOutput + ", " + ThirdOutput);
-                    break;
+                    if (MachineInput.DisassemblerOutputs.Count > 0)
+                    {
+                        FirstOutput = MachineInput.DisassemblerOutputs[0];
+                        SecondOutput = MachineInput.DisassemblerOutputs[1];
+                        ThirdOutput = MachineInput.DisassemblerOutputs.Count == 3 ? MachineInput.DisassemblerOutputs[2] : null;
+                        Debug.Log("Disassembled  " + MachineInput + " into " + FirstOutput + ", " + SecondOutput + ", " + ThirdOutput);
+                        break;
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
             case MachineType.Furnace:
                 {
                     // Furnace is a 1 to 1 machine (it means 1 input, 1 output)
-                    FirstOutput = MachineInput.FurnaceOutput;
-                    Debug.Log("Smelt " + MachineInput + " into " + FirstOutput);
-                    break;
+                    if (MachineInput.GrinderOutput != null)
+                    {
+                        FirstOutput = MachineInput.FurnaceOutput;
+                        Debug.Log("Smelt " + MachineInput + " into " + FirstOutput);
+                        break;
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
             case MachineType.None:
                 {
