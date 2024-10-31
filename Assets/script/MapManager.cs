@@ -16,7 +16,7 @@ public class MapManager : MonoBehaviour
 
     private int _id;
     private int _mapSize = 32;
-    private int _chunckSize = 6;
+    private int _chunckSize = 8;
     private RessourseSpot _currentMiningSpot;
     private int _currentPlacedSpot;
 
@@ -75,22 +75,29 @@ public class MapManager : MonoBehaviour
             foreach(TileData tileInChunk in chunk.TileChunk.Values)
             {
                 tileInChunk.ChunkState = chunk.state;
+                tileInChunk.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
             }
         }
     }
 
+
+
+
     /// <summary>
     private void CreateDumpster(TileData tile)
     {
-        if (_currentPlacedSpot < _allRessorceSpot[(int)TileObstacle.Dumpster].MaxOnMap - 9)
+        if(_allRessorceSpot.Count != 0)
         {
-            _currentPlacedSpot++;
-            tile.IsOccupied = true;
-            GameObject newSpot = Instantiate(_allRessorceSpot[(int)TileObstacle.Dumpster].Prefab);
-            tile.OnTop = newSpot;
-            newSpot.transform.position = tile.transform.position + new Vector3(0, 1, 0);
-            newSpot.transform.SetParent(_groundParent.transform);
-            newSpot.GetComponent<RessourseSpot>().SetAllParameter(_allRessorceSpot[(int)TileObstacle.Dumpster]);
+            if(_currentPlacedSpot < _allRessorceSpot[(int)TileObstacle.Dumpster].MaxOnMap - 9)
+            {
+                _currentPlacedSpot++;
+                tile.IsOccupied = true;
+                GameObject newSpot = Instantiate(_allRessorceSpot[(int)TileObstacle.Dumpster].Prefab);
+                tile.OnTop = newSpot;
+                newSpot.transform.position = tile.transform.position + new Vector3(0, 1, 0);
+                newSpot.transform.SetParent(_groundParent.transform);
+                newSpot.GetComponent<RessourseSpot>().SetAllParameter(_allRessorceSpot[(int)TileObstacle.Dumpster]);
+            }
         }
     }
     /// </summary>

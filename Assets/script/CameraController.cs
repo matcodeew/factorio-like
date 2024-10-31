@@ -46,7 +46,7 @@ public class CameraController : MonoBehaviour
         {
             Vector3 newPosition = _cam.transform.position;
             // Droite
-            if (Input.mousePosition.x >= Screen.width - _border)
+            if (Input.mousePosition.x >= Screen.width - _border || Input.GetKey(KeyCode.D))
             {
                 _accelerationX += _accelerationRate * Time.deltaTime;
                 _accelerationX = Mathf.Min(_accelerationX, _maxSpeed);
@@ -54,7 +54,7 @@ public class CameraController : MonoBehaviour
                 newPosition.x += _accelerationX * Time.deltaTime;
             }
             // Gauche
-            else if (Input.mousePosition.x <= 0 + _border)
+            else if (Input.mousePosition.x <= 0 + _border || Input.GetKey(KeyCode.A))
             {
                 _accelerationX += _accelerationRate * Time.deltaTime;
                 _accelerationX = Mathf.Min(_accelerationX, _maxSpeed);
@@ -67,7 +67,7 @@ public class CameraController : MonoBehaviour
             }
 
             // Haut
-            if (Input.mousePosition.y >= Screen.height - _border)
+            if (Input.mousePosition.y >= Screen.height - _border || Input.GetKey(KeyCode.W))
             {
                 _accelerationY += _accelerationRate * Time.deltaTime;
                 _accelerationY = Mathf.Min(_accelerationY, _maxSpeed);
@@ -75,7 +75,7 @@ public class CameraController : MonoBehaviour
                 newPosition.z += _accelerationY * Time.deltaTime;
             }
             // Bas
-            else if (Input.mousePosition.y <= 0 + _border)
+            else if (Input.mousePosition.y <= 0 + _border || Input.GetKey(KeyCode.S))
             {
                 _accelerationY += _accelerationRate * Time.deltaTime;
                 _accelerationY = Mathf.Min(_accelerationY, _maxSpeed);
