@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
 
-    public float rotationSpeed;
+    public float Speed;
+    public float RotationSpeed;
 
     private Vector3 _targetPosition;
     private Vector3 _clikedTarget;
@@ -13,6 +14,8 @@ public class PlayerController : MonoBehaviour
     private bool _isMoving;
 
     const int RIGHT_MOUSE_BUTTON = 1;
+
+    [SerializeField] private MapManager _mapManager;
 
     void Start()
     {
@@ -22,10 +25,26 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(RIGHT_MOUSE_BUTTON))
-            SetTargetPosition();
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
 
-        if (_isMoving)
+        if (Input.GetMouseButtonDown(RIGHT_MOUSE_BUTTON))
+        {
+            SetTargetPosition();
+            InventoryBuildManager.Instance.BuildStatPanel.SetActive(false);
+        }
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (Input.GetMouseButtonDown(RIGHT_MOUSE_BUTTON) && hit.collider.CompareTag("Build"))
+            {
+                SetTargetPosition();
+                InventoryBuildManager.Instance.BuildStatPanel.SetActive(true);
+                InventoryBuildManager.Instance.InventoryPanel.SetActive(false);
+                InventoryBuildManager.Instance.BuildInventoryButton.SetActive(true);
+            }
+        }      
+            if (_isMoving)
             MovingPlayer();
     }
 
@@ -38,10 +57,9 @@ public class PlayerController : MonoBehaviour
         if (plane.Raycast(ray, out point))
             _targetPosition = ray.GetPoint(point);
 
-
         _clikedTarget = _targetPosition;
         _clikedTarget = new Vector3(_clikedTarget.x, 0, _clikedTarget.z);
-        print(" tile select is : " + MapManager.Instance.AccessTileByPos(_clikedTarget));
+        print(" tile select is : " + _mapManager.AccessTileByPos(_clikedTarget));
 
         _isMoving = true;
     }
@@ -49,7 +67,7 @@ public class PlayerController : MonoBehaviour
     public void MovingPlayer()
     {
         transform.LookAt(_targetPosition);
-        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, Speed * Time.deltaTime);
 
 
         if (transform.position == _targetPosition)
