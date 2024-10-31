@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7851117662713609511}
   - component: {fileID: 7576382026243138773}
   m_Layer: 5
-  m_Name: Case Inventory (1)
+  m_Name: 'Case Inventory (2) '
   m_TagString: InventorySlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.073584795, b: 0.073584795, a: 1}
+  m_Color: {r: 0.0745098, g: 1, b: 0.1617125, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

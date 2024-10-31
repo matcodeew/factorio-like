@@ -1965,8 +1965,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c5051537833e22499eb91aa836feafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoryPlayerCase: {fileID: 903418172691988424, guid: 06c5a431a845ded489413f81b8418e4c,
-    type: 3}
+  _inventoryPlayerSlots:
+  - {fileID: 903418172691988424, guid: 06c5a431a845ded489413f81b8418e4c, type: 3}
+  - {fileID: 903418172691988424, guid: 0f97c243169a4c74fa2880176cc520ae, type: 3}
+  - {fileID: 903418172691988424, guid: a2d3ee584caefdc4a94a8a407af918ad, type: 3}
+  - {fileID: 903418172691988424, guid: 5499a5d72883ac248a7406a23d736ed5, type: 3}
+  _inventoryParentSlot: {fileID: 566505470}
   _scripts:
   - {fileID: 11400000, guid: 6e09eb3f3eaa2c94aa4bdc172260fea0, type: 2}
   - {fileID: 11400000, guid: f0078bb8393c0dc48adee180fd3eb013, type: 2}
@@ -1983,7 +1987,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6aa6676fdf6399647a1143f578d1856c, type: 2}
   - {fileID: 11400000, guid: 6604ab217bc7ee740b29bee2c6fbae39, type: 2}
   _objects: []
-  _quantities: 0000000000000000000000000000000000000000
 --- !u!1 &1331050994
 GameObject:
   m_ObjectHideFlags: 0
@@ -2452,7 +2455,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tilePrefab: {fileID: 2838385887705197276, guid: d95afd866212aab409a4eb1d48720a90,
     type: 3}
+  _allRessorceSpot:
+  - {fileID: 11400000, guid: 55415d4bdd234564c8e2a70eb67150ac, type: 2}
+  - {fileID: 11400000, guid: 54da1d3089d597149a816e20a1d1288c, type: 2}
   _groundParent: {fileID: 545659474}
+  PickingRessource: 0
 --- !u!4 &1717661255
 Transform:
   m_ObjectHideFlags: 0
