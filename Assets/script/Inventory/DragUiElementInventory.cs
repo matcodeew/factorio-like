@@ -33,7 +33,7 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             }
         }
 
-        if (targetTransform != null && targetTransform.childCount <= 0)
+        if (targetTransform != null && targetTransform.childCount > 0)
         {
             Transform targetChild = targetTransform.GetChild(1); 
             targetChild.SetParent(ParentAfterDrag); 
