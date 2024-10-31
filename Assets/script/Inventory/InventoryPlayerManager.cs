@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class InventoryPlayerManager : MonoBehaviour
 {
-
     [SerializeField] private GameObject _inventoryPlayerCase;
-
     [SerializeField] private List<Scriptable_Ressources> _scripts = new List<Scriptable_Ressources>();
-
     [SerializeField] private List<GameObject> _objects = new List<GameObject>();
+
+    [SerializeField] private List<int> _quantities = new List<int>();
+
     void Start()
     {
         InitializePlayerInventory();
@@ -19,7 +19,11 @@ public class InventoryPlayerManager : MonoBehaviour
         for (int i = 0; i < _scripts.Count; i++)
         {
             GameObject itemInstance = Instantiate(_inventoryPlayerCase);
-            itemInstance.AddComponent<Ressource>();
+            Ressource ressourceComponent = itemInstance.AddComponent<Ressource>();
+
+            int itemQuantity = (i < _quantities.Count) ? _quantities[i] : 1; 
+            ressourceComponent.SetAllParameters(_scripts[i], itemQuantity);
+
             _objects.Add(itemInstance);
         }
         RecupAllInfo();
@@ -27,11 +31,12 @@ public class InventoryPlayerManager : MonoBehaviour
 
     public void RecupAllInfo()
     {
-        foreach (GameObject item in _objects)
+        for (int i = 0; i < _objects.Count; i++)
         {
-            foreach (Scriptable_Ressources scripts in _scripts)
+            Ressource ressource = _objects[i].GetComponent<Ressource>();
+            if (ressource != null)
             {
-                item.GetComponent<Ressource>().SetAllParameters(scripts);            
+                ressource.SetAllParameters(_scripts[i], ressource.Quantity);
             }
         }
     }
@@ -45,8 +50,9 @@ public class Ressource : MonoBehaviour
     public bool IsPure;
     public ScriptableObject GrounderOutput;
     public List<ScriptableObject> DisassenblerOutputs;
+    public int Quantity;
 
-    public void SetAllParameters(Scriptable_Ressources ressources)
+    public void SetAllParameters(Scriptable_Ressources ressources, int quantity)
     {
         Id = ressources.Id;
         Name = ressources.Name;
@@ -54,5 +60,6 @@ public class Ressource : MonoBehaviour
         IsPure = ressources.IsPure;
         GrounderOutput = ressources.GrinderOutput;
         DisassenblerOutputs = ressources.DisassemblerOutputs;
+        Quantity = quantity; 
     }
 }

@@ -1,16 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [HideInInspector] public Transform parentAfterDrag;
+    [HideInInspector] public Transform ParentAfterDrag;
+
     public void OnBeginDrag(PointerEventData eventData)
     {
-        parentAfterDrag = transform.parent;
+        ParentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
-        transform.SetAsLastSibling();
-        InventorySlot.Instance.Image.raycastTarget = false;
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -19,7 +17,6 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.SetParent(parentAfterDrag);
-        InventorySlot.Instance.Image.raycastTarget = true;
+        transform.SetParent(ParentAfterDrag);
     }
 }
