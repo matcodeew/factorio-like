@@ -1,11 +1,15 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
     private Dictionary<Vector3, Chunck> Chunks = new Dictionary<Vector3, Chunck>();
+
+    [SerializeField] private GameObject SolorPanelPrefab;
+
 
     [SerializeField] private GameObject _tilePrefab;
     [SerializeField] private List<Scriptable_RessourceSpot> _allRessorceSpot;
@@ -60,6 +64,16 @@ public class MapManager : MonoBehaviour
             }
         }
         AllocatedTileObstacle();
+        CreateBuilding();
+    }
+
+    private void CreateBuilding()
+    {
+        Building newSolarPanel = new Building("SolorPanel", SolorPanelPrefab, new EnergyGenerator(30));
+        GameObject newSolarGo = newSolarPanel.CreateBuilding(newSolarPanel, new Vector3(10, 1f, 10));
+
+        Building newFurnace = new Building("SolorPanel", SolorPanelPrefab, new EnergyGenerator(30));
+        GameObject newFurnaceGo = newFurnace.CreateBuilding(newFurnace, new Vector3(5, 1f, 5));
     }
 
     private void AllocatedTileObstacle()

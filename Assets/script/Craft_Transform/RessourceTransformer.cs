@@ -46,24 +46,24 @@ public class RessourceTransformer : MonoBehaviour
         }
     }
 
-    // List<Scriptable_Ressources> FilterListByMachineType()
-    // {
-    //     bool isGrinder = _machineType == MachineType.Grinder;
-    //     bool isList = _machineType == MachineType.Disassembler;
+    //List<Scriptable_Ressources> FilterListByMachineType()
+    //{
+    //    bool isGrinder = _machineType == MachineType.Grinder;
+    //    bool isList = _machineType == MachineType.Disassembler;
 
-    //     return _transformationList.Where
-    //     (x =>
-    //         (
-    //             isList ?
-    //                 x.DisassemblerOutputs.Count > 0 :
-    //                 (
-    //                     isGrinder ?
-    //                         x.GrinderOutput != null :
-    //                         x.FurnaceOutput != null
-    //                 )
-    //         )
-    //     ).ToList();
-    // }
+    //    return _transformationList.Where
+    //    (x =>
+    //        (
+    //            isList ?
+    //                x.DisassemblerOutputs.Count > 0 :
+    //                (
+    //                    isGrinder ?
+    //                        x.GrinderOutput != null :
+    //                        x.FurnaceOutput != null
+    //                )
+    //        )
+    //    ).ToList();
+    //}
 
     public void StartTransformation()
     {
