@@ -1965,28 +1965,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c5051537833e22499eb91aa836feafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inventoryParentSlot: {fileID: 566505470}
+  _invRessouces:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _scriptableRessourceList: {fileID: 11400000, guid: 1eb2d93af717c2e4ebc476ce94a18b08,
+    type: 2}
+  _objects: []
   _inventoryPlayerSlots:
   - {fileID: 903418172691988424, guid: 06c5a431a845ded489413f81b8418e4c, type: 3}
   - {fileID: 903418172691988424, guid: 0f97c243169a4c74fa2880176cc520ae, type: 3}
   - {fileID: 903418172691988424, guid: a2d3ee584caefdc4a94a8a407af918ad, type: 3}
   - {fileID: 903418172691988424, guid: 5499a5d72883ac248a7406a23d736ed5, type: 3}
-  _inventoryParentSlot: {fileID: 566505470}
-  _scripts:
-  - {fileID: 11400000, guid: 6e09eb3f3eaa2c94aa4bdc172260fea0, type: 2}
-  - {fileID: 11400000, guid: f0078bb8393c0dc48adee180fd3eb013, type: 2}
-  - {fileID: 11400000, guid: f4bf8295af713d94ea82c82987d9be30, type: 2}
-  - {fileID: 11400000, guid: 67208f63ace2cec4fa935e9e0757a42e, type: 2}
-  - {fileID: 11400000, guid: 9abd1b5bc50f80141899f6c406b56811, type: 2}
-  - {fileID: 11400000, guid: 180b266b46ed01d4eb5eeb38e7c22913, type: 2}
-  - {fileID: 11400000, guid: c32917aeb7d0caf4285e644e8d6c8389, type: 2}
-  - {fileID: 11400000, guid: 59a13f0079aa80c4cbd6caf5ead21578, type: 2}
-  - {fileID: 11400000, guid: b370b913ac98339458f6a2cf7607af88, type: 2}
-  - {fileID: 11400000, guid: 07798cfa844b833448217ebc5f3b3d4c, type: 2}
-  - {fileID: 11400000, guid: 93e3e1cf7bb79234c87e719af291967e, type: 2}
-  - {fileID: 11400000, guid: 9bb42eb2fa9f53b4cbe61cdee2d7f716, type: 2}
-  - {fileID: 11400000, guid: 6aa6676fdf6399647a1143f578d1856c, type: 2}
-  - {fileID: 11400000, guid: 6604ab217bc7ee740b29bee2c6fbae39, type: 2}
-  _objects: []
 --- !u!1 &1331050994
 GameObject:
   m_ObjectHideFlags: 0

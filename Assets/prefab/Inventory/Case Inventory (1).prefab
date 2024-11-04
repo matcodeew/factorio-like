@@ -371,3 +371,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParentAfterDrag: {fileID: 0}
+  scriptable_Ressources: {fileID: 11400000, guid: 180b266b46ed01d4eb5eeb38e7c22913,
+    type: 2}

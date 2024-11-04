@@ -3,12 +3,19 @@ using UnityEngine;
 
 public class InventoryPlayerManager : MonoBehaviour
 {
-    [SerializeField] private RectTransform _inventoryParentSlot; 
+    public static InventoryPlayerManager Instance;
 
-    [SerializeField] private List<Scriptable_Ressources> _scripts = new List<Scriptable_Ressources>(); 
+    [SerializeField] private RectTransform _inventoryParentSlot;
+
+    [SerializeField] private List<InvRessource> _invRessouces  = new List<InvRessource>(); 
+    [SerializeField] private Scriptable_RessourceList _scriptableRessourceList; // TEST
     [SerializeField] private List<GameObject> _objects = new List<GameObject>(); 
-    [SerializeField] private List<GameObject> _inventoryPlayerSlots = new List<GameObject>(); 
+    [SerializeField] private List<GameObject> _inventoryPlayerSlots = new List<GameObject>();
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         InitializePlayerInventory();
@@ -16,13 +23,12 @@ public class InventoryPlayerManager : MonoBehaviour
 
     private void InitializePlayerInventory()
     {
-        for (int i = 0; i < _scripts.Count; i++)
+        for (int i = 0; i < _scriptableRessourceList.RessourceList.Count; i++)
         {
             GameObject selectedPrefab = _inventoryPlayerSlots[i % _inventoryPlayerSlots.Count]; 
             GameObject itemInstance = Instantiate(selectedPrefab, _inventoryParentSlot);
             InvRessource ressourceComponent = itemInstance.AddComponent<InvRessource>();
-            ressourceComponent.Ressource = _scripts[i]; 
-            ressourceComponent.Quantity = i + 1; 
+            ressourceComponent.Ressource = _scriptableRessourceList.RessourceList[i];
             _objects.Add(itemInstance); 
         }
     }
@@ -31,5 +37,5 @@ public class InventoryPlayerManager : MonoBehaviour
 public class InvRessource : MonoBehaviour
 {
     public Scriptable_Ressources Ressource; 
-    public int Quantity; 
+    public int Quantity;
 }
