@@ -702,9 +702,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdeba30c24cabd1409c299c822b4b45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SolorPanelPrefab: {fileID: 6977918930700773579, guid: 7f414df3fce178f4c9ac0eeadedf5652,
+  SolorPanelPrefab: {fileID: 6977918930700773579, guid: 52dd060c2d3388447be43792ccc5b39f,
     type: 3}
-  FurnacePrefab: {fileID: 827657833508366288, guid: bbbcd873de6dec940846ff0109a76bd5,
+  FurnacePrefab: {fileID: 5904258122139694459, guid: d3168da1bc9f5274484803538df54cfd,
     type: 3}
   _tilePrefab: {fileID: 2838385887705197276, guid: d95afd866212aab409a4eb1d48720a90,
     type: 3}

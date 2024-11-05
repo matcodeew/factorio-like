@@ -31,7 +31,6 @@ public class RessourceTransformer : MonoBehaviour
 
     [SerializeField] private TransformationUI _ressourceUI;
 
-
     public bool ActionWasCancelled;
 
     void Start()

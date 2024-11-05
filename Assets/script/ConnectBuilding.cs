@@ -13,16 +13,18 @@ public class ConnectBuilding : MonoBehaviour
 
     public Vector3 FirstPos;
     public Vector3 SecondPos;
+
+    private void Awake()
+    {
+        _generateEnergy = GetComponent<GenerateEnergy>();
+    }
     public void ConnectLink()
     {
-        _generateEnergy = GetComponentInParent<GenerateEnergy>();
-
         _currentLine = Instantiate(_electricLink);
         _lineRenderer = _currentLine.GetComponent<LineRenderer>();
 
         FirstPos = this.transform.position;
         _lineRenderer.SetPosition(0, FirstPos);
-        _lineRenderer.SetPosition(1, FirstPos); 
 
         _updateSecondPos = true;
     }
@@ -41,14 +43,12 @@ public class ConnectBuilding : MonoBehaviour
                 }
                 if(Input.GetMouseButtonDown(0))
                 {                    
-                    if(CheckTransformationBuilding(hit) && _generateEnergy.CanIncrementList())
+                    if(CheckTransformationBuilding(hit))
                     {
-                        print("building that needs electricity");
                         _updateSecondPos = false;
                     }
                     else
                     {
-                        print("no building or building that doesn't need electricity");
                         _updateSecondPos = false;
                         Destroy(_currentLine);
                     }
@@ -68,8 +68,15 @@ public class ConnectBuilding : MonoBehaviour
         GameObject onTop = MapManager.Instance.AccessTileByPos(hit.point).OnTop;
         if (onTop != null && _generateEnergy != null)
         {
-            _generateEnergy.IncrementList(onTop);
-            return onTop.GetComponent<RessourceTransformer>() != null;
+            if(_generateEnergy.CanIncrementList())
+            {
+                _generateEnergy.IncrementList(onTop);
+                return onTop.GetComponent<RessourceTransformer>() != null; ////////
+            }
+            else
+            {
+                print("the building has too many connections");
+            }
         }
         return false;
     }

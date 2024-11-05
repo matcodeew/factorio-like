@@ -1,45 +1,43 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
-public interface IComportement
+public interface IBehaviour
 {
     void Execute();
-    void AddRightComponent(GameObject _object);
 }
 
-public class EnergyGenerator : IComportement
+public class EnergyGenerator : IBehaviour
 {
-    public int GeneratedEnergy = 30;
+    private int EnergyMinimum;
+    private int EnergyMaximum;
+    public int EnergyGenerated { get; private set; }
+    public int MaxConnection { get; private set; }
     public GenerateEnergy GenerateEnergy;
-    public EnergyGenerator(int _energy)
+    public EnergyGenerator(int _maxConnection, int _energyminimum, int energyMaximum)
     {
-        GeneratedEnergy = _energy;
+        MaxConnection = _maxConnection;
+        EnergyMinimum = _energyminimum;
+        EnergyMaximum = energyMaximum;
     }
+    public int GenerateRandomEnergy() => EnergyGenerated = Random.Range(EnergyMinimum, EnergyMaximum);
+
     public void Execute()
     {
         //GeneratedEnergy.UpdateEnergyValue();
     }
-    public void AddRightComponent(GameObject _object)
-    {
-        GenerateEnergy = _object.AddComponent<GenerateEnergy>();
-    }
 }
-public class TransformRessources : IComportement
+
+public class TransformRessources : IBehaviour
 {
-    public int ReceivedEnergy;
-    public int NeededEnergy;
     public RessourceTransformer RessourceTransformer;
+    public int ReceivedEnergy{ get; set; }
+    public int NeededEnergy { get; private set; }
     public TransformRessources(int receivedEnergy, int neededEnergy)
     {
         ReceivedEnergy = receivedEnergy;
         NeededEnergy = neededEnergy;
     }
-    public void AddRightComponent(GameObject _object)
-    {
-        RessourceTransformer = _object.AddComponent<RessourceTransformer>();
-    }
+
     public void Execute()
     {
         if(ReceivedEnergy >= NeededEnergy)
@@ -49,34 +47,45 @@ public class TransformRessources : IComportement
     }
 }
 
-[System.Serializable]
 public class Building : MonoBehaviour
 {
-    public IComportement Comportement;
+    public IBehaviour Behaviour;
     public GameObject Prefab;
     public string Name;
 
-    public Building(string _name, GameObject _prefab, IComportement _comportement)
+    public void Initialize(string _name, GameObject _prefab, IBehaviour _behaviour)
     {
         Name = _name;
         Prefab = _prefab;
-        Comportement = _comportement;
+        Behaviour = _behaviour;
     }
-    public void ExecuteComportement()
+
+    public T GetBehaviour<T>() where T : class, IBehaviour /////////////
     {
-        Comportement.Execute();
+        return Behaviour as T;
     }
-    public GameObject CreateBuilding(Building _buildingWantToCreate, Vector3 _position)
+
+    public GameObject CreateBuilding(Building _buildingWantToCreate, Vector3 _position, GameObject newGo) //////////////
     {
-        GameObject newGo = Instantiate(_buildingWantToCreate.Prefab);
-        newGo.AddComponent<Building>();
         MapManager.Instance.AccessTileByPos(_position).OnTop = newGo;
         newGo.transform.position = _position;
         newGo.name = Name;
-
-        Comportement.AddRightComponent(newGo);
-
-
         return newGo;
+    }
+
+    public void ExecuteComportement()
+    {
+        Behaviour.Execute();
+    }
+    public void DebugComportement()
+    {
+        if (Behaviour == null)
+        {
+            Debug.LogWarning($"No comportement assigned to Building '{Name}'.");
+        }
+        else
+        {
+            Debug.Log($"Building '{Name}' has a comportement of type: {Behaviour.GetType()}");
+        }
     }
 }
