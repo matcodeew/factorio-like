@@ -75,10 +75,10 @@ public class MapManager : MonoBehaviour
         Building newSolarPanel = new Building("SolorPanel", SolorPanelPrefab, new EnergyGenerator(30));
         GameObject newSolarGo = newSolarPanel.CreateBuilding(newSolarPanel, new Vector3(10, 1f, 10));
 
-        Building newSolarPanel1 = new Building("SolorPanel1", SolorPanelPrefab, new EnergyGenerator(30));
-        GameObject newSolarGo1 = newSolarPanel1.CreateBuilding(newSolarPanel1, new Vector3(15, 1f, 15));
+        Building newFurnace1 = new Building("Furnace1", FurnacePrefab, new TransformRessources(10, 50));
+        GameObject newFurnaceGo1 = newFurnace1.CreateBuilding(newFurnace1, new Vector3(15, 1f, 15));
 
-        Building newFurnace = new Building("SolorPanel", FurnacePrefab, new TransformRessources(10, 50));
+        Building newFurnace = new Building("Furnace", FurnacePrefab, new TransformRessources(10, 50));
         GameObject newFurnaceGo = newFurnace.CreateBuilding(newFurnace, new Vector3(5, 1f, 5));
     }
 

@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GenerateEnergy : MonoBehaviour
 {
     private float _targetTime = 5.0f;
-    private List<Building> LinkBuilding = new List<Building>();
+    public List<Building> LinkBuilding = new List<Building>();
+    public int MaxConnection = 1;
     private bool isActive = false;
     private void ActivePanel()
     {
@@ -28,5 +30,15 @@ public class GenerateEnergy : MonoBehaviour
     private void Update()
     {
         Timer();
+    }
+
+    public void IncrementList(GameObject go)
+    {
+        if(CanIncrementList())
+            LinkBuilding.Add(go.GetComponent<Building>());
+    }
+    public bool CanIncrementList()
+    {
+        return LinkBuilding.Count < MaxConnection;
     }
 }

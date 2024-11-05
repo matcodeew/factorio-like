@@ -5,51 +5,52 @@ using UnityEngine;
 
 public class ConnectBuilding : MonoBehaviour
 {
-    [SerializeField] private GameObject ElectricLink;
+    [SerializeField] private GameObject _electricLink;
+    private bool _updateSecondPos;
+    private LineRenderer _lineRenderer;
+    private GenerateEnergy _generateEnergy;
+    private GameObject _currentLine;
+
     public Vector3 FirstPos;
     public Vector3 SecondPos;
-    private bool UpdateSecondPos;
-    private LineRenderer lineRenderer;
-
     public void ConnectLink()
     {
-        GameObject go = Instantiate(ElectricLink);
-        lineRenderer = go.GetComponent<LineRenderer>();
+        _generateEnergy = GetComponentInParent<GenerateEnergy>();
+
+        _currentLine = Instantiate(_electricLink);
+        _lineRenderer = _currentLine.GetComponent<LineRenderer>();
 
         FirstPos = this.transform.position;
-        lineRenderer.SetPosition(0, FirstPos);
-        lineRenderer.SetPosition(1, FirstPos); 
+        _lineRenderer.SetPosition(0, FirstPos);
+        _lineRenderer.SetPosition(1, FirstPos); 
 
-        UpdateSecondPos = true;
-    }
-
-    private void OnMouseDown()
-    {
-
+        _updateSecondPos = true;
     }
 
     private void Update()
     {
-        if(UpdateSecondPos)
+        if(_updateSecondPos)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 SecondPos = SnapToGrid(hit.point);
-                if(lineRenderer != null)
+                if(_lineRenderer != null)
                 {
-                    lineRenderer.SetPosition(1, SecondPos);
+                    _lineRenderer.SetPosition(1, SecondPos);
                 }
                 if(Input.GetMouseButtonDown(0))
                 {                    
-                    if(CheckTransformationBuilding(hit))
+                    if(CheckTransformationBuilding(hit) && _generateEnergy.CanIncrementList())
                     {
-                        print("Someone on top");
-                        UpdateSecondPos = false;
+                        print("building that needs electricity");
+                        _updateSecondPos = false;
                     }
                     else
                     {
-                        print("nothing on top");
+                        print("no building or building that doesn't need electricity");
+                        _updateSecondPos = false;
+                        Destroy(_currentLine);
                     }
                 }
             }
@@ -62,14 +63,13 @@ public class ConnectBuilding : MonoBehaviour
         int z = Mathf.FloorToInt(position.z);
         return new Vector3(x, 1, z);
     }
-
     private bool CheckTransformationBuilding(RaycastHit hit)
     {
-        if(MapManager.Instance.AccessTileByPos(hit.point).OnTop != null)
+        GameObject onTop = MapManager.Instance.AccessTileByPos(hit.point).OnTop;
+        if (onTop != null && _generateEnergy != null)
         {
-            RessourceTransformer? transformer = MapManager.Instance.AccessTileByPos(hit.point).OnTop.GetComponent<RessourceTransformer>();
-            bool RightBuilding = (transformer != null) ? true : false;
-            return RightBuilding;
+            _generateEnergy.IncrementList(onTop);
+            return onTop.GetComponent<RessourceTransformer>() != null;
         }
         return false;
     }

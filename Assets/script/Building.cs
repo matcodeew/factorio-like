@@ -48,6 +48,8 @@ public class TransformRessources : IComportement
         }
     }
 }
+
+[System.Serializable]
 public class Building : MonoBehaviour
 {
     public IComportement Comportement;
@@ -67,6 +69,7 @@ public class Building : MonoBehaviour
     public GameObject CreateBuilding(Building _buildingWantToCreate, Vector3 _position)
     {
         GameObject newGo = Instantiate(_buildingWantToCreate.Prefab);
+        newGo.AddComponent<Building>();
         MapManager.Instance.AccessTileByPos(_position).OnTop = newGo;
         newGo.transform.position = _position;
         newGo.name = Name;

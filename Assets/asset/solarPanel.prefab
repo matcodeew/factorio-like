@@ -125,8 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce7587d5592d2540aa5632c150a2ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ElectricLink: {fileID: 8371184711458994704, guid: aa1ee534ffa3fe04a8da5c1ee3698953,
+  _electricLink: {fileID: 8371184711458994704, guid: aa1ee534ffa3fe04a8da5c1ee3698953,
     type: 3}
+  _buildingParent: {fileID: 6977918930700773579}
   FirstPos: {x: 0, y: 0, z: 0}
   SecondPos: {x: 0, y: 0, z: 0}
 --- !u!4 &7696606756723288472 stripped
