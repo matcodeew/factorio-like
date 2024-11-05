@@ -19,11 +19,11 @@ public class EnergyGenerator : IComportement
     }
     public void Execute()
     {
-
+        //GeneratedEnergy.UpdateEnergyValue();
     }
     public void AddRightComponent(GameObject _object)
     {
-        _object.AddComponent<GenerateEnergy>();
+        GenerateEnergy = _object.AddComponent<GenerateEnergy>();
     }
 }
 public class TransformRessources : IComportement

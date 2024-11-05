@@ -8,8 +8,11 @@ public class MapManager : MonoBehaviour
 {
     private Dictionary<Vector3, Chunck> Chunks = new Dictionary<Vector3, Chunck>();
 
-    [SerializeField] private GameObject SolorPanelPrefab;
 
+    /////////////////////////////////////////////////////////
+    [SerializeField] private GameObject SolorPanelPrefab; ///
+    [SerializeField] private GameObject FurnacePrefab;    ///
+    /////////////////////////////////////////////////////////
 
     [SerializeField] private GameObject _tilePrefab;
     [SerializeField] private List<Scriptable_RessourceSpot> _allRessorceSpot;
@@ -72,7 +75,10 @@ public class MapManager : MonoBehaviour
         Building newSolarPanel = new Building("SolorPanel", SolorPanelPrefab, new EnergyGenerator(30));
         GameObject newSolarGo = newSolarPanel.CreateBuilding(newSolarPanel, new Vector3(10, 1f, 10));
 
-        Building newFurnace = new Building("SolorPanel", SolorPanelPrefab, new EnergyGenerator(30));
+        Building newSolarPanel1 = new Building("SolorPanel1", SolorPanelPrefab, new EnergyGenerator(30));
+        GameObject newSolarGo1 = newSolarPanel1.CreateBuilding(newSolarPanel1, new Vector3(15, 1f, 15));
+
+        Building newFurnace = new Building("SolorPanel", FurnacePrefab, new TransformRessources(10, 50));
         GameObject newFurnaceGo = newFurnace.CreateBuilding(newFurnace, new Vector3(5, 1f, 5));
     }
 

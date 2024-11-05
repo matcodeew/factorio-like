@@ -704,6 +704,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SolorPanelPrefab: {fileID: 6977918930700773579, guid: 7f414df3fce178f4c9ac0eeadedf5652,
     type: 3}
+  FurnacePrefab: {fileID: 827657833508366288, guid: bbbcd873de6dec940846ff0109a76bd5,
+    type: 3}
   _tilePrefab: {fileID: 2838385887705197276, guid: d95afd866212aab409a4eb1d48720a90,
     type: 3}
   _allRessorceSpot:
