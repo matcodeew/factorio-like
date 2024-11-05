@@ -18,4 +18,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         DragUiElementInventory draggableItem = dropped.GetComponent<DragUiElementInventory>();
         draggableItem.ParentAfterDrag = transform;
     }
+
+    public void AddToQuantity(Scriptable_Ressources ressource)
+    {
+        InvRessource ressources = GetComponent<InvRessource>();
+        ressources.Quantity++;
+    }
+
 }

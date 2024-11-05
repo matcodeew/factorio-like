@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryPlayerManager : MonoBehaviour
@@ -7,16 +6,15 @@ public class InventoryPlayerManager : MonoBehaviour
     public static InventoryPlayerManager Instance;
 
     [SerializeField] private RectTransform _inventoryParentSlot;
-
-    [SerializeField] private List<InvRessource> _invRessouces  = new List<InvRessource>(); 
-    [SerializeField] private Scriptable_RessourceList _scriptableRessourceList; // TEST
-    [SerializeField] private List<GameObject> _objects = new List<GameObject>(); 
+    [SerializeField] private Scriptable_RessourceList _scriptableRessourceList;
+    [SerializeField] private List<GameObject> _objects = new List<GameObject>();
     [SerializeField] private List<GameObject> _inventoryPlayerSlots = new List<GameObject>();
 
     private void Awake()
     {
         Instance = this;
     }
+
     void Start()
     {
         InitializePlayerInventory();
@@ -26,27 +24,19 @@ public class InventoryPlayerManager : MonoBehaviour
     {
         for (int i = 0; i < _scriptableRessourceList.RessourceList.Count; i++)
         {
-            GameObject selectedPrefab = _inventoryPlayerSlots[i % _inventoryPlayerSlots.Count]; 
+            GameObject selectedPrefab = _inventoryPlayerSlots[i % _inventoryPlayerSlots.Count];
             GameObject itemInstance = Instantiate(selectedPrefab, _inventoryParentSlot);
             InvRessource ressourceComponent = itemInstance.AddComponent<InvRessource>();
             ressourceComponent.Ressource = _scriptableRessourceList.RessourceList[i];
-            _objects.Add(itemInstance); 
+            ressourceComponent.Quantity = 1; 
+            _objects.Add(itemInstance);
         }
-    }
-
-    public void AddToQuantity(Scriptable_Ressources ressource)
-    {
-        InvRessource item = _invRessouces.Find(r => r.Ressource.Id == ressource.Id);
-        Debug.Log($"Quantité de {item.Ressource.Name} augmentée à {item.Quantity}");
-        if (item != null)
-        {
-            item.Quantity++;
-        }    
     }
 }
 
+
 public class InvRessource : MonoBehaviour
 {
-    public Scriptable_Ressources Ressource; 
+    public Scriptable_Ressources Ressource;
     public int Quantity;
 }

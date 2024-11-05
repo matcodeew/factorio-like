@@ -5,7 +5,8 @@ using UnityEngine.EventSystems;
 public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [HideInInspector] public Transform ParentAfterDrag;
-    [SerializeField] private Scriptable_Ressources Scriptable_Ressources;
+    [SerializeField] Scriptable_Ressources Scriptable_Ressources;
+    InventorySlot InventorySlot;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -42,17 +43,23 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
 
         if (targetItem != null && targetItem.Scriptable_Ressources != null && targetItem.Scriptable_Ressources.Id == this.Scriptable_Ressources.Id)
         {
-            InventoryPlayerManager.Instance.AddToQuantity(Scriptable_Ressources);
+            InventorySlot inventorySlot = targetItem.GetComponentInParent<InventorySlot>();
+
+            if (inventorySlot != null)
+            {
+                inventorySlot.AddToQuantity(this.Scriptable_Ressources);
+            }
             ParentAfterDrag.tag = "Empty";
-            Destroy(gameObject);
+            Destroy(ParentAfterDrag.gameObject);
+
         }
         else
         {
-                        transform.SetParent(ParentAfterDrag);
+            transform.SetParent(ParentAfterDrag);
             transform.position = ParentAfterDrag.position;
         }
 
-        if (targetTransform != null && targetTransform.CompareTag("Empty") && targetTransform.childCount == 1)
+        if (targetTransform != null && targetTransform.CompareTag("Empty") && targetTransform.childCount == 0)
         {
             targetTransform.tag = "InventorySlot";
             ParentAfterDrag.tag = "Empty";
@@ -66,4 +73,13 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
         }
     }
 
+    private void SetScriptable_Ressource(Scriptable_Ressources scriptable_Ressources)
+    {
+        scriptable_Ressources = Scriptable_Ressources;
+    }
+
+    private void SetInventorySlot(InventorySlot slot) 
+    {
+        slot = InventorySlot;
+    }
 }
