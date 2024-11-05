@@ -5,8 +5,7 @@ using UnityEngine.EventSystems;
 public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [HideInInspector] public Transform ParentAfterDrag;
-
-    Scriptable_Ressources Scriptable_Ressources;
+    [SerializeField] private Scriptable_Ressources Scriptable_Ressources;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -41,17 +40,24 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             }
         }
 
-        if (targetItem != null && targetItem.Scriptable_Ressources.Id == this.Scriptable_Ressources.Id)
+        if (targetItem != null && targetItem.Scriptable_Ressources != null && targetItem.Scriptable_Ressources.Id == this.Scriptable_Ressources.Id)
         {
+            InventoryPlayerManager.Instance.AddToQuantity(Scriptable_Ressources);
             ParentAfterDrag.tag = "Empty";
-            Debug.Log("Add to stack");
             Destroy(gameObject);
         }
-        else if (targetTransform != null && targetTransform.CompareTag("Empty") && targetTransform.childCount == 1)
+        else
         {
+                        transform.SetParent(ParentAfterDrag);
+            transform.position = ParentAfterDrag.position;
+        }
+
+        if (targetTransform != null && targetTransform.CompareTag("Empty") && targetTransform.childCount == 1)
+        {
+            targetTransform.tag = "InventorySlot";
+            ParentAfterDrag.tag = "Empty";
             transform.SetParent(targetTransform);
             transform.position = targetTransform.position;
-            ParentAfterDrag.tag = "Empty";
         }
         else
         {
@@ -59,4 +65,5 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             transform.position = ParentAfterDrag.position;
         }
     }
+
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryPlayerManager : MonoBehaviour
@@ -31,6 +32,16 @@ public class InventoryPlayerManager : MonoBehaviour
             ressourceComponent.Ressource = _scriptableRessourceList.RessourceList[i];
             _objects.Add(itemInstance); 
         }
+    }
+
+    public void AddToQuantity(Scriptable_Ressources ressource)
+    {
+        InvRessource item = _invRessouces.Find(r => r.Ressource.Id == ressource.Id);
+        Debug.Log($"Quantité de {item.Ressource.Name} augmentée à {item.Quantity}");
+        if (item != null)
+        {
+            item.Quantity++;
+        }    
     }
 }
 
