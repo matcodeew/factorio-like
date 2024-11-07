@@ -312,7 +312,6 @@ GameObject:
   - component: {fileID: 8923443113763735838}
   - component: {fileID: 1486242339139155297}
   - component: {fileID: 4635815518620409253}
-  - component: {fileID: -6221631390730573420}
   m_Layer: 0
   m_Name: solarPanel
   m_TagString: Untagged
@@ -422,19 +421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _electricLink: {fileID: 8371184711458994704, guid: aa1ee534ffa3fe04a8da5c1ee3698953,
     type: 3}
---- !u!114 &-6221631390730573420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6977918930700773579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a495203a55a8b46b03e4317ac8c886, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LinkBuilding: []
+  LinkTransformationBuilding: []
 --- !u!1 &8842770170775441570
 GameObject:
   m_ObjectHideFlags: 0

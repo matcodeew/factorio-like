@@ -1,34 +1,36 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MapManager : MonoBehaviour
 {
     private Dictionary<Vector3, Chunck> Chunks = new Dictionary<Vector3, Chunck>();
 
-
-    /////////////////////////////////////////////////////////
-    [SerializeField] private GameObject SolorPanelPrefab; ///
-    [SerializeField] private GameObject FurnacePrefab;    ///
-    /////////////////////////////////////////////////////////
-
+    [SerializeField] private GameObject SolorPanelPrefab; 
+    [SerializeField] private GameObject FurnacePrefab;    
     [SerializeField] private GameObject _tilePrefab;
     [SerializeField] private List<Scriptable_RessourceSpot> _allRessorceSpot;
     [SerializeField] private GameObject _groundParent;
-
-    public static MapManager Instance;
-    public bool PickingRessource;
-
     private int _id;
     private int _mapSize = 32;
     private int _chunckSize = 6;
     private RessourseSpot _currentMiningSpot;
     private int _currentPlacedSpot;
     private List<Building> _allBuildings = new List<Building>();
+    private Building BuildingInProgress;
+    private UnityEvent MyEvent = new UnityEvent();
 
 
+    public static MapManager Instance;
+    public bool PickingRessource;
+
+
+
+    public Action UpdateSharedEnergy;
+    public Action UpdateBuildingEnergy;
 
     private void Awake()
     {
@@ -72,30 +74,40 @@ public class MapManager : MonoBehaviour
         CreateBuilding();
     }
 
-    private void CreateBuilding() /////////////
+    private void CreateBuilding()
     {
-        Building newSolarPanel = Instantiate(SolorPanelPrefab).AddComponent<Building>(); // new solar panel
-        _allBuildings.Add(newSolarPanel.Initialize("SolorPanel", newSolarPanel.GameObject(),new Vector3(10, 1f, 10),
-            new EnergyGenerator(2, 15, 20)));
-
-        Building newFurnace1 = Instantiate(FurnacePrefab).AddComponent<Building>(); // new furnace
-        _allBuildings.Add(newFurnace1.Initialize("Furnace1", newFurnace1.GameObject(),new Vector3(5, 1f, 5),
-            new TransformRessources(10, 15)));
-
-
-        Building newFurnace = Instantiate(FurnacePrefab).AddComponent<Building>(); // new furnace 
-        _allBuildings.Add(newFurnace.Initialize("Furnace", newFurnace.GameObject(),new Vector3(15, 1f, 15),
-            new TransformRessources(10, 15)));
+        CreateSolarPanelBuilding(2);
+        CreateFurnaceBuilding(2);
     }
+
+    private void CreateSolarPanelBuilding(int _quantity)
+    {
+        for(int i = 0; i < _quantity; i++)
+        {
+            BuildingInProgress = Instantiate(SolorPanelPrefab).AddComponent<Building>();
+            _allBuildings.Add(BuildingInProgress.Initialize("SolorPanel " + i, BuildingInProgress.gameObject,
+                new Vector3(10 + i * 2, 1f, 10 + i * 2), new EnergyGenerator(2, 10, 20)));
+        }
+    }
+    private void CreateFurnaceBuilding(int _quantity)
+    {
+        for (int i = 0; i < _quantity; i++)
+        {
+            BuildingInProgress = Instantiate(FurnacePrefab).AddComponent<Building>();
+            _allBuildings.Add(BuildingInProgress.Initialize("Furnace " + i, BuildingInProgress.gameObject, new Vector3(15 + i * 2, 1f, 15 + i * 2),
+                new TransformRessources(15)));
+        }
+    }
+
     private void Update()
     {
         foreach(Building building in _allBuildings)
         {
             building.UpdateBehaviour();
         }
+        //UpdateBuildingEnergy.Invoke();
+        //UpdateSharedEnergy.Invoke();
     }
-
-
     private void CreateDumpster(TileData tile)
     {
         if (_currentPlacedSpot < _allRessorceSpot[(int)TileObstacle.Dumpster].MaxOnMap - 9)

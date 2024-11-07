@@ -1,11 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public interface IBehaviour
 {
     void Execute();
-    void UpdateBuilding();
     void SetComponent(GameObject _object);
+    void UpdateBuilding();
 }
 
 public class EnergyGenerator : IBehaviour
@@ -14,42 +16,47 @@ public class EnergyGenerator : IBehaviour
     private int EnergyMaximum;
     public int EnergyGenerated { get; private set; }
     public int MaxConnection { get; private set; }
-    public GenerateEnergy GenerateEnergy;
-    public EnergyGenerator(int _maxConnection, int _energyminimum, int energyMaximum)
+    public ConnectBuilding connectBuilding;
+    public EnergyGenerator(int _maxConnection, int _energyMinimum, int energyMaximum)
     {
         MaxConnection = _maxConnection;
-        EnergyMinimum = _energyminimum;
+        EnergyMinimum = _energyMinimum;
         EnergyMaximum = energyMaximum;
     }
-    public int GenerateRandomEnergy() => EnergyGenerated = Random.Range(EnergyMinimum, EnergyMaximum);
-
-
+    public int GenerateRandomEnergy() => EnergyGenerated = UnityEngine.Random.Range(EnergyMinimum, EnergyMaximum);
     public void SetComponent(GameObject _object)
     {
-        GenerateEnergy = _object.GetComponent<GenerateEnergy>();
+        connectBuilding = _object.GetComponent<ConnectBuilding>();
     }
     public void Execute()
     {
     }
     public void UpdateBuilding()
     {
-        if (GenerateEnergy != null)
+        if(connectBuilding != null)
         {
-            GenerateEnergy.Timer();
+            connectBuilding.Timer();
         }
-        else
-            Debug.LogWarning("GenerateEnergy est null ");
     }
 }
 
 public class TransformRessources : IBehaviour
 {
     public RessourceTransformer RessourceTransformer;
+    public List<EnergyGenerator> LinkedBuilding = new();
     public int ReceivedEnergy{ get; set; }
     public int NeededEnergy { get; private set; }
-    public TransformRessources(int receivedEnergy, int neededEnergy)
+    private int CalculateEnergyReceived()
     {
-        ReceivedEnergy = receivedEnergy;
+        ReceivedEnergy = 0;
+        foreach(var a in LinkedBuilding)
+        {
+            ReceivedEnergy = LinkedBuilding.Sum(Valeur => Valeur.EnergyGenerated) / a.connectBuilding.LinkTransformationBuilding.Count();
+        }
+        return ReceivedEnergy;
+    }
+    public TransformRessources(int neededEnergy)
+    {
         NeededEnergy = neededEnergy;
     }
     public void SetComponent(GameObject _object)
@@ -65,6 +72,8 @@ public class TransformRessources : IBehaviour
     }
     public void UpdateBuilding()
     {
+        Debug.Log("the building " + RessourceTransformer.gameObject.name + "  received : " + CalculateEnergyReceived() + " energy");
+        //Debug.Log("the building " + RessourceTransformer.gameObject.name + "  num of building connect : " + LinkedBuilding.Count);
     }
 }
 
@@ -82,6 +91,13 @@ public class Building : MonoBehaviour
         Behaviour.SetComponent(newGo);
         return this;
     }
+    //private void Start()
+    //{
+    //    if (Behaviour is EnergyGenerator)
+    //    {
+    //        MapManager.Instance.UpdateSharedEnergy += UpdateBehaviour;
+    //    }
+    //}
 
     public T GetBehaviour<T>() where T : class, IBehaviour
     {
