@@ -8,6 +8,7 @@ TagManager:
   - InventorySlot
   - Item
   - Empty
+  - Panel
   layers:
   - Default
   - TransparentFX

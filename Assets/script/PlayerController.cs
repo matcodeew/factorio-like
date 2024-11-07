@@ -40,8 +40,9 @@ public class PlayerController : MonoBehaviour
             {
                 SetTargetPosition();
                 InventoryBuildManager.Instance.BuildStatPanel.SetActive(true);
-                InventoryBuildManager.Instance.InventoryPanel.SetActive(false);
+                InventoryBuildManager.Instance.InventoryBuildPanel.SetActive(false);
                 InventoryBuildManager.Instance.BuildInventoryButton.SetActive(true);
+                InventoryBuildManager.Instance.InventoryButton.SetActive(true);
             }
         }      
             if (_isMoving)

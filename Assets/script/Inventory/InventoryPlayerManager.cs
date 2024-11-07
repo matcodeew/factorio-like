@@ -26,14 +26,26 @@ public class InventoryPlayerManager : MonoBehaviour
         {
             GameObject selectedPrefab = _inventoryPlayerSlots[i % _inventoryPlayerSlots.Count];
             GameObject itemInstance = Instantiate(selectedPrefab, _inventoryParentSlot);
-            InvRessource ressourceComponent = itemInstance.AddComponent<InvRessource>();
-            ressourceComponent.Ressource = _scriptableRessourceList.RessourceList[i];
-            ressourceComponent.Quantity = 1; 
-            _objects.Add(itemInstance);
+            if (itemInstance.transform.childCount == 1)
+            {
+                Transform secondChild = itemInstance.transform.GetChild(0);
+                InvRessource ressourceComponent = secondChild.gameObject.AddComponent<InvRessource>();
+                ressourceComponent.Ressource = _scriptableRessourceList.RessourceList[i];
+                ressourceComponent.Quantity = 1;
+                _objects.Add(secondChild.gameObject);
+            }
         }
     }
-}
 
+    public void AddItemToInventory(GameObject newItem)
+    {
+        // Add the new item to the inventory list (or any other logic you need)
+        _objects.Add(newItem);  // Add the new GameObject to the objects list
+
+        // You can also log to confirm the item is added
+        Debug.Log("New item added to inventory: " + newItem.name);
+    }
+}
 
 public class InvRessource : MonoBehaviour
 {

@@ -1,12 +1,27 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [HideInInspector] public Transform ParentAfterDrag;
+
     [SerializeField] Scriptable_Ressources Scriptable_Ressources;
+    [SerializeField] private TextMeshProUGUI _quantityText;
+
     InventorySlot InventorySlot;
+
+    private void Update()
+    {
+        InvRessource invRessource = GetComponent<InvRessource>();
+
+        if (_quantityText != null)
+        {
+            _quantityText.text = invRessource.Quantity.ToString();
+        }
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -21,7 +36,6 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
     {
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, results);
-
         Transform targetTransform = null;
         DragUiElementInventory targetItem = null;
 
@@ -43,15 +57,14 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
 
         if (targetItem != null && targetItem.Scriptable_Ressources != null && targetItem.Scriptable_Ressources.Id == this.Scriptable_Ressources.Id)
         {
-            InventorySlot inventorySlot = targetItem.GetComponentInParent<InventorySlot>();
+            InventoryPlayerManager inventorySlot = targetItem.GetComponentInParent<InventoryPlayerManager>();
 
             if (inventorySlot != null)
             {
-                inventorySlot.AddToQuantity(this.Scriptable_Ressources);
+                targetItem.AddToQuantity();
             }
             ParentAfterDrag.tag = "Empty";
             Destroy(ParentAfterDrag.gameObject);
-
         }
         else
         {
@@ -61,11 +74,26 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
 
         if (targetTransform != null && targetTransform.CompareTag("Empty") && targetTransform.childCount == 0)
         {
-            targetTransform.tag = "InventorySlot";
+            Image itemImage = gameObject.GetComponent<Image>();
+            bool isImageEnabled = itemImage != null && itemImage.enabled;
+            Destroy(ParentAfterDrag.gameObject);
             ParentAfterDrag.tag = "Empty";
-            transform.SetParent(targetTransform);
-            transform.position = targetTransform.position;
+            transform.SetParent(targetTransform);  
+            transform.position = targetTransform.position; 
+
+            if (itemImage != null)
+            {
+                itemImage.enabled = isImageEnabled;  
+            }
+
+            DragUiElementInventory dragScript = gameObject.GetComponent<DragUiElementInventory>();
+            if (dragScript != null)
+            {
+                dragScript.enabled = true;  
+            }
+            targetTransform.tag = "InventorySlot";
         }
+
         else
         {
             transform.SetParent(ParentAfterDrag);
@@ -73,13 +101,19 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
         }
     }
 
-    private void SetScriptable_Ressource(Scriptable_Ressources scriptable_Ressources)
+    public void AddToQuantity()
+    {
+        InvRessource currentRessource = GetComponent<InvRessource>();
+        InvRessource otherRessource = GetComponent<InvRessource>();
+
+        if (currentRessource != null && otherRessource != null && currentRessource.Ressource.Id == otherRessource.Ressource.Id)
+        {
+            currentRessource.Quantity += otherRessource.Quantity;
+        }
+    }
+    private void SetScripts(Scriptable_Ressources scriptable_Ressources, InventorySlot slot)
     {
         scriptable_Ressources = Scriptable_Ressources;
-    }
-
-    private void SetInventorySlot(InventorySlot slot) 
-    {
         slot = InventorySlot;
     }
 }
