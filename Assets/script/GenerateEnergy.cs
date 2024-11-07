@@ -6,7 +6,7 @@ using UnityEngine;
 public class GenerateEnergy : MonoBehaviour
 {
     private float _targetTime = 5.0f;
-    public List<GameObject> LinkBuilding = new List<GameObject>();
+    public List<Building> LinkBuilding = new List<Building>();
     private bool isActive = false;
     private bool GetComponentForFirstTime = true;
     private EnergyGenerator _energyGenerator;
@@ -15,7 +15,7 @@ public class GenerateEnergy : MonoBehaviour
     {
         if(GetComponentForFirstTime)
         {
-            _energyGenerator = GetComponent<Building>().GetBehaviour<EnergyGenerator>(); ////// descente a 5 fps.
+            _energyGenerator = GetComponent<Building>().GetBehaviour<EnergyGenerator>();
             GetComponentForFirstTime = false;
         }
     }
@@ -34,32 +34,26 @@ public class GenerateEnergy : MonoBehaviour
             _targetTime = 5.0f;
         }
     }
-    public void IncrementList(GameObject go)
+    public void IncrementList(Building building)
     {
-        if (CanIncrementList())
-            LinkBuilding.Add(go);
+        if(CanConnectBuilding() && !LinkBuilding.Contains(building))
+        { 
+            LinkBuilding.Add(building);
+        } 
     }
-    public bool CanIncrementList()
-    {
-        return LinkBuilding.Count < _energyGenerator.MaxConnection;
-    }
+    public bool CanConnectBuilding() { return LinkBuilding.Count < _energyGenerator.MaxConnection; }
     public void TransferEnergy()
     {
-        foreach(GameObject link in LinkBuilding)
+        int EnergyTranfered = _energyGenerator.GenerateRandomEnergy();
+        foreach(Building link in LinkBuilding)
         {
-            TransformRessources transformRessource = link.GetComponent<Building>().GetBehaviour<TransformRessources>();
-            transformRessource.ReceivedEnergy = _energyGenerator.GenerateRandomEnergy() / LinkBuilding.Count;
+            TransformRessources transformRessource = link.GetBehaviour<TransformRessources>();
+            transformRessource.ReceivedEnergy = EnergyTranfered / LinkBuilding.Count;
             print("the energy transferred is : " + transformRessource.ReceivedEnergy);
         }
     }
-
-
     public void OnMouseDown()
     {
         ActivePanel();
-    }
-    private void Update()
-    {
-        Timer();
     }
 }

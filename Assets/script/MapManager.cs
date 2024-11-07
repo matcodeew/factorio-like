@@ -26,6 +26,7 @@ public class MapManager : MonoBehaviour
     private int _chunckSize = 6;
     private RessourseSpot _currentMiningSpot;
     private int _currentPlacedSpot;
+    private List<Building> _allBuildings = new List<Building>();
 
 
 
@@ -70,58 +71,31 @@ public class MapManager : MonoBehaviour
         }
         CreateBuilding();
     }
+
     private void CreateBuilding() /////////////
     {
         Building newSolarPanel = Instantiate(SolorPanelPrefab).AddComponent<Building>(); // new solar panel
-
-        newSolarPanel.Initialize("SolorPanel", SolorPanelPrefab, new EnergyGenerator(2, 10, 20));
-        newSolarPanel.CreateBuilding(newSolarPanel, new Vector3(10, 1f, 10), newSolarPanel.GameObject());
-        newSolarPanel.DebugComportement();
-        
-
-
+        _allBuildings.Add(newSolarPanel.Initialize("SolorPanel", newSolarPanel.GameObject(),new Vector3(10, 1f, 10),
+            new EnergyGenerator(2, 15, 20)));
 
         Building newFurnace1 = Instantiate(FurnacePrefab).AddComponent<Building>(); // new furnace
-
-        newFurnace1.Initialize("Furnace1", FurnacePrefab, new TransformRessources(10, 15));
-        newFurnace1.CreateBuilding(newFurnace1, new Vector3(5, 1f, 5), newFurnace1.GameObject());
-        newFurnace1.DebugComportement();
-
-
-
+        _allBuildings.Add(newFurnace1.Initialize("Furnace1", newFurnace1.GameObject(),new Vector3(5, 1f, 5),
+            new TransformRessources(10, 15)));
 
 
         Building newFurnace = Instantiate(FurnacePrefab).AddComponent<Building>(); // new furnace 
-
-        newFurnace.Initialize("Furnace", FurnacePrefab, new TransformRessources(10, 15));
-        newFurnace.CreateBuilding(newFurnace, new Vector3(15, 1f, 15), newFurnace.GameObject());
-        newFurnace.DebugComportement();
+        _allBuildings.Add(newFurnace.Initialize("Furnace", newFurnace.GameObject(),new Vector3(15, 1f, 15),
+            new TransformRessources(10, 15)));
+    }
+    private void Update()
+    {
+        foreach(Building building in _allBuildings)
+        {
+            building.UpdateBehaviour();
+        }
     }
 
 
-
-
-
-
-
-    //private void AllocatedTileObstacle()
-    //{
-    //    foreach(Chunck chunk in Chunks.Values)
-    //    {
-    //        if(Random.Range(0, 100) < 100 / 4) // une chance sur 4 
-    //        {
-    //            chunk.state = (ChunkState)Random.Range(0, System.Enum.GetValues(typeof(ChunkState)).Length);
-    //        }
-    //        else
-    //            chunk.state = ChunkState.None;
-    //        foreach(TileData tileInChunk in chunk.TileChunk.Values)
-    //        {
-    //            tileInChunk.ChunkState = chunk.state;
-    //        }
-    //    }
-    //}
-
-    /// <summary>
     private void CreateDumpster(TileData tile)
     {
         if (_currentPlacedSpot < _allRessorceSpot[(int)TileObstacle.Dumpster].MaxOnMap - 9)
@@ -135,7 +109,8 @@ public class MapManager : MonoBehaviour
             newSpot.GetComponent<RessourseSpot>().SetAllParameter(_allRessorceSpot[(int)TileObstacle.Dumpster]);
         }
     }
-    /// </summary>
+
+
     public Chunck AccessChunkByTilePos(Vector3 _clikedPos)
     {
         int i = Mathf.FloorToInt(_clikedPos.x) / _chunckSize;

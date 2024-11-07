@@ -11,8 +11,7 @@ public class ConnectBuilding : MonoBehaviour
     private GenerateEnergy _generateEnergy;
     private GameObject _currentLine;
 
-    public Vector3 FirstPos;
-    public Vector3 SecondPos;
+    private Vector3 FirstPos, SecondPos;
 
     private void Awake()
     {
@@ -20,6 +19,7 @@ public class ConnectBuilding : MonoBehaviour
     }
     public void ConnectLink()
     {
+        GetComponent<GenerateEnergy>().ActivePanel();
         _currentLine = Instantiate(_electricLink);
         _lineRenderer = _currentLine.GetComponent<LineRenderer>();
 
@@ -68,9 +68,9 @@ public class ConnectBuilding : MonoBehaviour
         GameObject onTop = MapManager.Instance.AccessTileByPos(hit.point).OnTop;
         if (onTop != null && _generateEnergy != null)
         {
-            if(_generateEnergy.CanIncrementList())
+            if(_generateEnergy.CanConnectBuilding())
             {
-                _generateEnergy.IncrementList(onTop);
+                _generateEnergy.IncrementList(onTop.GetComponent<Building>());
                 return onTop.GetComponent<RessourceTransformer>() != null; ////////
             }
             else

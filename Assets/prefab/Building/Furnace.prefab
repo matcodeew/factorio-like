@@ -114,7 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 13663489159091631}
-  - component: {fileID: -8235486604630143636}
+  - component: {fileID: 4101368592497420678}
   m_Layer: 0
   m_Name: Furnace
   m_TagString: Untagged
@@ -139,7 +139,7 @@ Transform:
   - {fileID: 8756523015192164517}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8235486604630143636
+--- !u!114 &4101368592497420678
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

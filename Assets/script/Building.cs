@@ -4,6 +4,8 @@ using static UnityEngine.Rendering.DebugUI;
 public interface IBehaviour
 {
     void Execute();
+    void UpdateBuilding();
+    void SetComponent(GameObject _object);
 }
 
 public class EnergyGenerator : IBehaviour
@@ -21,9 +23,22 @@ public class EnergyGenerator : IBehaviour
     }
     public int GenerateRandomEnergy() => EnergyGenerated = Random.Range(EnergyMinimum, EnergyMaximum);
 
+
+    public void SetComponent(GameObject _object)
+    {
+        GenerateEnergy = _object.GetComponent<GenerateEnergy>();
+    }
     public void Execute()
     {
-        //GeneratedEnergy.UpdateEnergyValue();
+    }
+    public void UpdateBuilding()
+    {
+        if (GenerateEnergy != null)
+        {
+            GenerateEnergy.Timer();
+        }
+        else
+            Debug.LogWarning("GenerateEnergy est null ");
     }
 }
 
@@ -37,7 +52,10 @@ public class TransformRessources : IBehaviour
         ReceivedEnergy = receivedEnergy;
         NeededEnergy = neededEnergy;
     }
-
+    public void SetComponent(GameObject _object)
+    {
+        RessourceTransformer = _object.GetComponent<RessourceTransformer>();
+    }
     public void Execute()
     {
         if(ReceivedEnergy >= NeededEnergy)
@@ -45,47 +63,37 @@ public class TransformRessources : IBehaviour
             RessourceTransformer.StartTransformation();
         }
     }
+    public void UpdateBuilding()
+    {
+    }
 }
 
 public class Building : MonoBehaviour
 {
     public IBehaviour Behaviour;
-    public GameObject Prefab;
     public string Name;
 
-    public void Initialize(string _name, GameObject _prefab, IBehaviour _behaviour)
+    public Building Initialize(string _name, GameObject newGo, Vector3 _position, IBehaviour _behaviour)
     {
-        Name = _name;
-        Prefab = _prefab;
+        newGo.name = _name;
         Behaviour = _behaviour;
-    }
-
-    public T GetBehaviour<T>() where T : class, IBehaviour /////////////
-    {
-        return Behaviour as T;
-    }
-
-    public GameObject CreateBuilding(Building _buildingWantToCreate, Vector3 _position, GameObject newGo) //////////////
-    {
         MapManager.Instance.AccessTileByPos(_position).OnTop = newGo;
         newGo.transform.position = _position;
-        newGo.name = Name;
-        return newGo;
+        Behaviour.SetComponent(newGo);
+        return this;
+    }
+
+    public T GetBehaviour<T>() where T : class, IBehaviour
+    {
+        return Behaviour as T;
     }
 
     public void ExecuteComportement()
     {
         Behaviour.Execute();
     }
-    public void DebugComportement()
+    public void UpdateBehaviour()
     {
-        if (Behaviour == null)
-        {
-            Debug.LogWarning($"No comportement assigned to Building '{Name}'.");
-        }
-        else
-        {
-            Debug.Log($"Building '{Name}' has a comportement of type: {Behaviour.GetType()}");
-        }
+        Behaviour.UpdateBuilding();
     }
 }
