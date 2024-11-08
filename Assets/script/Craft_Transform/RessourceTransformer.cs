@@ -36,14 +36,14 @@ public class RessourceTransformer : MonoBehaviour
 
     void Start()
     {
-        _transformationList = _transformationListHolder.RessourceList;
-        // _transformationList = FilterListByMachineType();
+        //_transformationList = _transformationListHolder.RessourceList;
+        //// _transformationList = FilterListByMachineType();
 
-        if (_transformationList.Count != 0)
-        {
-            MachineInput = _transformationList[UnityEngine.Random.Range(0, _transformationList.Count - 1)];
-            StartTransformation();
-        }
+        //if (_transformationList.Count != 0)
+        //{
+        //    MachineInput = _transformationList[UnityEngine.Random.Range(0, _transformationList.Count - 1)];
+        //    StartTransformation();
+        //}
     }
 
     // List<Scriptable_Ressources> FilterListByMachineType()

@@ -59,7 +59,6 @@ public class PlayerController : MonoBehaviour
 
         _clikedTarget = _targetPosition;
         _clikedTarget = new Vector3(_clikedTarget.x, 0, _clikedTarget.z);
-        print(" tile select is : " + MapManager.Instance.AccessTileByPos(_clikedTarget));
         MapManager.Instance.PickingRessource = false;
         MapManager.Instance.CheckRessourceOnClick(_clikedTarget);
         _isMoving = true;
