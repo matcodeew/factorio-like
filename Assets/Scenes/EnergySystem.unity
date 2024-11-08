@@ -349,8 +349,8 @@ MonoBehaviour:
   AllBuilding: []
   SolarForcePercent: 75
   SolarPanelEnergy: 20
-  WindForcePercent: 0
-  WindTurbineEnergy: 0
+  WindForcePercent: 50
+  WindTurbineEnergy: 10
   SolarPanelPrefab: {fileID: 5330380428058016937, guid: da2872813df7edc44aacffdf9a33c254,
     type: 3}
   FurnacePrefab: {fileID: 8601229226408911263, guid: d3168da1bc9f5274484803538df54cfd,

@@ -5,22 +5,25 @@ using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
-    public List<GameObject> AllBuilding = new();
-    public static BuildingManager Instance;
+    [HideInInspector] public List<GameObject> AllBuilding = new();
+    [HideInInspector] public static BuildingManager Instance;
 
+    [Header("Energy Value")]
     [Range(0.0f, 100.0f)] public int SolarForcePercent;
     [SerializeField] private int SolarPanelEnergy;
     [Range(0.0f, 100.0f)] public int WindForcePercent;
     [SerializeField] private int WindTurbineEnergy;
 
+    [Header("Building Prefab")]
     public GameObject SolarPanelPrefab;
     public GameObject FurnacePrefab;
     private GameObject _buildingInProgress;
 
+
     private int _furnaceId = 0;
     private int _solarPanelId = 0;
     private bool _isUpdatingEnergy;
-
+    //Event
     public Action UpdateSharedEnergy;
     public Action UpdateBuildingEnergy;
     private void Awake()
@@ -35,23 +38,29 @@ public class BuildingManager : MonoBehaviour
         UpdateSharedEnergy?.Invoke();
     }
 
-    public int GenerateEnergy()
+    public int GenerateSolarEnergy()
     {
-        float RandEnergy = UnityEngine.Random.Range(SolarPanelEnergy - 5, SolarPanelEnergy);
+        float RandEnergy = UnityEngine.Random.Range(SolarPanelEnergy/* - 5*/, SolarPanelEnergy);
         int EnergyGenerated = (int)Mathf.Round(RandEnergy * SolarForcePercent / 100);
+        return EnergyGenerated;
+    }
+    public int GenerateWindEnergy()
+    {
+        float RandEnergy = UnityEngine.Random.Range(WindTurbineEnergy/* - 5*/, WindTurbineEnergy);
+        int EnergyGenerated = (int)Mathf.Round(RandEnergy * WindForcePercent / 100);
         return EnergyGenerated;
     }
     public void CreateBuilding()
     {
         //create SolarPanel
-        AllBuilding.Add(CreateSolarPanel(new Vector3(1, 1, 2)));
+        AllBuilding.Add(CreateSolarPanel(new Vector3(0, 1, 2)));
         AllBuilding.Add(CreateSolarPanel(new Vector3(5, 1, 2)));
-        AllBuilding.Add(CreateSolarPanel(new Vector3(9, 1, 2)));
+        AllBuilding.Add(CreateSolarPanel(new Vector3(10, 1, 2)));
 
         //Create Furnace
-        AllBuilding.Add(CreateFurnace(new Vector3(1, 1.5f, 10)));
+        AllBuilding.Add(CreateFurnace(new Vector3(0, 1.5f, 10)));
         AllBuilding.Add(CreateFurnace(new Vector3(5, 1.5f, 10)));
-        AllBuilding.Add(CreateFurnace(new Vector3(9, 1.5f, 10)));
+        AllBuilding.Add(CreateFurnace(new Vector3(10, 1.5f, 10)));
     }
     public GameObject CreateSolarPanel(Vector3 _pos)
     {

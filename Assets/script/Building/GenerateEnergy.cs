@@ -1,14 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class GenerateEnergy : MonoBehaviour
 {
-    public List<BuildingReceivedEnergy> TransformBuildingConnected = new List<BuildingReceivedEnergy>();
-    public int MaxConnection;
-    public int Energy;
-
+    [HideInInspector]public List<BuildingReceivedEnergy> TransformBuildingConnected = new List<BuildingReceivedEnergy>();
+    [Range(2, 15)] public int MaxConnection;
+    [ReadOnly(true)]public int Energy;
     private BuildingManager instance;
     private bool _isActive;
     public bool CanConnectBuilding() { return TransformBuildingConnected.Count < MaxConnection; }
@@ -21,7 +21,15 @@ public class GenerateEnergy : MonoBehaviour
 
     private void UpdateEnergy()
     {
-        Energy = instance.GenerateEnergy();
+        //if(CompareTag("SolarPanel"))
+        //{
+        //    Energy = instance.GenerateSolarEnergy();
+        //}
+        //else
+        //{
+        //    Energy = instance.GenerateWindEnergy();
+        //}
+        Energy = instance.GenerateSolarEnergy();
         Debug.Log($"energy send by {gameObject.name} is : {Energy}");
         instance.UpdateBuildingEnergy?.Invoke();
     }
