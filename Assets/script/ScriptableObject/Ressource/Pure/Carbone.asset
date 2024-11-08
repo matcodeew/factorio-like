@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 1
   Name: Carbone
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   IsPure: 1
   GrinderOutput: {fileID: 0}
+  FurnaceOutput: {fileID: 0}
   DisassemblerOutputs: []

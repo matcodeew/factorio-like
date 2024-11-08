@@ -395,17 +395,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: f21f767cc44d81749aa3669ab587f06d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.73297375
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f21f767cc44d81749aa3669ab587f06d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.022129774
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f21f767cc44d81749aa3669ab587f06d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.929898
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f21f767cc44d81749aa3669ab587f06d,
         type: 3}
@@ -519,7 +519,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TransformBuildingConnected: []
+  _linkConnect: []
   MaxConnection: 2
+  Energy: 0
 --- !u!114 &1075250652447334358
 MonoBehaviour:
   m_ObjectHideFlags: 0

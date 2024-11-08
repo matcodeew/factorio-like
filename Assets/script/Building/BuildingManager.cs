@@ -8,6 +8,8 @@ public class BuildingManager : MonoBehaviour
     [HideInInspector] public List<GameObject> AllBuilding = new();
     [HideInInspector] public static BuildingManager Instance;
 
+    public bool CanDestroyBuilding = false;
+
     [Header("Energy Value")]
     [Range(0.0f, 100.0f)] public int SolarForcePercent;
     [SerializeField] private int SolarPanelEnergy;
@@ -88,5 +90,9 @@ public class BuildingManager : MonoBehaviour
             UpdateSharedEnergy?.Invoke();
         }
         yield return null;
+    }
+    public void CanDestroyOBject()
+    {
+        CanDestroyBuilding = !CanDestroyBuilding;
     }
 }
