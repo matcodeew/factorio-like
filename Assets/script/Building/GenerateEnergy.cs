@@ -1,19 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GenerateEnergy : MonoBehaviour
 {
-    public List<GameObject> TransformBuildingConnected = new List<GameObject>();
+    public List<BuildingReceivedEnergy> TransformBuildingConnected = new List<BuildingReceivedEnergy>();
     public int MaxConnection;
-    [SerializeField] private GameObject _connectPanel;
     private bool _isActive;
 
-    public bool CanConnectBuilding() {  return TransformBuildingConnected.Count < MaxConnection; }
+    public bool CanConnectBuilding() { return TransformBuildingConnected.Count < MaxConnection; }
+    public void AddGenToList()
+    {
+        foreach (BuildingReceivedEnergy energy in TransformBuildingConnected)
+        {
+            if (!energy.ConnectGenerator.Contains(this))
+            {
+                energy.ConnectGenerator.Add(this);
+            }
+        }
+    }
     public void ActivePanel()
     {
         _isActive = !_isActive;
-        _connectPanel.SetActive(_isActive);
+        transform.GetChild(0).gameObject.SetActive(_isActive);
     }
     private void OnMouseDown()
     {

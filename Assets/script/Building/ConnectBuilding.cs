@@ -73,7 +73,8 @@ public class ConnectBuilding : MonoBehaviour
         {
             if (_generateEnergy.CanConnectBuilding())
             {
-                _generateEnergy.TransformBuildingConnected.Add(onTop);
+                _generateEnergy.TransformBuildingConnected.Add(onTop.GetComponent<BuildingReceivedEnergy>());
+                _generateEnergy.AddGenToList();
                 return onTop.GetComponent<RessourceTransformer>() != null; 
             }
             else { print("the building has too many connections"); }

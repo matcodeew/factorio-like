@@ -59,7 +59,7 @@ public class MapManager : MonoBehaviour
                 _id++;
             }
         }
-        AllocatedTileObstacle();
+        BuildingManager.Instance.CreateBuilding();
     }
 
     private void AllocatedTileObstacle()
