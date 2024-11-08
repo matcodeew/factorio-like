@@ -39,8 +39,17 @@ public class PlayerController : MonoBehaviour
             if (Input.GetMouseButtonDown(RIGHT_MOUSE_BUTTON) && hit.collider.CompareTag("Build"))
             {
                 SetTargetPosition();
+                InventoryBuildManager.Instance.InventoryBuildPanel.SetActive(false);
+                InventoryBuildManager.Instance.BuildInventoryButton.SetActive(true);
+                InventoryBuildManager.Instance.InventoryButton.SetActive(true);
+            }
+
+            if (Input.GetMouseButtonDown(RIGHT_MOUSE_BUTTON) && hit.collider.CompareTag("Transformer"))
+            {
+                SetTargetPosition();
                 InventoryBuildManager.Instance.BuildStatPanel.SetActive(true);
-                InventoryBuildManager.Instance.InventoryPanel.SetActive(false);
+                InventoryBuildManager.Instance.InventoryBuildPanel.SetActive(false);
+                InventoryBuildManager.Instance.InventoryButton.SetActive(true);
                 InventoryBuildManager.Instance.BuildInventoryButton.SetActive(true);
             }
         }      

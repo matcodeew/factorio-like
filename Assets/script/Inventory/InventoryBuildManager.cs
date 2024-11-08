@@ -5,13 +5,14 @@ public class InventoryBuildManager : MonoBehaviour
 {
     public static InventoryBuildManager Instance;
 
-    [SerializeField] private RectTransform InventoryCasesParent;
-    [SerializeField] private RectTransform BuildingPrefabItemsParent;
+    [SerializeField] private RectTransform _panelBuildingParent;
+    private RectTransform BuildingPrefabItemsParent;
 
     public RectTransform TrashArea;
 
+    public GameObject InventoryButton;
     public GameObject TrashAreaGameObject;
-    public GameObject InventoryPanel;
+    public GameObject InventoryBuildPanel;
     public GameObject BuildStatPanel;
     public GameObject BuildInventoryButton;
 
@@ -31,7 +32,7 @@ public class InventoryBuildManager : MonoBehaviour
 
         if (_uiCanvasGroup == null)
         {
-            _uiCanvasGroup = InventoryPanel.gameObject.AddComponent<CanvasGroup>();
+            _uiCanvasGroup = InventoryBuildPanel.gameObject.AddComponent<CanvasGroup>();
         }
     }
 
@@ -39,7 +40,7 @@ public class InventoryBuildManager : MonoBehaviour
     {
         for (int i = 0; i < _inventoryCases.Count; i++)
         {
-            GameObject itemInstance = Instantiate(_inventoryCases[i], InventoryCasesParent);
+            GameObject itemInstance = Instantiate(_inventoryCases[i], _panelBuildingParent);
 
             if (itemInstance.transform.childCount > 0)
             {

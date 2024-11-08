@@ -1,13 +1,24 @@
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryPlayerManager : MonoBehaviour
 {
-    [SerializeField] private RectTransform _inventoryParentSlot; 
+    public static InventoryPlayerManager Instance;
+    Scriptable_Ressources Scriptable_Ressources;
 
-    [SerializeField] private List<Scriptable_Ressources> _scripts = new List<Scriptable_Ressources>(); 
-    [SerializeField] private List<GameObject> _objects = new List<GameObject>(); 
-    [SerializeField] private List<GameObject> _inventoryPlayerSlots = new List<GameObject>(); 
+    public GameObject _EmptyPrefab;
+    [SerializeField] private RectTransform _inventoryParentSlot;
+    [SerializeField] private Scriptable_RessourceList _scriptableRessourceList;
+    [SerializeField] private List<GameObject> _objects = new List<GameObject>();
+    [SerializeField] private List<GameObject> _inventoryPlayerSlots = new List<GameObject>();
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -16,20 +27,31 @@ public class InventoryPlayerManager : MonoBehaviour
 
     private void InitializePlayerInventory()
     {
-        for (int i = 0; i < _scripts.Count; i++)
+        for (int i = 0; i < _scriptableRessourceList.RessourceList.Count; i++)
         {
-            GameObject selectedPrefab = _inventoryPlayerSlots[i % _inventoryPlayerSlots.Count]; 
+            GameObject selectedPrefab = _inventoryPlayerSlots[i % _inventoryPlayerSlots.Count];
             GameObject itemInstance = Instantiate(selectedPrefab, _inventoryParentSlot);
-            InvRessource ressourceComponent = itemInstance.AddComponent<InvRessource>();
-            ressourceComponent.Ressource = _scripts[i]; 
-            ressourceComponent.Quantity = i + 1; 
-            _objects.Add(itemInstance); 
+            if (itemInstance.transform.childCount == 1)
+            {
+                Transform secondChild = itemInstance.transform.GetChild(0);
+                InvRessource ressourceComponent = secondChild.gameObject.AddComponent<InvRessource>();
+                ressourceComponent.Ressource = _scriptableRessourceList.RessourceList[i];
+                ressourceComponent.Quantity = 1;
+                _objects.Add(secondChild.gameObject);
+            }
         }
+    }
+
+    public void AddToInventory(GameObject newItem)
+    {
+        _objects.Add(newItem);
     }
 }
 
 public class InvRessource : MonoBehaviour
 {
-    public Scriptable_Ressources Ressource; 
-    public int Quantity; 
+    public Scriptable_Ressources Ressource;
+    public int Quantity;
 }
+
+
