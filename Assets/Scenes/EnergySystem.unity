@@ -247,7 +247,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.60876137, y: -0, z: -0, w: 0.7933534}
-  m_LocalPosition: {x: 8, y: 23, z: 8}
+  m_LocalPosition: {x: 8, y: 23, z: 4.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -304,7 +304,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32f2405db7818454e92308f1722d71b0, type: 3}
   m_Name: 
@@ -347,6 +347,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AllBuilding: []
+  SolarForcePercent: 75
+  SolarPanelEnergy: 20
+  WindForcePercent: 0
+  WindTurbineEnergy: 0
   SolarPanelPrefab: {fileID: 5330380428058016937, guid: da2872813df7edc44aacffdf9a33c254,
     type: 3}
   FurnacePrefab: {fileID: 8601229226408911263, guid: d3168da1bc9f5274484803538df54cfd,

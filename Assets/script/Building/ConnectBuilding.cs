@@ -69,13 +69,14 @@ public class ConnectBuilding : MonoBehaviour
     private bool CheckTransformationBuilding(RaycastHit hit)
     {
         GameObject onTop = MapManager.Instance.AccessTileByPos(hit.point).OnTop;
-        if (onTop != null && _generateEnergy != null)
+        if(onTop != null && _generateEnergy != null)
         {
-            if (_generateEnergy.CanConnectBuilding())
+            RessourceTransformer ressourceTransformer = onTop.GetComponent<RessourceTransformer>();
+            if(_generateEnergy.CanConnectBuilding() && ressourceTransformer != null)
             {
                 _generateEnergy.TransformBuildingConnected.Add(onTop.GetComponent<BuildingReceivedEnergy>());
                 _generateEnergy.AddGenToList();
-                return onTop.GetComponent<RessourceTransformer>() != null; 
+                return true; 
             }
             else { print("the building has too many connections"); }
         }
