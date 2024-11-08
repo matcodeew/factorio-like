@@ -56,7 +56,8 @@ public class InventoryBuildManager : MonoBehaviour
     {
         if (!MapManager.Instance.AccessTileByPos(position).IsOccupied)
         {
-            Instantiate(prefab, position, Quaternion.identity, BuildingPrefabItemsParent);
+            GameObject newGo = Instantiate(prefab, position, Quaternion.identity, BuildingPrefabItemsParent);
+            MapManager.Instance.AccessTileByPos(position).OnTop = newGo;
             MapManager.Instance.AccessTileByPos(position).IsOccupied = true;
         }
     }

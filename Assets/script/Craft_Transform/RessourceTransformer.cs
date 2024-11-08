@@ -32,31 +32,27 @@ public class RessourceTransformer : MonoBehaviour
     [SerializeField] private Transform _machineInput;
     [SerializeField] private Transform _parentSlot;
 
-    public bool ActionWasCancelled;
+    private bool _isInAction = false;
 
-    void Start()
+    private void Update()
     {
-        _transformationList = _transformationListHolder.RessourceList;
-
-        if (_transformationList.Count != 0)
+        if(!_isInAction && MachineInput != null)
         {
-            MachineInput = _transformationList[UnityEngine.Random.Range(0, _transformationList.Count - 1)];
+            _isInAction = true;
             StartTransformation();
         }
     }
 
+    public bool ActionWasCancelled;
     public void StartTransformation()
     {
-        FirstOutput = null;
-        SecondOutput = null;
-        ThirdOutput = null;
-
         StartCoroutine(HandleProcessTime());
     }
 
     public void StopTransformation()
     {
         ActionWasCancelled = true;
+        _isInAction = false;
     }
 
     private IEnumerator HandleProcessTime()
@@ -110,6 +106,7 @@ public class RessourceTransformer : MonoBehaviour
                 break;
         }
         MachineInput = null;
+        _isInAction = false;    
     }
 
     private void DisplayOutputPrefabs()
@@ -142,9 +139,9 @@ public class RessourceTransformer : MonoBehaviour
         GameObject ImageRessource = new GameObject();
         ImageRessource.transform.position = outputItem.transform.position;  
         ImageRessource.transform.parent = outputItem.transform;
-        //ImageRessource.AddComponent<Image>().sprite = invRessource.Ressource.Sprite;
+        ImageRessource.AddComponent<Image>().sprite = invRessource.Ressource.Sprite;
         ImageRessource.AddComponent<DragUiElementInventory>();
-        ImageRessource.AddComponent<Image>().color = Color.red; // a changer
+        //ImageRessource.AddComponent<Image>().color = Color.red; // a changer
 
         //if(outputItem.tag == "Empty")
         //{

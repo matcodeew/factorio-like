@@ -118,7 +118,6 @@ public class MapManager : MonoBehaviour
     public void CheckRessourceOnClick(Vector3 _clikedTarget)
     {
         TileData clickedTile = AccessTileByPos(_clikedTarget);
-
         if (clickedTile != null && clickedTile.IsOccupied)
         {
             RessourseSpot newSpot = clickedTile.OnTop.GetComponent<RessourseSpot>();
