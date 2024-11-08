@@ -16,7 +16,6 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
     private void Update()
     {
         InvRessource invRessource = GetComponent<InvRessource>();
-
         if (_quantityText != null)
         {
             _quantityText.text = invRessource.Quantity.ToString();
@@ -46,9 +45,20 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
                 targetTransform = result.gameObject.transform;
                 break;
             }
+            if (result.gameObject.CompareTag("Panel"))
+            {
+                targetTransform = result.gameObject.transform;
+                break;
+            }
             else if (result.gameObject != gameObject && result.gameObject.CompareTag("Item"))
             {
                 ParentAfterDrag.tag = "InventorySlot";
+                targetTransform = result.gameObject.transform.parent;
+                targetItem = result.gameObject.GetComponent<DragUiElementInventory>();
+                break;
+            }
+            else if (result.gameObject.CompareTag("Item") && result.gameObject != gameObject)
+            {
                 targetTransform = result.gameObject.transform.parent;
                 targetItem = result.gameObject.GetComponent<DragUiElementInventory>();
                 break;
@@ -61,7 +71,7 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
 
             if (inventorySlot != null)
             {
-                targetItem.AddToQuantity();
+                targetItem.AddToQuantity(targetItem.GetComponent<InvRessource>());
             }
             ParentAfterDrag.tag = "Empty";
             Destroy(ParentAfterDrag.gameObject);
@@ -93,22 +103,40 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             }
             targetTransform.tag = "InventorySlot";
         }
-
         else
         {
             transform.SetParent(ParentAfterDrag);
             transform.position = ParentAfterDrag.position;
         }
-    }
 
-    public void AddToQuantity()
+        if (targetTransform.CompareTag("Panel"))
+        {
+            targetTransform = targetTransform.gameObject.transform;
+            GameObject newItem = Instantiate(InventoryPlayerManager.Instance._EmptyPrefab, targetTransform);
+            transform.SetParent(newItem.transform);
+            transform.position = newItem.transform.position;
+            Image itemImage = gameObject.GetComponent<Image>();
+            bool isImageEnabled = itemImage != null && itemImage.enabled;
+            if (itemImage != null)
+            {
+                itemImage.enabled = isImageEnabled;
+            }
+            DragUiElementInventory dragScript = gameObject.GetComponent<DragUiElementInventory>();
+            if (dragScript != null)
+            {
+                dragScript.enabled = true;
+            }
+            ParentAfterDrag.tag = "Empty";
+        }
+    }
+    
+    private void AddToQuantity(InvRessource otherRessource)
     {
         InvRessource currentRessource = GetComponent<InvRessource>();
-        InvRessource otherRessource = GetComponent<InvRessource>();
 
         if (currentRessource != null && otherRessource != null && currentRessource.Ressource.Id == otherRessource.Ressource.Id)
         {
-            currentRessource.Quantity += otherRessource.Quantity;
+           currentRessource.Quantity += otherRessource.Quantity;
         }
     }
     private void SetScripts(Scriptable_Ressources scriptable_Ressources, InventorySlot slot)

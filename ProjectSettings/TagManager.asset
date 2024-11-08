@@ -9,6 +9,7 @@ TagManager:
   - Item
   - Empty
   - Panel
+  - Transformer
   layers:
   - Default
   - TransparentFX

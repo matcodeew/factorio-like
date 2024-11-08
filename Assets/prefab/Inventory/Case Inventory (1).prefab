@@ -345,6 +345,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParentAfterDrag: {fileID: 0}
+  _EmptyPrefab: {fileID: 903418172691988424, guid: a3ccca3e4f0600b4bb9c850ddf66ce0a,
+    type: 3}
   Scriptable_Ressources: {fileID: 11400000, guid: 59a13f0079aa80c4cbd6caf5ead21578,
     type: 2}
   _quantityText: {fileID: 6614482121762504460}

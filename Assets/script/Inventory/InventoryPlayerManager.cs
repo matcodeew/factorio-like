@@ -1,10 +1,15 @@
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryPlayerManager : MonoBehaviour
 {
     public static InventoryPlayerManager Instance;
+    Scriptable_Ressources Scriptable_Ressources;
 
+    public GameObject _EmptyPrefab;
     [SerializeField] private RectTransform _inventoryParentSlot;
     [SerializeField] private Scriptable_RessourceList _scriptableRessourceList;
     [SerializeField] private List<GameObject> _objects = new List<GameObject>();
@@ -37,13 +42,9 @@ public class InventoryPlayerManager : MonoBehaviour
         }
     }
 
-    public void AddItemToInventory(GameObject newItem)
+    public void AddToInventory(GameObject newItem)
     {
-        // Add the new item to the inventory list (or any other logic you need)
-        _objects.Add(newItem);  // Add the new GameObject to the objects list
-
-        // You can also log to confirm the item is added
-        Debug.Log("New item added to inventory: " + newItem.name);
+        _objects.Add(newItem);
     }
 }
 
@@ -52,3 +53,5 @@ public class InvRessource : MonoBehaviour
     public Scriptable_Ressources Ressource;
     public int Quantity;
 }
+
+

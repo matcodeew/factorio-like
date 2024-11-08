@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6833288191974467033}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Build
+  m_TagString: Transformer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
