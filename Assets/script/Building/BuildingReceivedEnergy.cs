@@ -9,9 +9,15 @@ public class BuildingReceivedEnergy : MonoBehaviour
     public bool IsLinked;
     [SerializeField, ReadOnly(true)] private int _sumOfEnergyReceived;
 
+    private BuildingManager instance;
+
+    private void Awake()
+    {
+        instance = BuildingManager.Instance;
+    }
     private void Start()
     {
-        BuildingManager.Instance.UpdateBuildingEnergy += CalculateSumOfEnergy;
+        instance.UpdateBuildingEnergy += CalculateSumOfEnergy;
         CalculateSumOfEnergy();
     }
 
@@ -36,15 +42,18 @@ public class BuildingReceivedEnergy : MonoBehaviour
             {
                 if(link.GetComponent<LineRenderer>().GetPosition(1) == transform.position)
                 {
+                    gen._linkConnect.Remove(link);
                     Destroy(link);
+                    break;
                 }
             }
         }
-        BuildingManager.Instance.UpdateSharedEnergy?.Invoke();
+        instance.UpdateBuildingEnergy -= CalculateSumOfEnergy;
+        instance.UpdateSharedEnergy?.Invoke();
     }
     private void OnMouseDown()
     {
-        if(BuildingManager.Instance.CanDestroyBuilding)
+        if(instance.CanDestroyBuilding)
         {
             Destroy(gameObject);
             DestroyTransformer();

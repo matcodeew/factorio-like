@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class GenerateEnergy : MonoBehaviour
 {
-    [HideInInspector] public List<BuildingReceivedEnergy> TransformBuildingConnected = new List<BuildingReceivedEnergy>();
-    [HideInInspector] public List<GameObject> _linkConnect = new List<GameObject>();
+    public List<BuildingReceivedEnergy> TransformBuildingConnected = new List<BuildingReceivedEnergy>();
+    public List<GameObject> _linkConnect = new List<GameObject>();
     [Range(2, 15)] public int MaxConnection;
     [ReadOnly(true)]public int Energy;
     private BuildingManager instance;
@@ -66,12 +66,19 @@ public class GenerateEnergy : MonoBehaviour
         foreach(var transformer in TransformBuildingConnected)
         {
             if(transformer.ConnectGenerator.Contains(this))
+            {
                 transformer.ConnectGenerator.Remove(this);
-            else { Debug.LogWarning($" the building {transformer.gameObject.name} try to remove wrong building"); }
-        }
-        foreach(GameObject link in _linkConnect)
-        {
-            Destroy(link);
+            }
+
+            foreach(GameObject link in _linkConnect)
+            {
+                if(_linkConnect.Contains(link))
+                {
+                    _linkConnect.Remove(link);
+                    Destroy(link);
+                }
+                break;
+            }
         }
         instance.UpdateBuildingEnergy?.Invoke();
         instance.UpdateSharedEnergy -= UpdateEnergy;

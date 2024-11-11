@@ -60,9 +60,9 @@ public class BuildingManager : MonoBehaviour
         AllBuilding.Add(CreateSolarPanel(new Vector3(10, 1, 2)));
 
         //Create Furnace
-        AllBuilding.Add(CreateFurnace(new Vector3(0, 1.5f, 10)));
-        AllBuilding.Add(CreateFurnace(new Vector3(5, 1.5f, 10)));
-        AllBuilding.Add(CreateFurnace(new Vector3(10, 1.5f, 10)));
+        AllBuilding.Add(CreateFurnace(new Vector3(0, 1f, 10)));
+        AllBuilding.Add(CreateFurnace(new Vector3(5, 1f, 10)));
+        AllBuilding.Add(CreateFurnace(new Vector3(10, 1f, 10)));
     }
     public GameObject CreateSolarPanel(Vector3 _pos)
     {

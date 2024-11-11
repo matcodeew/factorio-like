@@ -63,7 +63,7 @@ public class ConnectBuilding : MonoBehaviour
     {
         int x = Mathf.FloorToInt(position.x);
         int z = Mathf.FloorToInt(position.z);
-        return new Vector3(x, 1, z);
+        return new Vector3(x, 1f, z);
     }
 
     private bool CheckTransformationBuilding(RaycastHit hit)
