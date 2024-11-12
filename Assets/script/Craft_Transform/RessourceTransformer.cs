@@ -32,15 +32,36 @@ public class RessourceTransformer : MonoBehaviour
     [SerializeField] private Transform _machineInput;
     [SerializeField] private Transform _parentSlot;
 
+    private List<GameObject> _instantiateOutputList = new();
+
     private bool _isInAction = false;
 
     private void Update()
     {
-        if(!_isInAction && MachineInput != null)
+        if(_machineInput.childCount > 0 )
         {
-            _isInAction = true;
-            StartTransformation();
+            if (!_isInAction && MachineInputNotNull())
+            {
+                _isInAction = true;
+                StartTransformation();
+            }
         }
+    }
+
+    private bool MachineInputNotNull() 
+    { 
+        MachineInput = _machineInput.GetComponentInChildren<InvRessource>().Ressource;
+
+        if( MachineInput == null)
+        {
+            return false;
+        }
+
+        if(MachineInput.IsPure == false)
+        {
+            return true; ;
+        }
+        return false;
     }
 
     public bool ActionWasCancelled;
@@ -85,7 +106,7 @@ public class RessourceTransformer : MonoBehaviour
                     FirstOutput = MachineInput.DisassemblerOutputs[0];
                     SecondOutput = MachineInput.DisassemblerOutputs[1];
                     ThirdOutput = MachineInput.DisassemblerOutputs.Count == 3 ? MachineInput.DisassemblerOutputs[2] : null;
-                    Debug.Log("Disassembled " + MachineInput + " into " + FirstOutput + ", " + SecondOutput + ", " + ThirdOutput);
+                    Debug.Log("Disassembled " + MachineInput + " into " + FirstOutput + ", " + SecondOutput + ", " + ThirdOutput);                   
                 }
                 break;
 
@@ -116,6 +137,11 @@ public class RessourceTransformer : MonoBehaviour
             Debug.LogWarning("No UI assigned to display outputs.");
             return;
         }
+        if (_parentSlot.childCount > 0)
+        {
+            DestroyAllChildren(_parentSlot);
+
+        }
         if (FirstOutput != null)
             CreateAndAlignOutputPrefab(FirstOutput , "InventorySlot"); 
 
@@ -124,19 +150,22 @@ public class RessourceTransformer : MonoBehaviour
 
         if (ThirdOutput != null)
             CreateAndAlignOutputPrefab(ThirdOutput, "InventorySlot");
+
     }
 
     private void CreateAndAlignOutputPrefab(Scriptable_Ressources outputResource, string newTag)
     {
-        DestroyAllChildren(_machineInput);    
+        DestroyAllChildren(_machineInput);
+
         _machineInput.tag = "Empty";
         GameObject outputItem = Instantiate(InventoryPlayerManager.Instance._EmptyPrefab, _parentSlot);
-        InvRessource invRessource = outputItem.AddComponent<InvRessource>();
-        invRessource.Ressource = outputResource;
-        invRessource.Quantity = 1;
+        _instantiateOutputList.Add(outputItem);
         outputItem.tag = newTag;
 
         GameObject ImageRessource = new GameObject();
+        InvRessource invRessource = ImageRessource.AddComponent<InvRessource>();
+        invRessource.Ressource = outputResource;
+        invRessource.Quantity = 1;
         ImageRessource.transform.position = outputItem.transform.position;  
         ImageRessource.transform.parent = outputItem.transform;
         ImageRessource.AddComponent<Image>().sprite = invRessource.Ressource.Sprite;
@@ -151,6 +180,7 @@ public class RessourceTransformer : MonoBehaviour
 
     private void DestroyAllChildren(Transform parentTransform)
     {
+
         foreach (Transform child in parentTransform)
         {
             Destroy(child.gameObject);
