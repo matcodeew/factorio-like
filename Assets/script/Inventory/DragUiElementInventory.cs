@@ -8,7 +8,6 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
 {
     [HideInInspector] public Transform ParentAfterDrag;
 
-    [SerializeField] Scriptable_Ressources Scriptable_Ressources;
     [SerializeField] private TextMeshProUGUI _quantityText;
 
     InventorySlot InventorySlot;
@@ -65,7 +64,7 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             }
         }
 
-        if (targetItem != null && targetItem.Scriptable_Ressources != null && targetItem.Scriptable_Ressources.Id == this.Scriptable_Ressources.Id)
+        if (targetItem != null && targetItem.GetComponent<InvRessource>() != null && targetItem.GetComponent<InvRessource>().Ressource.Id == GetComponent<InvRessource>().Ressource.Id)
         {
             InventoryPlayerManager inventorySlot = targetItem.GetComponentInParent<InventoryPlayerManager>();
 
@@ -128,20 +127,16 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             }
             ParentAfterDrag.tag = "Empty";
         }
+
     }
-    
-    private void AddToQuantity(InvRessource otherRessource)
+
+    public void AddToQuantity(InvRessource otherRessource)
     {
         InvRessource currentRessource = GetComponent<InvRessource>();
 
         if (currentRessource != null && otherRessource != null && currentRessource.Ressource.Id == otherRessource.Ressource.Id)
         {
-           currentRessource.Quantity += otherRessource.Quantity;
+            currentRessource.Quantity += otherRessource.Quantity;
         }
-    }
-    private void SetScripts(Scriptable_Ressources scriptable_Ressources, InventorySlot slot)
-    {
-        scriptable_Ressources = Scriptable_Ressources;
-        slot = InventorySlot;
     }
 }

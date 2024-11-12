@@ -10,7 +10,6 @@ public class Scriptable_RessourceSpot : ScriptableObject
     public GameObject Prefab;
     public List<RessourceData> AvailableResource;
     public float MiningTime;
-    public int MaxOnMap;
 
     [System.Serializable]
     public struct RessourceData

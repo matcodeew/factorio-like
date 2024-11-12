@@ -1,67 +1,62 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-[System.Serializable]
-public class UseRessourceData
-{
-    public int ID;
-    public Scriptable_Ressources Ressource;
-    public int Quantity;
-    public UseRessourceData(int _id, Scriptable_Ressources _ressources, int _startQuantity)
-    {
-        ID = _id;
-        Ressource = _ressources;
-        Quantity = _startQuantity;
-    }
-}
-
-
 public class RessourseSpot : MonoBehaviour
 {
-    public string Name;
-    public GameObject Prefab;
     public float MiningTime;
-    public int MaxOnMap;
-    [SerializeField] public List<UseRessourceData> AvailableResource;
+    public int Quantity;
+    public Scriptable_RessourceSpot Spot;
+    public List<RessourceData> AvailableResource = new();
 
-    public void SetAllParameter(Scriptable_RessourceSpot RessourceSpot)
+    private void Awake()
     {
-        Name = RessourceSpot.Name;
-        Prefab = RessourceSpot.Prefab;
-        MiningTime = RessourceSpot.MiningTime;
-        MaxOnMap = RessourceSpot.MaxOnMap;
-
-        AvailableResource = new List<UseRessourceData>();
-        foreach (var ressource in RessourceSpot.AvailableResource)
-        {
-            AvailableResource.Add(new UseRessourceData(ressource.Id, ressource.Ressources, ressource.StartQuantity));
-        }
+        AddToList();
     }
     public int PickRandomRessource()
     {
         int totalQuantity = 0;
-        foreach(var ressource in AvailableResource)
+        foreach(var ressource in Spot.AvailableResource)
         {
-            if(ressource.Quantity > 0)
+            if(ressource.StartQuantity > 0)
             {
-                totalQuantity += ressource.Quantity;
+                totalQuantity += ressource.StartQuantity;
             }
         }
         if(totalQuantity == 0) return -1;
 
         int randomValue = Random.Range(0, totalQuantity);
         int cumulative = 0;
-        foreach (var ressource in AvailableResource)
+        foreach (var ressource in Spot.AvailableResource)
         {
-            cumulative += ressource.Quantity;
+            cumulative += ressource.StartQuantity;
             if (randomValue < cumulative)
             {
-                return ressource.ID;
+                return ressource.Id;
             }
         }
         return -1;
+    }
+
+    private void AddToList()
+    {
+        foreach(var a in Spot.AvailableResource)
+        {
+            AvailableResource.Add(new RessourceData(a.Id, a.Ressources, a.StartQuantity));
+        }
+    }
+}
+
+[System.Serializable]
+public class RessourceData
+{
+    public int Id;
+    public Scriptable_Ressources Ressources;
+    public int StartQuantity;
+
+    public RessourceData(int id,Scriptable_Ressources ressources,int Quantity)
+    {
+        this.Id = id;
+        this.Ressources = ressources;
+        this.StartQuantity = Quantity;
     }
 }

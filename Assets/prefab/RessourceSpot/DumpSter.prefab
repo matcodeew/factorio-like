@@ -12,28 +12,33 @@ GameObject:
   - component: {fileID: 4967870662892647980}
   - component: {fileID: 7032561350156594824}
   - component: {fileID: 9108290205440983513}
+  - component: {fileID: 6167219052209046026}
   m_Layer: 0
-  m_Name: RessourceSpot
+  m_Name: DumpSter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &593843988063395468
-Transform:
+--- !u!224 &593843988063395468
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3792326885201706066}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.973781, y: -26.077757, z: 5.4682584}
+  m_LocalPosition: {x: 0, y: 0, z: 5.4682584}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 10.973781, y: -26.077757}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!33 &4967870662892647980
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -105,3 +110,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6167219052209046026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3792326885201706066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94012f9f65f998b4988ab45cb012e4ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MiningTime: 2
+  Quantity: 0
+  Spot: {fileID: 11400000, guid: 54da1d3089d597149a816e20a1d1288c, type: 2}

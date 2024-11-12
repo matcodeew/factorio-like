@@ -10,9 +10,11 @@ public class MapManager : MonoBehaviour
     [SerializeField] private GameObject _tilePrefab;
     [SerializeField] private List<Scriptable_RessourceSpot> _allRessorceSpot;
     [SerializeField] private GameObject _groundParent;
+    [SerializeField] private GameObject _dumpsterPrefab;
 
     public static MapManager Instance;
     public bool PickingRessource;
+    private bool _createDumpster = true;
 
     private int _id;
     private int _mapSize = 32;
@@ -42,9 +44,7 @@ public class MapManager : MonoBehaviour
                 newTile.transform.parent = _groundParent.transform;
                 newTile.name = "Tile (" + x + " , "+ y + ")";
                 newTile.GetComponent<TileData>().ID = _id;
-
                 CreateDumpster(newTile.GetComponent<TileData>());
-
 
                 int i = x / _chunckSize;
                 int j = y / _chunckSize;
@@ -60,6 +60,20 @@ public class MapManager : MonoBehaviour
             }
         }
         AllocatedTileObstacle();
+    }
+
+    public void CreateDumpster(TileData tile)
+    {
+        if (_createDumpster == true)
+        {
+            GameObject newGo = Instantiate(_dumpsterPrefab);
+            newGo.transform.parent = _groundParent.transform;
+            newGo.transform.position = tile.transform.position + new Vector3(0, 1.5f, 0);
+            tile.OnTop = newGo;
+            tile.IsOccupied = true;
+            _createDumpster = false;
+        }
+
     }
 
     private void AllocatedTileObstacle()
@@ -78,22 +92,6 @@ public class MapManager : MonoBehaviour
             }
         }
     }
-
-    /// <summary>
-    private void CreateDumpster(TileData tile)
-    {
-        if (_currentPlacedSpot < _allRessorceSpot[(int)TileObstacle.Dumpster].MaxOnMap - 9)
-        {
-            _currentPlacedSpot++;
-            tile.IsOccupied = true;
-            GameObject newSpot = Instantiate(_allRessorceSpot[(int)TileObstacle.Dumpster].Prefab);
-            tile.OnTop = newSpot;
-            newSpot.transform.position = tile.transform.position + new Vector3(0, 1, 0);
-            newSpot.transform.SetParent(_groundParent.transform);
-            newSpot.GetComponent<RessourseSpot>().SetAllParameter(_allRessorceSpot[(int)TileObstacle.Dumpster]);
-        }
-    }
-    /// </summary>
     public Chunck AccessChunkByTilePos(Vector3 _clikedPos)
     {
         int i = Mathf.FloorToInt(_clikedPos.x) / _chunckSize;
@@ -139,15 +137,17 @@ public class MapManager : MonoBehaviour
     private IEnumerator StillRessource(RessourseSpot _ressourceSpot)
     {
         PickingRessource = true;
-        while (PickingRessource && _ressourceSpot != null && _ressourceSpot.AvailableResource.Count > 0)
+        while (PickingRessource && _ressourceSpot != null && _ressourceSpot.Spot.AvailableResource.Count > 0)
         {
             yield return new WaitForSeconds(_ressourceSpot.MiningTime);
             int resourceIndex = _ressourceSpot.PickRandomRessource();
             if (resourceIndex != -1)
             {
-                if (_ressourceSpot.AvailableResource[resourceIndex].Quantity > 0)
+                if (_ressourceSpot.Spot.AvailableResource[resourceIndex].StartQuantity > 0)
                 {
-                    _ressourceSpot.AvailableResource[resourceIndex].Quantity--;
+                    InventoryPlayerManager.Instance.CreateNewInventorySlot(_ressourceSpot.AvailableResource[resourceIndex]);
+                    print($"ressource pick ID is {_ressourceSpot.Spot.AvailableResource[resourceIndex].Id}"); 
+                    _ressourceSpot.AvailableResource[resourceIndex].StartQuantity--;
                 }
                 else
                 {
