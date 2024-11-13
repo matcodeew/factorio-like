@@ -64,7 +64,7 @@ public class InventoryPlayerManager : MonoBehaviour
                     InvRessource invRessource = newSlot.transform.GetChild(0).AddComponent<InvRessource>();
                     _slotGameobjectList.Add(invRessource);
                     invRessource.Ressource = ressources.Ressources;
-                    // newSlot.GetComponentInChildren<Image>().sprite = ressources.Ressources.Sprite;
+                    newSlot.transform.GetChild(0).GetComponent<Image>().sprite = ressources.Ressources.Sprite;
                     invRessource.Quantity = 1;
                 }
                 else
@@ -80,7 +80,7 @@ public class InventoryPlayerManager : MonoBehaviour
             InvRessource invRessource = newSlot.transform.GetChild(0).AddComponent<InvRessource>();
             _slotGameobjectList.Add(invRessource);
             invRessource.Ressource = ressources.Ressources;
-            // newSlot.GetComponentInChildren<Image>().sprite = ressources.Ressources.Sprite;
+            newSlot.transform.GetChild(0).GetComponent<Image>().sprite = ressources.Ressources.Sprite;
             invRessource.Quantity = 1;
         }
     } 

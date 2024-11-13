@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 0
   Name: Steel
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 21300000, guid: 21d42fc03882f7248b61c7af87a31743, type: 3}
   IsPure: 0
   GrinderOutput: {fileID: 0}
+  FurnaceOutput: {fileID: 0}
   DisassemblerOutputs:
   - {fileID: 11400000, guid: 9bb42eb2fa9f53b4cbe61cdee2d7f716, type: 2}
   - {fileID: 11400000, guid: 59a13f0079aa80c4cbd6caf5ead21578, type: 2}

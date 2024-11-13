@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 6
   Name: Electronic component
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 21300000, guid: 78d8381a42fafc24a8fa306bcf94baa7, type: 3}
   IsPure: 0
   GrinderOutput: {fileID: 11400000, guid: 180b266b46ed01d4eb5eeb38e7c22913, type: 2}
+  FurnaceOutput: {fileID: 0}
   DisassemblerOutputs:
   - {fileID: 11400000, guid: 93e3e1cf7bb79234c87e719af291967e, type: 2}
   - {fileID: 11400000, guid: 9bb42eb2fa9f53b4cbe61cdee2d7f716, type: 2}

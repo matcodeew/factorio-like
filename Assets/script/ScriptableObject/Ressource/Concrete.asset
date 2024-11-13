@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 4
   Name: concrete
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 21300000, guid: ae342cb3540ea974f98c0cf6f7924244, type: 3}
   IsPure: 0
   GrinderOutput: {fileID: 11400000, guid: 9abd1b5bc50f80141899f6c406b56811, type: 2}
+  FurnaceOutput: {fileID: 0}
   DisassemblerOutputs:
   - {fileID: 11400000, guid: 9abd1b5bc50f80141899f6c406b56811, type: 2}
   - {fileID: 11400000, guid: 6e09eb3f3eaa2c94aa4bdc172260fea0, type: 2}
