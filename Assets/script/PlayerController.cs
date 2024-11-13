@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Menu.GameIsPaused)
+            return;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 

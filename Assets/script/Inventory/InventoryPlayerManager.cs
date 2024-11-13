@@ -1,9 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static Scriptable_RessourceSpot;
 
 public class InventoryPlayerManager : MonoBehaviour
 {
@@ -12,6 +12,10 @@ public class InventoryPlayerManager : MonoBehaviour
 
     public GameObject _EmptyPrefab;
     public RectTransform _inventoryParentSlot;
+    [Header ("Progress Bar")]
+    [SerializeField] private Image _ProgressBarDecontamination;
+    [SerializeField] private TextMeshProUGUI _ProgressBarValue;
+    [Header ("Inventory")]
     [SerializeField] private Scriptable_RessourceList _scriptableRessourceList;
     [SerializeField] private List<GameObject> _objects = new List<GameObject>();
     [SerializeField] private List<GameObject> _inventoryPlayerSlots = new List<GameObject>();
@@ -25,6 +29,7 @@ public class InventoryPlayerManager : MonoBehaviour
         Instance = this;
     }
 
+    
     void Start()
     {
         InitializePlayerInventory();
@@ -83,7 +88,18 @@ public class InventoryPlayerManager : MonoBehaviour
             newSlot.transform.GetChild(0).GetComponent<Image>().sprite = ressources.Ressources.Sprite;
             invRessource.Quantity = 1;
         }
-    } 
+    }
+
+    public IEnumerator UpdateProgressBar()
+    {
+        while (_ProgressBarDecontamination.fillAmount < 100)
+        {
+            _ProgressBarDecontamination.fillAmount = MapManager.Instance.CalculPourcentageDecontaminationChunck();
+            float progressPercentage = Mathf.Round(_ProgressBarDecontamination.fillAmount * 100);
+            _ProgressBarValue.text = progressPercentage.ToString() + "%";
+            yield return new WaitForSeconds(3f);
+        }
+    }
 }
 
 public class InvRessource : MonoBehaviour
