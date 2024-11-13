@@ -91,7 +91,7 @@ public class DragUIElementBuild : MonoBehaviour, IBeginDragHandler, IDragHandler
         if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f))
         {
             Vector3 snappedPosition = SnapToGrid(hit.point);
-            InventoryBuildManager.Instance.CreateObject(_prefabToInstantiate, snappedPosition);
+            InventoryBuildManager.Instance.CreateObjectOnMap(_prefabToInstantiate, snappedPosition);
         }
     }
 

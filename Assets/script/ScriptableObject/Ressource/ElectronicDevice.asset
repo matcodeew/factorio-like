@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd6940f605d832428031185754f8d05, type: 3}
   m_Name: ElectronicDevice
   m_EditorClassIdentifier: 
-  Id: 7
+  Id: 10
   Name: Electronic device
   Sprite: {fileID: 0}
   IsPure: 0
   GrinderOutput: {fileID: 11400000, guid: 180b266b46ed01d4eb5eeb38e7c22913, type: 2}
+  FurnaceOutput: {fileID: 0}
   DisassemblerOutputs:
   - {fileID: 11400000, guid: f4bf8295af713d94ea82c82987d9be30, type: 2}
   - {fileID: 11400000, guid: 9bb42eb2fa9f53b4cbe61cdee2d7f716, type: 2}

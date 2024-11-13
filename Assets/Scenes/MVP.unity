@@ -1152,7 +1152,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1564414261}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -1168,6 +1168,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1295283483}
+        m_TargetAssemblyTypeName: InventoryBuildManager, Assembly-CSharp
+        m_MethodName: UpdateBuildingCase
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2048,38 +2060,13 @@ MonoBehaviour:
   InventoryBuildPanel: {fileID: 1205893769}
   BuildStatPanel: {fileID: 1564414261}
   BuildInventoryButton: {fileID: 1016944396}
-  _prefabItems:
-  - {fileID: 8806253017590343422, guid: ec2a4a75d5ccc8e43b1103cc216fc1c7, type: 3}
-  - {fileID: 942615120019314595, guid: d3564e5776516ff4480783cc78dc272e, type: 3}
-  - {fileID: 3983904539972652171, guid: a1458b7d50a69144181fb0440528cd0c, type: 3}
-  - {fileID: 3983904539972652171, guid: a1458b7d50a69144181fb0440528cd0c, type: 3}
-  - {fileID: 3983904539972652171, guid: a1458b7d50a69144181fb0440528cd0c, type: 3}
-  - {fileID: 3983904539972652171, guid: a1458b7d50a69144181fb0440528cd0c, type: 3}
-  - {fileID: 3983904539972652171, guid: a1458b7d50a69144181fb0440528cd0c, type: 3}
-  - {fileID: 3983904539972652171, guid: a1458b7d50a69144181fb0440528cd0c, type: 3}
-  - {fileID: 3983904539972652171, guid: a1458b7d50a69144181fb0440528cd0c, type: 3}
-  - {fileID: 3983904539972652171, guid: a1458b7d50a69144181fb0440528cd0c, type: 3}
-  - {fileID: 3983904539972652171, guid: a1458b7d50a69144181fb0440528cd0c, type: 3}
-  - {fileID: 3983904539972652171, guid: a1458b7d50a69144181fb0440528cd0c, type: 3}
-  - {fileID: 3983904539972652171, guid: a1458b7d50a69144181fb0440528cd0c, type: 3}
-  - {fileID: 3983904539972652171, guid: a1458b7d50a69144181fb0440528cd0c, type: 3}
-  - {fileID: 3983904539972652171, guid: a1458b7d50a69144181fb0440528cd0c, type: 3}
-  _inventoryCases:
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
-  - {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4, type: 3}
+  _buildingPrefabs:
+  - {fileID: 6634538959374061348, guid: 7f5570a0d6926f0419067b0310e68987, type: 3}
+  - {fileID: 6634538959374061348, guid: 56e9bc4b78e3944438c3b705570bf642, type: 3}
+  - {fileID: 6634538959374061348, guid: 12a7c8ad3e45b88448a85fe28f1f7235, type: 3}
+  _inventoryCasePrefab: {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4,
+    type: 3}
+  _invSlots: []
 --- !u!114 &1295283484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2092,16 +2079,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c5051537833e22499eb91aa836feafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _EmptyPrefab: {fileID: 903418172691988424, guid: a3ccca3e4f0600b4bb9c850ddf66ce0a,
-    type: 3}
   _inventoryParentSlot: {fileID: 566505470}
-  _scriptableRessourceList: {fileID: 11400000, guid: 1eb2d93af717c2e4ebc476ce94a18b08,
-    type: 2}
-  _objects: []
-  _inventoryPlayerSlots: []
+  SlotGameobjectList: []
   _globalPrefab: {fileID: 903418172691988424, guid: b0618175f0344cb4496995f3e954438d,
     type: 3}
-  _slotGameobjectList: []
+  EmptyPrefab: {fileID: 903418172691988424, guid: a3ccca3e4f0600b4bb9c850ddf66ce0a,
+    type: 3}
 --- !u!1 &1331050994
 GameObject:
   m_ObjectHideFlags: 0
@@ -2420,10 +2403,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e2613f467314cc44999a4f0fe6f93d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _machineType: 1
-  _transformationListHolder: {fileID: 11400000, guid: 1eb2d93af717c2e4ebc476ce94a18b08,
-    type: 2}
-  _processTime: 10
+  _machineType: 3
+  _processTime: 1
   _ressourceUI: {fileID: 2095969321}
   MachineInput: {fileID: 0}
   FirstOutput: {fileID: 0}

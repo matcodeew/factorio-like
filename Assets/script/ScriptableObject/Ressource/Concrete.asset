@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd6940f605d832428031185754f8d05, type: 3}
   m_Name: Concrete
   m_EditorClassIdentifier: 
-  Id: 4
+  Id: 8
   Name: concrete
   Sprite: {fileID: 0}
   IsPure: 0
   GrinderOutput: {fileID: 11400000, guid: 9abd1b5bc50f80141899f6c406b56811, type: 2}
+  FurnaceOutput: {fileID: 0}
   DisassemblerOutputs:
   - {fileID: 11400000, guid: 9abd1b5bc50f80141899f6c406b56811, type: 2}
   - {fileID: 11400000, guid: 6e09eb3f3eaa2c94aa4bdc172260fea0, type: 2}

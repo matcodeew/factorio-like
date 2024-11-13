@@ -6,7 +6,7 @@ public class RessourseSpot : MonoBehaviour
     public float MiningTime;
     public int Quantity;
     public Scriptable_RessourceSpot Spot;
-    public List<RessourceData> AvailableResource = new();
+    public Dictionary<int, RessourceData> AvailableResource = new();
 
     private void Awake()
     {
@@ -15,7 +15,7 @@ public class RessourseSpot : MonoBehaviour
     public int PickRandomRessource()
     {
         int totalQuantity = 0;
-        foreach(var ressource in Spot.AvailableResource)
+        foreach(var ressource in AvailableResource.Values)
         {
             if(ressource.StartQuantity > 0)
             {
@@ -26,7 +26,7 @@ public class RessourseSpot : MonoBehaviour
 
         int randomValue = Random.Range(0, totalQuantity);
         int cumulative = 0;
-        foreach (var ressource in Spot.AvailableResource)
+        foreach(var ressource in AvailableResource.Values)
         {
             cumulative += ressource.StartQuantity;
             if (randomValue < cumulative)
@@ -41,7 +41,8 @@ public class RessourseSpot : MonoBehaviour
     {
         foreach(var a in Spot.AvailableResource)
         {
-            AvailableResource.Add(new RessourceData(a.Id, a.Ressources, a.StartQuantity));
+            RessourceData newRessource = new RessourceData(a.Ressources.Id, a.Ressources, a.StartQuantity);
+            AvailableResource.Add(a.Ressources.Id , newRessource);
         }
     }
 }

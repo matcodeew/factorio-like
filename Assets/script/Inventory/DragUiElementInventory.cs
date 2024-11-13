@@ -111,7 +111,7 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
         if (targetTransform.CompareTag("Panel"))
         {
             targetTransform = targetTransform.gameObject.transform;
-            GameObject newItem = Instantiate(InventoryPlayerManager.Instance._EmptyPrefab, targetTransform);
+            GameObject newItem = Instantiate(InventoryPlayerManager.Instance.EmptyPrefab, targetTransform);
             transform.SetParent(newItem.transform);
             transform.position = newItem.transform.position;
             Image itemImage = gameObject.GetComponent<Image>();

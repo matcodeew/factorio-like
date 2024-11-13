@@ -143,17 +143,19 @@ public class MapManager : MonoBehaviour
             int resourceIndex = _ressourceSpot.PickRandomRessource();
             if (resourceIndex != -1)
             {
-                if (_ressourceSpot.Spot.AvailableResource[resourceIndex].StartQuantity > 0)
+                if (_ressourceSpot.AvailableResource.TryGetValue(resourceIndex, out RessourceData ressource))
                 {
-                    InventoryPlayerManager.Instance.CreateNewInventorySlot(_ressourceSpot.AvailableResource[resourceIndex]);
-                    print($"ressource pick ID is {_ressourceSpot.Spot.AvailableResource[resourceIndex].Id}"); 
-                    _ressourceSpot.AvailableResource[resourceIndex].StartQuantity--;
-                }
-                else
-                {
-                    PickingRessource = false;
-                    _currentMiningSpot = null;
-                    StopAllCoroutines();
+                    if (ressource.StartQuantity > 0)
+                    {
+                        InventoryPlayerManager.Instance.CreateNewInventorySlot(ressource);
+                        ressource.StartQuantity--;
+                    }
+                    else
+                    {
+                        PickingRessource = false;
+                        _currentMiningSpot = null;
+                        StopAllCoroutines();
+                    }
                 }
             }
             else

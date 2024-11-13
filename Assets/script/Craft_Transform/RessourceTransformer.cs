@@ -4,22 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using Unity.VisualScripting;
+using System.ComponentModel;
 
 public class RessourceTransformer : MonoBehaviour
 {
-    public enum MachineType
-    {
-        Grinder,
-        Disassembler,
-        Furnace,
-        None
-    }
+
 
     [Header("Machine data")]
-    [SerializeField] private MachineType _machineType;
+    [SerializeField] private MachineType _machineType = MachineType.None;
     [Tooltip("List of Ressources that can be modified by the machine")]
-    [SerializeField] private Scriptable_RessourceList _transformationListHolder;
-    private List<Scriptable_Ressources> _transformationList;
+    //[SerializeField] private Scriptable_RessourceList _transformationListHolder;
+    //private List<Scriptable_Ressources> _transformationList;
     [SerializeField] private float _processTime;
 
     [SerializeField] private TransformationUI _ressourceUI;
@@ -35,6 +30,12 @@ public class RessourceTransformer : MonoBehaviour
     private List<GameObject> _instantiateOutputList = new();
 
     private bool _isInAction = false;
+    public void SetTypeOfMachine(BuildingRessourceAccessor data)
+    {
+        _machineType = data.MachineType;
+        //_transformationList = data.TransformationList;
+        _processTime = data.ProcessTime;
+    }
 
     private void Update()
     {
@@ -158,7 +159,7 @@ public class RessourceTransformer : MonoBehaviour
         DestroyAllChildren(_machineInput);
 
         _machineInput.tag = "Empty";
-        GameObject outputItem = Instantiate(InventoryPlayerManager.Instance._EmptyPrefab, _parentSlot);
+        GameObject outputItem = Instantiate(InventoryPlayerManager.Instance.EmptyPrefab, _parentSlot);
         _instantiateOutputList.Add(outputItem);
         outputItem.tag = newTag;
 

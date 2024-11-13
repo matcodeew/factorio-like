@@ -48,6 +48,8 @@ public class PlayerController : MonoBehaviour
             {
                 SetTargetPosition();
                 InventoryBuildManager.Instance.BuildStatPanel.SetActive(true);
+                InventoryBuildManager.Instance.BuildStatPanel.GetComponent<RessourceTransformer>().SetTypeOfMachine(hit.collider.GetComponent<BuildingRessourceAccessor>());
+
                 InventoryBuildManager.Instance.InventoryBuildPanel.SetActive(false);
                 InventoryBuildManager.Instance.InventoryButton.SetActive(true);
                 InventoryBuildManager.Instance.BuildInventoryButton.SetActive(true);

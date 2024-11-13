@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd6940f605d832428031185754f8d05, type: 3}
   m_Name: Empty
   m_EditorClassIdentifier: 
-  Id: 0
+  Id: -1
   Name: 
   Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   IsPure: 0
   GrinderOutput: {fileID: 0}
+  FurnaceOutput: {fileID: 0}
   DisassemblerOutputs: []

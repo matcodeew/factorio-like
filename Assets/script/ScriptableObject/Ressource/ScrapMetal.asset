@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd6940f605d832428031185754f8d05, type: 3}
   m_Name: ScrapMetal
   m_EditorClassIdentifier: 
-  Id: 13
+  Id: 12
   Name: Scrap metal
   Sprite: {fileID: 0}
   IsPure: 0
   GrinderOutput: {fileID: 0}
+  FurnaceOutput: {fileID: 0}
   DisassemblerOutputs:
   - {fileID: 11400000, guid: 9bb42eb2fa9f53b4cbe61cdee2d7f716, type: 2}
   - {fileID: 11400000, guid: 07798cfa844b833448217ebc5f3b3d4c, type: 2}

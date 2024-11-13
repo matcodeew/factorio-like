@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd6940f605d832428031185754f8d05, type: 3}
   m_Name: Sand
   m_EditorClassIdentifier: 
-  Id: 12
+  Id: 6
   Name: Sand
   Sprite: {fileID: 0}
   IsPure: 1
   GrinderOutput: {fileID: 0}
+  FurnaceOutput: {fileID: 0}
   DisassemblerOutputs: []

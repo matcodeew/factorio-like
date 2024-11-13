@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd6940f605d832428031185754f8d05, type: 3}
   m_Name: Limestone
   m_EditorClassIdentifier: 
-  Id: 11
+  Id: 5
   Name: Limestone
   Sprite: {fileID: 0}
   IsPure: 1
   GrinderOutput: {fileID: 0}
+  FurnaceOutput: {fileID: 0}
   DisassemblerOutputs: []
