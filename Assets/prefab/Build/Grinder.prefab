@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3751504704750280027}
   - component: {fileID: 2892414497920809087}
   - component: {fileID: 8530753089874027168}
+  - component: {fileID: 1719336305160728697}
   m_Layer: 0
   m_Name: Grinder
   m_TagString: Transformer
@@ -90,6 +91,21 @@ MonoBehaviour:
     Quantity: 4
   - Ressource: {fileID: 11400000, guid: f4bf8295af713d94ea82c82987d9be30, type: 2}
     Quantity: 1
+--- !u!114 &1719336305160728697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6634538959374061348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5d8807d05b0df44fa729878b0acd37d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConnectGenerator: []
+  IsLinked: 0
+  _sumOfEnergyReceived: 0
 --- !u!1 &7479722957289071033
 GameObject:
   m_ObjectHideFlags: 0

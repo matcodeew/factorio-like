@@ -5,22 +5,20 @@ using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GenerateEnergy : MonoBehaviour
+public class GenerateEnergy : MonoBehaviour, ISubscrireEvent
 {
     public List<BuildingReceivedEnergy> TransformBuildingConnected = new List<BuildingReceivedEnergy>();
     public List<GameObject> _linkConnect = new List<GameObject>();
-    [Range(2, 15)] public int MaxConnection;
-    [ReadOnly(true)]public int Energy;
+    [SerializeField, Min(1.0f)] public int MaxConnection = 2;
+    public int Energy;
     private BuildingManager instance;
     private bool _isActive;
     public bool CanConnectBuilding() { return TransformBuildingConnected.Count < MaxConnection; }
-
-    private void Start()
+    public void SubscrireEvent()
     {
         instance = BuildingManager.Instance;
         instance.UpdateSharedEnergy += UpdateEnergy;
     }
-
     private void UpdateEnergy()
     {
         //if(CompareTag("SolarPanel"))
@@ -32,7 +30,7 @@ public class GenerateEnergy : MonoBehaviour
         //    Energy = instance.GenerateWindEnergy();
         //}
         Energy = instance.GenerateSolarEnergy();
-        Debug.Log($"energy send by {gameObject.name} is : {Energy}");   
+        //Debug.Log($"energy send by {gameObject.name} is : {Energy}");   
         instance.UpdateBuildingEnergy?.Invoke();
     }
     public void AddGenToList()
@@ -42,7 +40,7 @@ public class GenerateEnergy : MonoBehaviour
             if(!energy.ConnectGenerator.Contains(this))
             {
                 energy.ConnectGenerator.Add(this);
-                instance.UpdateSharedEnergy?.Invoke();
+                //instance.UpdateSharedEnergy?.Invoke();
             }
         }
     }

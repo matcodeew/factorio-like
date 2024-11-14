@@ -65,6 +65,7 @@ public class InventoryBuildManager : MonoBehaviour
             GameObject newGo = Instantiate(prefab, position, Quaternion.identity, BuildingPrefabItemsParent);
             MapManager.Instance.AccessTileByPos(position).OnTop = newGo;
             MapManager.Instance.AccessTileByPos(position).IsOccupied = true;
+            newGo.GetComponent<ISubscrireEvent>().SubscrireEvent();
         }
     }
 
