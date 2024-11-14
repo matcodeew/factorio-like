@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dumpster
   m_EditorClassIdentifier: 
   Name: Dumpster
-  Prefab: {fileID: 7812776980421760279, guid: 438bbcdaedff6ee4e9e7ab45850ef4ab, type: 3}
+  Prefab: {fileID: 3792326885201706066, guid: 2cc8e84ed1e63d64a992523aa3f29974, type: 3}
   AvailableResource:
   - Id: 0
     Ressources: {fileID: 11400000, guid: 07798cfa844b833448217ebc5f3b3d4c, type: 2}

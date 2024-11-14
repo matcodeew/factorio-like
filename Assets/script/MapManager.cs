@@ -8,7 +8,6 @@ public class MapManager : MonoBehaviour
     private Dictionary<Vector3, Chunck> Chuncks = new Dictionary<Vector3, Chunck>();
 
     [SerializeField] private GameObject _tilePrefab;
-    [SerializeField] private List<Scriptable_RessourceSpot> _allRessorceSpot;
     [SerializeField] private GameObject _groundParent;
     [SerializeField] private GameObject _dumpsterPrefab;
 
