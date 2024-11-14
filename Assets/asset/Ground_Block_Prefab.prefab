@@ -163,6 +163,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _purifiedValue: 0.5
-  _floorMat: {fileID: -876546973899608171, guid: 327f18af05267f94c8898d47cfe9ab58,
-    type: 3}
+  _floorMat: {fileID: 2100000, guid: 9f83b39709296d34aa07a31f589addae, type: 2}
   _purifiedView: 0

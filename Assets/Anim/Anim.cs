@@ -5,8 +5,12 @@ public class Anim : MonoBehaviour
     [SerializeField] private GameObject _starShip;
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _generator;
-    [SerializeField] private GameObject _chest;
+    [SerializeField] private GameObject _panelNoInteract;
 
+    private void Start()
+    {
+        _panelNoInteract.SetActive(true);
+    }
     public void DestroyShip()
     {
         if (_starShip != null)
@@ -21,8 +25,7 @@ public class Anim : MonoBehaviour
         {
             GameObject newGo = Instantiate(_generator);
             newGo.transform.position = new Vector3(15, 2, 15);
-            GameObject go = Instantiate(_chest);
-            go.transform.position = new Vector3(10, 2, 10);
+            newGo.GetComponent<ISubscrireEvent>().SubscrireEvent();
             _player.SetActive(true);
         }
     }
@@ -31,6 +34,7 @@ public class Anim : MonoBehaviour
     {
         if (_player != null)
         {
+            _panelNoInteract.SetActive(false);
             _player.GetComponent<Animator>().enabled = false;
         }
     }
