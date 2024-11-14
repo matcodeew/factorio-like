@@ -115,11 +115,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 0
-  TileObstacle: 0
   IsOccupied: 0
   OnTop: {fileID: 0}
-  State: 0
-  ProgressValue: 0
+  ProgressValue: 75
+  ChunkState: 0
 --- !u!65 &-4277168727622217324
 BoxCollider:
   m_ObjectHideFlags: 0

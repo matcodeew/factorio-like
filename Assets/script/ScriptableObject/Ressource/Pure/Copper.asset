@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2
   Name: Copper
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 21300000, guid: bcdcd273d60fef941a0982f15f9fd2f0, type: 3}
   IsPure: 1
   GrinderOutput: {fileID: 0}
   FurnaceOutput: {fileID: 0}

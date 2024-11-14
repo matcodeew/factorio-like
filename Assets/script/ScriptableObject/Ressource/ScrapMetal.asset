@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 12
   Name: Scrap metal
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 21300000, guid: 7b37be0e6af529844ab9561618d333fb, type: 3}
   IsPure: 0
   GrinderOutput: {fileID: 0}
   FurnaceOutput: {fileID: 0}
