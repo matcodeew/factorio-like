@@ -78,6 +78,12 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 28d626159562afa4bbaa6395c8780aae,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 327f18af05267f94c8898d47cfe9ab58,
+        type: 3}
     - target: {fileID: 919132149155446097, guid: 28d626159562afa4bbaa6395c8780aae,
         type: 3}
       propertyPath: m_Name
@@ -95,6 +101,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: -4277168727622217324}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 28d626159562afa4bbaa6395c8780aae,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -517788014418657991}
   m_SourcePrefab: {fileID: 100100000, guid: 28d626159562afa4bbaa6395c8780aae, type: 3}
 --- !u!1 &2838385887705197276 stripped
 GameObject:
@@ -117,7 +127,7 @@ MonoBehaviour:
   ID: 0
   IsOccupied: 0
   OnTop: {fileID: 0}
-  ProgressValue: 75
+  ProgressValue: 25
   ChunkState: 0
 --- !u!65 &-4277168727622217324
 BoxCollider:
@@ -140,3 +150,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
   m_Center: {x: 0, y: 0.49999997, z: 0}
+--- !u!114 &-517788014418657991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2838385887705197276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 272faa40506aca242940077652f70706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _purifiedValue: 0.5
+  _floorMat: {fileID: 2100000, guid: 9f83b39709296d34aa07a31f589addae, type: 2}
+  _purifiedView: 0

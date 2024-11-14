@@ -194,18 +194,18 @@ public class RessourceTransformer : MonoBehaviour
                                                                                                  ///// arrete de fonctionner et on ne peut pas relancer 
     {
         DeleteOutPutCase();
-        bool itemFounded = false;
+        bool itemFound = false;
         foreach (GameObject item in _instantiateOutputList)
         {
             InvRessource ressource = item.GetComponentInChildren<InvRessource>();
             if (ressource.Ressource.Id == outputResource.Id)
             {
-                itemFounded = true;
+                itemFound = true;
                 ressource.Quantity++;
                 break;
             }
         }
-        if (!itemFounded)
+        if (!itemFound)
         {
             GameObject outputItem = Instantiate(InventoryPlayerManager.Instance._globalPrefab, _parentSlot);
             InvRessource invRessource = outputItem.transform.GetChild(0).AddComponent<InvRessource>();
