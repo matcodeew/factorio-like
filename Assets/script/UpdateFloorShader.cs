@@ -8,15 +8,22 @@ public class UpdateFloorShader : MonoBehaviour
     [SerializeField] private Material _floorMat;
     [SerializeField] private bool _purifiedView = false;
 
-    void Update()
+
+    void Start()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-            _purifiedView = !_purifiedView;
-
-
-        _floorMat.SetFloat("_PurifiedValue", _purifiedValue);
-        _floorMat.SetInt("_IsPurified", _purifiedValue == 1.0f ? 1 : 0);
-        _floorMat.SetInt("_IsInPurifiedView", _purifiedView ? 1 : 0);
-
+        gameObject.GetComponent<Renderer>().material = new Material(_floorMat);
+        _floorMat = gameObject.GetComponent<Renderer>().material;
     }
+
+    //void FixedUpdate()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.V))
+    //        _purifiedView = !_purifiedView;
+
+
+    //    _floorMat.SetFloat("_PurifiedValue", _purifiedValue);
+    //    _floorMat.SetInt("_IsPurified", _purifiedValue == 1.0f ? 1 : 0);
+    //    _floorMat.SetInt("_IsInPurifiedView", _purifiedView ? 1 : 0);
+
+    //}
 }
