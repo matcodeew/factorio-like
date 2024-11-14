@@ -26,6 +26,7 @@ public class RessourceTransformer : MonoBehaviour
     private bool CreateCaseOneTime = true;
     [SerializeField] private List<GameObject> _instantiateOutputList = new();
 
+
     private bool _isInAction = false;
     public void SetTypeOfMachine(BuildingRessourceAccessor data)
     {
@@ -43,11 +44,14 @@ public class RessourceTransformer : MonoBehaviour
                 StartTransformation();
             }
         }
-        //if(CheckIfAllOutputCaseIsEmpty())
-        //{
-        //    ActionWasCancelled = false;
-        //    _isInAction = false;
-        //}
+        else
+        {
+            if(CheckIfAllOutputCaseIsEmpty())
+            {
+                _isInAction = false;
+                ActionWasCancelled = false;
+            }
+        }
     }
 
     private bool MachineInputNotNull()
@@ -157,13 +161,15 @@ public class RessourceTransformer : MonoBehaviour
 
         if(_currentRessourceToTransform.Quantity <= 0)
         {
-            ActionWasCancelled = true;
+            StopTransformation();
             DestroyAllChildren(_parentSlot);
+            CheckIfAllOutputCaseIsEmpty();
         }
         if(_parentSlot.childCount < 0)
         {
-            ActionWasCancelled = true;
+            StopTransformation();
             DestroyAllChildren(_parentSlot);
+            CheckIfAllOutputCaseIsEmpty();
         }
 
         if (FirstOutput != null)
