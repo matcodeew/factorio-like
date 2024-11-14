@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MVP.unity
     guid: fde2370cfbcf50f46879ce485ea86ac6
+  - enabled: 1
+    path: Assets/Scenes/Shipintro.unity
+    guid: 7dd7630d9b6b61449880bd761f2a4d99
+  - enabled: 1
+    path: Assets/Scenes/StartEndGame.unity
+    guid: c9792ae6ade59f248ac278df0f1ae24f
   m_configObjects: {}

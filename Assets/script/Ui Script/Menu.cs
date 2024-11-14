@@ -11,6 +11,11 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("MVP");
     }
 
+    public void LoadIntro()
+    {
+        SceneManager.LoadScene("Shipintro");
+    }
+
     public void QuitGame()
     {
         Application.Quit();
