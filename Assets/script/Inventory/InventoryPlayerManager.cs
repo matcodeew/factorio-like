@@ -12,14 +12,26 @@ public class InventoryPlayerManager : MonoBehaviour
     [SerializeField] private Image _ProgressBarDecontamination;
     [SerializeField] private TextMeshProUGUI _ProgressBarValue;
     [Header("Inventory")]
+    [SerializeField] private List<RessourceData> _cheatAllInventoryRessource = new();
     public RectTransform _inventoryParentSlot;
     public List<InvRessource> SlotGameobjectList = new();
-    [SerializeField] private GameObject _globalPrefab;
+    [SerializeField] public GameObject _globalPrefab;
     [SerializeField] public GameObject EmptyPrefab;
 
     private void Awake()
     {
         Instance = this;
+    }
+    private void Start()
+    {
+        foreach(RessourceData ressource in _cheatAllInventoryRessource)
+        {
+            ressource.Id = ressource.Ressources.Id;
+            for(int i = 0; i < ressource.StartQuantity; i++)
+            {
+                CreateNewInventorySlot(ressource);
+            }
+        }
     }
     public void CreateNewInventorySlot(RessourceData ressources)
     {
@@ -60,5 +72,3 @@ public class InvRessource : MonoBehaviour
     public Scriptable_Ressources Ressource;
     public int Quantity;
 }
-
-

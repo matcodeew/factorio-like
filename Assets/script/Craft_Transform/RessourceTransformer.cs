@@ -8,13 +8,9 @@ using System.ComponentModel;
 
 public class RessourceTransformer : MonoBehaviour
 {
-
-
     [Header("Machine data")]
     [SerializeField] private MachineType _machineType = MachineType.None;
     [Tooltip("List of Ressources that can be modified by the machine")]
-    //[SerializeField] private Scriptable_RessourceList _transformationListHolder;
-    //private List<Scriptable_Ressources> _transformationList;
     [SerializeField] private float _processTime;
 
     [SerializeField] private TransformationUI _ressourceUI;
@@ -25,21 +21,21 @@ public class RessourceTransformer : MonoBehaviour
     [HideInInspector] public Scriptable_Ressources ThirdOutput;
 
     [SerializeField] private Transform _machineInput;
+    private InvRessource _currentRessourceToTransform;
     [SerializeField] private Transform _parentSlot;
-
-    private List<GameObject> _instantiateOutputList = new();
+    private bool CreateCaseOneTime = true;
+    [SerializeField] private List<GameObject> _instantiateOutputList = new();
 
     private bool _isInAction = false;
     public void SetTypeOfMachine(BuildingRessourceAccessor data)
     {
         _machineType = data.MachineType;
-        //_transformationList = data.TransformationList;
         _processTime = data.ProcessTime;
     }
 
     private void Update()
     {
-        if(_machineInput.childCount > 0 )
+        if (_machineInput.childCount > 0)
         {
             if (!_isInAction && MachineInputNotNull())
             {
@@ -47,20 +43,25 @@ public class RessourceTransformer : MonoBehaviour
                 StartTransformation();
             }
         }
+        //if(CheckIfAllOutputCaseIsEmpty())
+        //{
+        //    ActionWasCancelled = false;
+        //    _isInAction = false;
+        //}
     }
 
-    private bool MachineInputNotNull() 
-    { 
+    private bool MachineInputNotNull()
+    {
         MachineInput = _machineInput.GetComponentInChildren<InvRessource>().Ressource;
 
-        if( MachineInput == null)
+        if (MachineInput == null)
         {
             return false;
         }
 
-        if(MachineInput.IsPure == false)
+        if (MachineInput.IsPure == false)
         {
-            return true; ;
+            return true;
         }
         return false;
     }
@@ -68,7 +69,11 @@ public class RessourceTransformer : MonoBehaviour
     public bool ActionWasCancelled;
     public void StartTransformation()
     {
-        StartCoroutine(HandleProcessTime());
+        _currentRessourceToTransform = _machineInput.GetComponentInChildren<InvRessource>();
+        if (_currentRessourceToTransform != null)
+        {
+            StartCoroutine(HandleProcessTime());
+        }
     }
 
     public void StopTransformation()
@@ -79,14 +84,25 @@ public class RessourceTransformer : MonoBehaviour
 
     private IEnumerator HandleProcessTime()
     {
-        yield return new WaitForSeconds(_processTime);
-        if (!ActionWasCancelled)
+        if (CheckIfAllOutputCaseIsEmpty())
         {
-            transformRessource();
-            DisplayOutputPrefabs(); 
+            while (_currentRessourceToTransform.Quantity > 0)
+            {
+                yield return new WaitForSeconds(_processTime);
+                if (!ActionWasCancelled)
+                {
+                    if(_machineInput.childCount == 0)
+                    {
+                        ActionWasCancelled = true;
+                        break;
+                    }
+                    transformRessource();
+                    DisplayOutputPrefabs();
+                }
+                if(ActionWasCancelled) { break; }
+                ActionWasCancelled = false;
+            }
         }
-
-        ActionWasCancelled = false;
     }
 
     private void transformRessource()
@@ -107,7 +123,7 @@ public class RessourceTransformer : MonoBehaviour
                     FirstOutput = MachineInput.DisassemblerOutputs[0];
                     SecondOutput = MachineInput.DisassemblerOutputs[1];
                     ThirdOutput = MachineInput.DisassemblerOutputs.Count == 3 ? MachineInput.DisassemblerOutputs[2] : null;
-                    Debug.Log("Disassembled " + MachineInput + " into " + FirstOutput + ", " + SecondOutput + ", " + ThirdOutput);                   
+                    Debug.Log("Disassembled " + MachineInput + " into " + FirstOutput + ", " + SecondOutput + ", " + ThirdOutput);
                 }
                 break;
 
@@ -127,8 +143,8 @@ public class RessourceTransformer : MonoBehaviour
                 Debug.Log("Problem in enum");
                 break;
         }
-        MachineInput = null;
-        _isInAction = false;    
+        _currentRessourceToTransform.Quantity--;
+        _isInAction = false;
     }
 
     private void DisplayOutputPrefabs()
@@ -138,50 +154,93 @@ public class RessourceTransformer : MonoBehaviour
             Debug.LogWarning("No UI assigned to display outputs.");
             return;
         }
-        if (_parentSlot.childCount > 0)
-        {
-            DestroyAllChildren(_parentSlot);
 
+        if(_currentRessourceToTransform.Quantity <= 0)
+        {
+            ActionWasCancelled = true;
+            DestroyAllChildren(_parentSlot);
         }
+        if(_parentSlot.childCount < 0)
+        {
+            ActionWasCancelled = true;
+            DestroyAllChildren(_parentSlot);
+        }
+
         if (FirstOutput != null)
-            CreateAndAlignOutputPrefab(FirstOutput , "InventorySlot"); 
+        {
+            CreateAndAlignOutputPrefab(FirstOutput, "InventorySlot");
+        }
 
         if (SecondOutput != null)
+        {
             CreateAndAlignOutputPrefab(SecondOutput, "InventorySlot");
+        }
 
         if (ThirdOutput != null)
+        {
             CreateAndAlignOutputPrefab(ThirdOutput, "InventorySlot");
+        }
 
     }
 
-    private void CreateAndAlignOutputPrefab(Scriptable_Ressources outputResource, string newTag)
+    private void CreateAndAlignOutputPrefab(Scriptable_Ressources outputResource, string newTag) ///// si le panel est désactiver le script est
+                                                                                                 ///// arrete de fonctionner et on ne peut pas relancer 
     {
-        DestroyAllChildren(_machineInput);
-
-        _machineInput.tag = "Empty";
-        GameObject outputItem = Instantiate(InventoryPlayerManager.Instance.EmptyPrefab, _parentSlot);
-        _instantiateOutputList.Add(outputItem);
-        outputItem.tag = newTag;
-
-        GameObject ImageRessource = new GameObject();
-        InvRessource invRessource = ImageRessource.AddComponent<InvRessource>();
-        invRessource.Ressource = outputResource;
-        invRessource.Quantity = 1;
-        ImageRessource.transform.position = outputItem.transform.position;  
-        ImageRessource.transform.parent = outputItem.transform;
-        ImageRessource.AddComponent<Image>().sprite = invRessource.Ressource.Sprite;
-        ImageRessource.AddComponent<DragUiElementInventory>();
-        //ImageRessource.AddComponent<Image>().color = Color.red; // a changer
-
-        //if(outputItem.tag == "Empty")
-        //{
-        //    Destroy(outputItem);
-        //}
+        DeleteOutPutCase();
+        bool itemFounded = false;
+        foreach (GameObject item in _instantiateOutputList)
+        {
+            InvRessource ressource = item.GetComponentInChildren<InvRessource>();
+            if (ressource.Ressource.Id == outputResource.Id)
+            {
+                itemFounded = true;
+                ressource.Quantity++;
+                break;
+            }
+        }
+        if (!itemFounded)
+        {
+            GameObject outputItem = Instantiate(InventoryPlayerManager.Instance._globalPrefab, _parentSlot);
+            InvRessource invRessource = outputItem.transform.GetChild(0).AddComponent<InvRessource>();
+            invRessource.Ressource = outputResource;
+            invRessource.Quantity = 1;
+            outputItem.transform.GetChild(0).GetComponent<Image>().sprite = outputResource.Sprite;
+            _instantiateOutputList.Add(outputItem);
+            outputItem.tag = newTag;
+        }
+    }
+    private void DeleteOutPutCase() // si on met une ressource dans l'inventaire en même temps qu'une transfo est faite ya une erreur 
+    {
+        List<GameObject> CaseToRemove = new List<GameObject>();
+        foreach(GameObject outputCase in _instantiateOutputList)
+        {
+            if(outputCase.tag == "Empty")
+            {
+                Destroy(outputCase);
+                CaseToRemove.Add(outputCase);
+            }
+        }
+        if (CaseToRemove.Count > 0)
+        {
+            foreach(GameObject outputCase in CaseToRemove)
+            {
+                _instantiateOutputList.Remove(outputCase);
+            }
+            CaseToRemove.Clear();
+        }
+    }
+    private bool CheckIfAllOutputCaseIsEmpty()
+    {
+        DeleteOutPutCase();
+        if (_instantiateOutputList.Count == 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     private void DestroyAllChildren(Transform parentTransform)
     {
-
         foreach (Transform child in parentTransform)
         {
             Destroy(child.gameObject);

@@ -43,7 +43,6 @@ public class PlayerController : MonoBehaviour
             {
                 SetTargetPosition();
                 InventoryBuildManager.Instance.InventoryBuildPanel.SetActive(false);
-                InventoryBuildManager.Instance.BuildInventoryButton.SetActive(true);
                 InventoryBuildManager.Instance.InventoryButton.SetActive(true);
             }
 
@@ -55,7 +54,6 @@ public class PlayerController : MonoBehaviour
 
                 InventoryBuildManager.Instance.InventoryBuildPanel.SetActive(false);
                 InventoryBuildManager.Instance.InventoryButton.SetActive(true);
-                InventoryBuildManager.Instance.BuildInventoryButton.SetActive(true);
             }
         }      
             if (_isMoving)

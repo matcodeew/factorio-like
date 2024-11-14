@@ -24,7 +24,7 @@ public class MapManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
             Instance = this;
     }
     private void Start()
@@ -42,7 +42,7 @@ public class MapManager : MonoBehaviour
                 GameObject newTile = Instantiate(_tilePrefab);
                 newTile.transform.position = new Vector3(x, 0, y);
                 newTile.transform.parent = _groundParent.transform;
-                newTile.name = "Tile (" + x + " , "+ y + ")";
+                newTile.name = "Tile (" + x + " , " + y + ")";
                 newTile.GetComponent<TileData>().ID = _id;
                 CreateDumpster(newTile.GetComponent<TileData>());
 
@@ -59,39 +59,30 @@ public class MapManager : MonoBehaviour
                 _id++;
             }
         }
-        AllocatedTileObstacle();
         StartCoroutine(InventoryPlayerManager.Instance.UpdateProgressBar());
     }
 
     public float CalculPourcentageDecontaminationChunck()
     {
         float totalDecontamination = 0;
-        int chunkCount = Chuncks.Count;
 
-        foreach (Chunck chunck in Chuncks.Values)
+        foreach(Chunck chunck in Chuncks.Values)
         {
-            float ok = 0;
             float chunkDecontamination = 0;
-
             // Additionne la valeur de décontamination pour chaque tuile du chunk
-            foreach (TileData tileData in chunck.TileChunk.Values)
+            foreach(TileData tileData in chunck.TileChunk.Values)
             {
-                print($"progressValue at {tileData.ID} is {tileData.ProgressValue}");
                 chunkDecontamination += tileData.ProgressValue;
             }
 
             // Calcule la moyenne de décontamination pour ce chunk
-           ok =  chunkDecontamination / chunck.TileChunk.Count;
-
+            float AverrageChunckDecontamination = chunkDecontamination / chunck.TileChunk.Count;
             // Ajoute la moyenne du chunk au total
-            totalDecontamination += ok;
+            totalDecontamination += AverrageChunckDecontamination;
         }
 
         // Calcule la moyenne sur tous les chunks et retourne en pourcentage
-
-        float averageDecontamination = totalDecontamination / chunkCount;
-        averageDecontamination /= 100;
-        return averageDecontamination; // Retourne un pourcentage entre 0 et 100
+        return (totalDecontamination / Chuncks.Count) / 100;
     }
 
 
@@ -108,29 +99,12 @@ public class MapManager : MonoBehaviour
         }
 
     }
-
-    private void AllocatedTileObstacle()
-    {
-        foreach(Chunck chunk in Chuncks.Values)
-        {
-            if(Random.Range(0, 100) < 100 / 4) // une chance sur 4 
-            {
-                chunk.state = (ChunkState)Random.Range(0, System.Enum.GetValues(typeof(ChunkState)).Length);
-            }
-            else
-                chunk.state = ChunkState.None;
-            foreach(TileData tileInChunk in chunk.TileChunk.Values)
-            {
-                tileInChunk.ChunkState = chunk.state;
-            }
-        }
-    }
     public Chunck AccessChunkByTilePos(Vector3 _clikedPos)
     {
         int i = Mathf.FloorToInt(_clikedPos.x) / _chunckSize;
         int j = Mathf.FloorToInt(_clikedPos.z) / _chunckSize;
         Vector3 chunkPos = new Vector3(i, 0, j);
-        if(Chuncks.TryGetValue(chunkPos, out Chunck chunk))
+        if (Chuncks.TryGetValue(chunkPos, out Chunck chunk))
             return chunk;
         else return null;
     }
@@ -142,7 +116,7 @@ public class MapManager : MonoBehaviour
         int z = Mathf.FloorToInt(_clikedPos.z);
         Vector3 tilePos = new Vector3(x, 0, z);
 
-        if(_chunkSelect.TileChunk.TryGetValue(tilePos, out TileData tileData))
+        if (_chunkSelect.TileChunk.TryGetValue(tilePos, out TileData tileData))
             return tileData;
         else return null;
     }

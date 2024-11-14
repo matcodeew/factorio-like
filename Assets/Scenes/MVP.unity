@@ -5831,11 +5831,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _panelBuildingParent: {fileID: 1087318648}
   TrashArea: {fileID: 718150138}
-  InventoryButton: {fileID: 971207969}
+  InventoryButton: {fileID: 1927842182}
   TrashAreaGameObject: {fileID: 718150134}
   InventoryBuildPanel: {fileID: 1205893769}
   BuildStatPanel: {fileID: 1564414261}
-  BuildInventoryButton: {fileID: 1016944396}
   _buildingPrefabs:
   - {fileID: 6634538959374061348, guid: 7f5570a0d6926f0419067b0310e68987, type: 3}
   - {fileID: 6634538959374061348, guid: 56e9bc4b78e3944438c3b705570bf642, type: 3}
@@ -5857,11 +5856,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ProgressBarDecontamination: {fileID: 1954465010}
   _ProgressBarValue: {fileID: 1605458774}
+  _cheatAllInventoryRessource:
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: 59a13f0079aa80c4cbd6caf5ead21578, type: 2}
+    StartQuantity: 100
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: 6e09eb3f3eaa2c94aa4bdc172260fea0, type: 2}
+    StartQuantity: 100
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: b370b913ac98339458f6a2cf7607af88, type: 2}
+    StartQuantity: 100
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: f0078bb8393c0dc48adee180fd3eb013, type: 2}
+    StartQuantity: 100
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: 07798cfa844b833448217ebc5f3b3d4c, type: 2}
+    StartQuantity: 100
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: f4bf8295af713d94ea82c82987d9be30, type: 2}
+    StartQuantity: 100
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: 67208f63ace2cec4fa935e9e0757a42e, type: 2}
+    StartQuantity: 100
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: 93e3e1cf7bb79234c87e719af291967e, type: 2}
+    StartQuantity: 100
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: 9abd1b5bc50f80141899f6c406b56811, type: 2}
+    StartQuantity: 100
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: 9bb42eb2fa9f53b4cbe61cdee2d7f716, type: 2}
+    StartQuantity: 100
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: 6aa6676fdf6399647a1143f578d1856c, type: 2}
+    StartQuantity: 100
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: 6604ab217bc7ee740b29bee2c6fbae39, type: 2}
+    StartQuantity: 100
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: 180b266b46ed01d4eb5eeb38e7c22913, type: 2}
+    StartQuantity: 100
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: c32917aeb7d0caf4285e644e8d6c8389, type: 2}
+    StartQuantity: 100
   _inventoryParentSlot: {fileID: 566505470}
   SlotGameobjectList: []
   _globalPrefab: {fileID: 903418172691988424, guid: b0618175f0344cb4496995f3e954438d,
     type: 3}
-  EmptyPrefab: {fileID: 0}
+  EmptyPrefab: {fileID: 903418172691988424, guid: a3ccca3e4f0600b4bb9c850ddf66ce0a,
+    type: 3}
 --- !u!1 &1305002768
 GameObject:
   m_ObjectHideFlags: 0
@@ -6853,55 +6896,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1462565249}
   m_CullTransparentMesh: 1
---- !u!1 &1471903461
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1471903463}
-  - component: {fileID: 1471903464}
-  m_Layer: 0
-  m_Name: UiManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1471903463
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1471903461}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 958.3629, y: 679.67737, z: -19.910217}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1471903464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1471903461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d06748b549346446af656817c86f4e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueObjects:
-  - uiObject: {fileID: 783098659}
-    dialogueText: rzgeagethaetheatheth
-  dialogueBubblePrefab: {fileID: 3538471857909899254, guid: 89ee457589ddc7c44aed567e668fc6b1,
-    type: 3}
 --- !u!1 &1491019555
 GameObject:
   m_ObjectHideFlags: 0
@@ -9385,4 +9379,3 @@ SceneRoots:
   - {fileID: 1717661255}
   - {fileID: 1295283482}
   - {fileID: 1736082914}
-  - {fileID: 1471903463}

@@ -70,7 +70,7 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
 
             if (inventorySlot != null)
             {
-                targetItem.AddToQuantity(targetItem.GetComponent<InvRessource>());
+                AddToQuantity(targetItem.GetComponent<InvRessource>());
             }
             ParentAfterDrag.tag = "Empty";
             Destroy(ParentAfterDrag.gameObject);
@@ -136,7 +136,7 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
 
         if (currentRessource != null && otherRessource != null && currentRessource.Ressource.Id == otherRessource.Ressource.Id)
         {
-            currentRessource.Quantity += otherRessource.Quantity;
+            otherRessource.Quantity += currentRessource.Quantity;
         }
     }
 }

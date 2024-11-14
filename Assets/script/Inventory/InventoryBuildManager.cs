@@ -17,7 +17,6 @@ public class InventoryBuildManager : MonoBehaviour
     public GameObject TrashAreaGameObject;
     public GameObject InventoryBuildPanel;
     public GameObject BuildStatPanel;
-    public GameObject BuildInventoryButton;
 
     [SerializeField] private List<GameObject> _buildingPrefabs = new List<GameObject>();
     [SerializeField] private GameObject _inventoryCasePrefab;
@@ -74,6 +73,10 @@ public class InventoryBuildManager : MonoBehaviour
         {
            _uiCanvasGroup.alpha = targetAlpha;
         }
+    }
+    private void CanBuild()
+    {
+
     }
     public void UpdateBuildingCase()
     {
