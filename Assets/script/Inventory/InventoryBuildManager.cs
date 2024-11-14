@@ -57,14 +57,38 @@ public class InventoryBuildManager : MonoBehaviour
         }
     }
 
-    public void CreateObjectOnMap(GameObject prefab, Vector3 position)
+    public void CreateObjectOnMap(GameObject prefab, Vector3 position, BuildingData data)
     {
         if (!MapManager.Instance.AccessTileByPos(position).IsOccupied)
         {
+            ReduceRessource(data);
             GameObject newGo = Instantiate(prefab, position, Quaternion.identity, BuildingPrefabItemsParent);
             MapManager.Instance.AccessTileByPos(position).OnTop = newGo;
             MapManager.Instance.AccessTileByPos(position).IsOccupied = true;
         }
+    }
+
+    public void ReduceRessource(BuildingData buildingData)
+    {
+        Dictionary<Scriptable_Ressources, int> invRessources = InventoryPlayerManager.Instance.SlotGameobjectList
+           .ToDictionary(ressource => ressource.Ressource, ressource => ressource.Quantity);
+
+        foreach (NeededRessource needed in buildingData.NeededRessources)
+        {
+            if (invRessources.ContainsKey(needed.Ressource))
+            {
+                invRessources[needed.Ressource] -= needed.Quantity;
+            }
+        }
+
+        foreach (InvRessource ressource in InventoryPlayerManager.Instance.SlotGameobjectList)
+        {
+            if (invRessources.ContainsKey(ressource.Ressource))
+            {
+                ressource.Quantity = invRessources[ressource.Ressource];
+            }
+        }
+        UpdateBuildingCase();
     }
 
     public void FadeUIElement(float targetAlpha)
