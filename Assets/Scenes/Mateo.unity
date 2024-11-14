@@ -6152,7 +6152,6 @@ MonoBehaviour:
   TrashAreaGameObject: {fileID: 718150134}
   InventoryBuildPanel: {fileID: 1205893769}
   BuildStatPanel: {fileID: 1564414261}
-  BuildInventoryButton: {fileID: 1016944396}
   _buildingPrefabs:
   - {fileID: 6634538959374061348, guid: 7f5570a0d6926f0419067b0310e68987, type: 3}
   - {fileID: 6634538959374061348, guid: 56e9bc4b78e3944438c3b705570bf642, type: 3}
@@ -6174,6 +6173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ProgressBarDecontamination: {fileID: 1954465010}
   _ProgressBarValue: {fileID: 1605458774}
+  _cheatAllInventoryRessource: []
   _inventoryParentSlot: {fileID: 566505470}
   SlotGameobjectList: []
   _globalPrefab: {fileID: 903418172691988424, guid: b0618175f0344cb4496995f3e954438d,
@@ -7903,6 +7903,7 @@ MonoBehaviour:
   ThirdOutput: {fileID: 0}
   _machineInput: {fileID: 2095969317}
   _parentSlot: {fileID: 1742675768}
+  _instantiateOutputList: []
   ActionWasCancelled: 0
 --- !u!1 &1573375085
 GameObject:
