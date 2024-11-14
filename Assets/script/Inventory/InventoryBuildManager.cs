@@ -75,54 +75,8 @@ public class InventoryBuildManager : MonoBehaviour
            _uiCanvasGroup.alpha = targetAlpha;
         }
     }
-    private void CanBuild()
-    {
-
-    }
     public void UpdateBuildingCase()
     {
-        //List<Scriptable_Ressources> _ressourceNeed = new();
-        //List<Scriptable_Ressources> _stillRessource = new();
-
-        //foreach(var Building in _prefabItems)
-        //{
-        //    BuildingRessourceAccessor data = Building?.GetComponent<BuildingRessourceAccessor>();
-        //    if (data != null)
-        //    {
-        //        foreach(var ItemNeed in data.RessourceNeedToBuild)
-        //        {
-        //            _ressourceNeed.Add(ItemNeed);
-        //        }
-        //        foreach(var ItemHave in InventoryPlayerManager.Instance.SlotGameobjectList)
-        //        {
-        //            foreach(var ItemNeed in _ressourceNeed)
-        //            {
-        //                if(ItemNeed == ItemHave.Ressource)
-        //                {
-        //                    _stillRessource.Add(ItemNeed);
-        //                    break; // si il trouve la ressource
-        //                }
-        //            }
-        //        }
-        //    }
-        //    if (_stillRessource.Count == _ressourceNeed.Count)
-        //    {
-        //        print($"can build {Building.name}");
-        //    }
-        //    else { print($"cant build {Building.name}"); }
-        //}
-
-
-
-
-
-
-
-
-
-
-
-
         Dictionary<Scriptable_Ressources, int> invRessources = new();
         foreach (InvRessource ressource in InventoryPlayerManager.Instance.SlotGameobjectList)
         {
