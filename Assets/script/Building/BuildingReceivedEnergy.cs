@@ -3,28 +3,23 @@ using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 
-public class BuildingReceivedEnergy : MonoBehaviour
+public class BuildingReceivedEnergy : MonoBehaviour, ISubscrireEvent
 {
     public List<GenerateEnergy> ConnectGenerator = new();
     public bool IsLinked;
     [SerializeField, ReadOnly(true)] private int _sumOfEnergyReceived;
 
     private BuildingManager instance;
-
-    private void Awake()
+    public void SubscrireEvent()
     {
         instance = BuildingManager.Instance;
-    }
-    private void Start()
-    {
         instance.UpdateBuildingEnergy += CalculateSumOfEnergy;
         CalculateSumOfEnergy();
     }
-
     private void CalculateSumOfEnergy()
     {
         _sumOfEnergyReceived = 0;
-        if(ConnectGenerator.Count > 0)
+        if (ConnectGenerator.Count > 0)
         {
             _sumOfEnergyReceived = ConnectGenerator.Sum(gen => gen.Energy / gen.TransformBuildingConnected.Count);
             Debug.Log($"Total energy received by {gameObject.name} is : {_sumOfEnergyReceived}");
@@ -33,14 +28,14 @@ public class BuildingReceivedEnergy : MonoBehaviour
     }
     private void DestroyTransformer()
     {
-        foreach(var gen in ConnectGenerator)
+        foreach (var gen in ConnectGenerator)
         {
-            if(gen.TransformBuildingConnected.Contains(this))
+            if (gen.TransformBuildingConnected.Contains(this))
                 gen.TransformBuildingConnected.Remove(this);
             else { Debug.LogWarning($" the building {gen.gameObject.name} try to remove wrong building"); }
-            foreach(GameObject link in gen._linkConnect)
+            foreach (GameObject link in gen._linkConnect)
             {
-                if(link.GetComponent<LineRenderer>().GetPosition(1) == transform.position)
+                if (link.GetComponent<LineRenderer>().GetPosition(1) + new Vector3(0, 0.5f, 0) == transform.position)
                 {
                     gen._linkConnect.Remove(link);
                     Destroy(link);
@@ -53,7 +48,7 @@ public class BuildingReceivedEnergy : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if(instance.CanDestroyBuilding)
+        if (instance.CanDestroyBuilding)
         {
             Destroy(gameObject);
             DestroyTransformer();

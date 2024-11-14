@@ -15,10 +15,6 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private int SolarPanelEnergy;
     [Range(0.0f, 100.0f)] public int WindForcePercent;
     [SerializeField] private int WindTurbineEnergy;
-
-    [Header("Building Prefab")]
-    public GameObject SolarPanelPrefab;
-    public GameObject FurnacePrefab;
     private GameObject _buildingInProgress;
 
 
@@ -52,34 +48,34 @@ public class BuildingManager : MonoBehaviour
         int EnergyGenerated = (int)Mathf.Round(RandEnergy * WindForcePercent / 100);
         return EnergyGenerated;
     }
-    public void CreateBuilding()
-    {
-        //create SolarPanel
-        AllBuilding.Add(CreateSolarPanel(new Vector3(0, 1, 2)));
-        AllBuilding.Add(CreateSolarPanel(new Vector3(5, 1, 2)));
-        AllBuilding.Add(CreateSolarPanel(new Vector3(10, 1, 2)));
+    //public void CreateBuilding()
+    //{
+    //    //create SolarPanel
+    //    AllBuilding.Add(CreateSolarPanel(new Vector3(0, 1, 2)));
+    //    AllBuilding.Add(CreateSolarPanel(new Vector3(5, 1, 2)));
+    //    AllBuilding.Add(CreateSolarPanel(new Vector3(10, 1, 2)));
 
-        //Create Furnace
-        AllBuilding.Add(CreateFurnace(new Vector3(0, 1f, 10)));
-        AllBuilding.Add(CreateFurnace(new Vector3(5, 1f, 10)));
-        AllBuilding.Add(CreateFurnace(new Vector3(10, 1f, 10)));
-    }
-    public GameObject CreateSolarPanel(Vector3 _pos)
-    {
-        _buildingInProgress = Instantiate(SolarPanelPrefab, _pos, Quaternion.identity);
-        _buildingInProgress.name = "SolarPanel " + _solarPanelId;
-        MapManager.Instance.AccessTileByPos(_pos).OnTop = _buildingInProgress;
-        _solarPanelId++;
-        return _buildingInProgress;
-    }
-    public GameObject CreateFurnace(Vector3 _pos)
-    {
-        _buildingInProgress = Instantiate(FurnacePrefab, _pos, Quaternion.identity);
-        _buildingInProgress.name = "Furnace " + _furnaceId;
-        MapManager.Instance.AccessTileByPos(_pos).OnTop = _buildingInProgress;
-        _furnaceId++;
-        return _buildingInProgress;
-    }
+    //    //Create Furnace
+    //    AllBuilding.Add(CreateFurnace(new Vector3(0, 1f, 10)));
+    //    AllBuilding.Add(CreateFurnace(new Vector3(5, 1f, 10)));
+    //    AllBuilding.Add(CreateFurnace(new Vector3(10, 1f, 10)));
+    //}
+    //public GameObject CreateSolarPanel(Vector3 _pos)
+    //{
+    //    _buildingInProgress = Instantiate(SolarPanelPrefab, _pos, Quaternion.identity);
+    //    _buildingInProgress.name = "SolarPanel " + _solarPanelId;
+    //    MapManager.Instance.AccessTileByPos(_pos).OnTop = _buildingInProgress;
+    //    _solarPanelId++;
+    //    return _buildingInProgress;
+    //}
+    //public GameObject CreateFurnace(Vector3 _pos)
+    //{
+    //    _buildingInProgress = Instantiate(FurnacePrefab, _pos, Quaternion.identity);
+    //    _buildingInProgress.name = "Furnace " + _furnaceId;
+    //    MapManager.Instance.AccessTileByPos(_pos).OnTop = _buildingInProgress;
+    //    _furnaceId++;
+    //    return _buildingInProgress;
+    //}
 
     private IEnumerator PeriodicEnergyUpdate(float _time)
     {
