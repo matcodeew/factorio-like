@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class DragUIElementBuild : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -28,37 +29,38 @@ public class DragUIElementBuild : MonoBehaviour, IBeginDragHandler, IDragHandler
 
         if (_prefabToInstantiate != null)
         {
-           _previewPrefabToInstantiate = Instantiate(_prefabToInstantiate);
+            _previewPrefabToInstantiate = Instantiate(_prefabToInstantiate);
         }
         InventoryBuildManager.Instance.FadeUIElement(0f);
     }
 
     public void OnDrag(PointerEventData data)
     {
+        InventoryBuildManager.Instance.TrashAreaGameObject.SetActive(true);
+        if (_isOverTrash) return;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
             _uiElements.transform as RectTransform, data.position, data.pressEventCamera, out Vector2 localPointerPosition))
         {
             Vector3 offset = localPointerPosition - _originalPointerPosition;
-            _uiElements.transform.localPosition = _originalPanelPosition + offset;
-            InventoryBuildManager.Instance.TrashAreaGameObject.SetActive(true);
 
             if (_previewPrefabToInstantiate != null)
             {
                 UpdatePreviewPosition(data);
-            }
-
-            _isOverTrash = IsPointerOverTrash(data);
-            if (_isOverTrash)
-            {
-                OnEndDrag(data);
             }
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        _uiElements.transform.localPosition = _originalPanelPosition;
         InventoryBuildManager.Instance.TrashAreaGameObject.SetActive(false);
+        if (_isOverTrash && _previewPrefabToInstantiate != null)
+        {
+            Destroy(_previewPrefabToInstantiate);
+            _previewPrefabToInstantiate = null;
+            InventoryBuildManager.Instance.FadeUIElement(1f);
+            return;
+        }
+
         if (_previewPrefabToInstantiate != null)
         {
             TryPlaceObject(eventData);
@@ -91,7 +93,8 @@ public class DragUIElementBuild : MonoBehaviour, IBeginDragHandler, IDragHandler
         if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f))
         {
             Vector3 snappedPosition = SnapToGrid(hit.point);
-            InventoryBuildManager.Instance.CreateObjectOnMap(_prefabToInstantiate, snappedPosition);
+            BuildingData data = _prefabToInstantiate.GetComponent<BuildingData>();
+            InventoryBuildManager.Instance.CreateObjectOnMap(_prefabToInstantiate,snappedPosition,data);
         }
     }
 

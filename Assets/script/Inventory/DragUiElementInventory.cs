@@ -127,7 +127,6 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             }
             ParentAfterDrag.tag = "Empty";
         }
-
     }
 
     public void AddToQuantity(InvRessource otherRessource)
