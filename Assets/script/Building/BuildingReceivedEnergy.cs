@@ -32,7 +32,6 @@ public class BuildingReceivedEnergy : MonoBehaviour, ISubscrireEvent
         {
             if (gen.TransformBuildingConnected.Contains(this))
                 gen.TransformBuildingConnected.Remove(this);
-            else { Debug.LogWarning($" the building {gen.gameObject.name} try to remove wrong building"); }
             foreach (GameObject link in gen._linkConnect)
             {
                 if (link.GetComponent<LineRenderer>().GetPosition(1) + new Vector3(0, 0.5f, 0) == transform.position)

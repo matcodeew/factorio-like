@@ -28,11 +28,11 @@ public class RessourceTransformer : MonoBehaviour
 
 
     private bool _isInAction = false;
-    public void SetTypeOfMachine(BuildingRessourceAccessor data)
-    {
-        _machineType = data.MachineType;
-        _processTime = data.ProcessTime;
-    }
+    //public void SetTypeOfMachine(BuildingRessourceAccessor data)
+    //{
+    //    _machineType = data.MachineType;
+    //    _processTime = data.ProcessTime;
+    //}
 
     private void Update()
     {
@@ -52,6 +52,7 @@ public class RessourceTransformer : MonoBehaviour
                 ActionWasCancelled = false;
             }
         }
+        CheckEmptyCase();
     }
 
     private bool MachineInputNotNull()
@@ -235,10 +236,20 @@ public class RessourceTransformer : MonoBehaviour
             CaseToRemove.Clear();
         }
     }
+    private void CheckEmptyCase()
+    {
+        foreach(var output in _instantiateOutputList)
+        {
+            if(output.transform.childCount == 0)
+            {
+                output.tag = "Empty";
+            }
+        }
+    }
     private bool CheckIfAllOutputCaseIsEmpty()
     {
         DeleteOutPutCase();
-        if (_instantiateOutputList.Count == 0)
+        if(_instantiateOutputList.Count == 0)
         {
             return true;
         }

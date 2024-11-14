@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PlayerController : MonoBehaviour
     const int RIGHT_MOUSE_BUTTON = 1;
 
     [SerializeField] private MapManager _mapManager;
+
+    public GameObject _actualBuilding;
 
     void Start()
     {
@@ -34,7 +37,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(RIGHT_MOUSE_BUTTON))
         {
             SetTargetPosition();
-            InventoryBuildManager.Instance.BuildStatPanel.SetActive(false);
+            if(_actualBuilding != null)
+                _actualBuilding.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         if (Physics.Raycast(ray, out hit))
@@ -48,9 +52,10 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetMouseButtonDown(RIGHT_MOUSE_BUTTON) && hit.collider.CompareTag("Transformer"))
             {
+                _actualBuilding = hit.collider.gameObject;
                 SetTargetPosition();
-                InventoryBuildManager.Instance.BuildStatPanel.SetActive(true);
-                InventoryBuildManager.Instance.BuildStatPanel.GetComponent<RessourceTransformer>().SetTypeOfMachine(hit.collider.GetComponent<BuildingRessourceAccessor>());
+                _actualBuilding.transform.GetChild(0).gameObject.SetActive(true);
+                //InventoryBuildManager.Instance.BuildStatPanel.SetActive(true);
 
                 InventoryBuildManager.Instance.InventoryBuildPanel.SetActive(false);
                 InventoryBuildManager.Instance.InventoryButton.SetActive(true);

@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-using static UnityEditor.Progress;
+using UnityEngine;
 using static BuildingData;
 
 public class InventoryBuildManager : MonoBehaviour
 {
     public static InventoryBuildManager Instance;
-
+    [SerializeField] public Transform ImageParentDrag;
     [SerializeField] private RectTransform _panelBuildingParent;
     private RectTransform BuildingPrefabItemsParent;
 
@@ -16,7 +15,7 @@ public class InventoryBuildManager : MonoBehaviour
     public GameObject InventoryButton;
     public GameObject TrashAreaGameObject;
     public GameObject InventoryBuildPanel;
-    public GameObject BuildStatPanel;
+   // public GameObject BuildStatPanel;
 
     [SerializeField] private List<GameObject> _buildingPrefabs = new List<GameObject>();
     [SerializeField] private GameObject _inventoryCasePrefab;

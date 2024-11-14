@@ -20,11 +20,14 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             _quantityText.text = invRessource.Quantity.ToString();
         }
     }
-
+    private void Awake()
+    {
+        //ParentAfterDrag = InventoryBuildManager.Instance.ImageParentDrag;
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         ParentAfterDrag = transform.parent;
-        transform.SetParent(transform.root);
+        transform.SetParent(InventoryBuildManager.Instance.ImageParentDrag);
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -36,7 +39,6 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
         EventSystem.current.RaycastAll(eventData, results);
         Transform targetTransform = null;
         DragUiElementInventory targetItem = null;
-
         foreach (var result in results)
         {
             if (result.gameObject.CompareTag("Empty"))
@@ -125,7 +127,7 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             {
                 dragScript.enabled = true;
             }
-            ParentAfterDrag.tag = "Empty";
+                ParentAfterDrag.tag = "Empty";
         }
     }
 
