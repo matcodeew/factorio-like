@@ -7,7 +7,7 @@ public class BuildingReceivedEnergy : MonoBehaviour, ISubscrireEvent
 {
     public List<GenerateEnergy> ConnectGenerator = new();
     public bool IsLinked;
-    [SerializeField, ReadOnly(true)] private int _sumOfEnergyReceived;
+    [SerializeField, ReadOnly(true)] private float _sumOfEnergyReceived;
 
     private BuildingManager instance;
     public void SubscrireEvent()
