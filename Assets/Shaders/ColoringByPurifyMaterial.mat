@@ -40,7 +40,7 @@ Material:
     m_Floats:
     - _IsInPurifiedView: 0
     - _IsPurified: 0
-    - _PurifiedValue: 0.668
+    - _PurifiedValue: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Test: 0
