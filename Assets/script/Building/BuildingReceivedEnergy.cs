@@ -3,15 +3,21 @@ using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(BuildingData))]
 public class BuildingReceivedEnergy : MonoBehaviour, ISubscrireEvent
 {
     public List<GenerateEnergy> ConnectGenerator = new();
     public bool IsLinked;
-    [SerializeField, ReadOnly(true)] private float _sumOfEnergyReceived;
+    private float _sumOfEnergyReceived;
+
+    private bool _isPowered = false;
+    private BuildingData _buildingData;
 
     private BuildingManager instance;
     public void SubscrireEvent()
     {
+        _buildingData = GetComponent<BuildingData>();
+
         instance = BuildingManager.Instance;
         instance.UpdateBuildingEnergy += CalculateSumOfEnergy;
         CalculateSumOfEnergy();
@@ -25,7 +31,17 @@ public class BuildingReceivedEnergy : MonoBehaviour, ISubscrireEvent
             Debug.Log($"Total energy received by {gameObject.name} is : {_sumOfEnergyReceived}");
         }
         else { Debug.Log($"No Generator connect to {gameObject.name}"); }
+
+        _isPowered = _sumOfEnergyReceived >= _buildingData.NeededEnergy;
     }
+
+    public bool IsPowered()
+    {
+        return _isPowered;
+    }
+
+
+
     private void DestroyTransformer()
     {
         foreach (var gen in ConnectGenerator)

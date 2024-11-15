@@ -5,6 +5,7 @@ using UnityEngine;
 public class BuildingData : MonoBehaviour
 {
     public string Name;
+    public float NeededEnergy = 0.0f;
     public List<NeededRessource> NeededRessources;
 
     [System.Serializable]

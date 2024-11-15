@@ -7,11 +7,11 @@ public class CameraController : MonoBehaviour
     public float MaxZoom;
     public float MinX, MaxX, MinY, MaxY;
 
-    private float _maxSpeed = 50f;     
+    private float _maxSpeed = 50f;
     private float _accelerationRate = 20f;
     private float _speed = 30f;
     private float _border = 50.0f;
-    private float _accelerationX = 5f;  
+    private float _accelerationX = 5f;
     private float _accelerationY = 5f;
 
     private Camera _cam;
@@ -36,6 +36,13 @@ public class CameraController : MonoBehaviour
             _cam.fieldOfView -= scrollInput * ZoomSpeed;
             _cam.fieldOfView = Mathf.Clamp(_cam.fieldOfView, MinZoom, MaxZoom);
         }
+
+        // Toggle Purified View
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            MapManager.Instance.FireTogglePurifyViewEvent();
+        }
+
     }
 
     private void MoveCamera()
