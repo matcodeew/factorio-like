@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class InventoryPlayerManager : MonoBehaviour
 {
+    [SerializeField] private GameObject _endShipGameObject;
     public static InventoryPlayerManager Instance;
     [Header("Progress Bar")]
     [SerializeField] private Image _ProgressBarDecontamination;
@@ -63,6 +64,10 @@ public class InventoryPlayerManager : MonoBehaviour
             _ProgressBarDecontamination.fillAmount = MapManager.Instance.CalculPourcentageDecontaminationChunck();
             float progressPercentage = Mathf.Round(_ProgressBarDecontamination.fillAmount * 100);
             _ProgressBarValue.text = progressPercentage.ToString() + "%";
+            if (_ProgressBarDecontamination.fillAmount >= 1) // ou 100%
+            {
+                _endShipGameObject.SetActive(true);
+            }
             yield return new WaitForSeconds(3f);
         }
     }

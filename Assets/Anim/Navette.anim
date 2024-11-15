@@ -486,7 +486,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 6.516667
+  - time: 9
     functionName: DestroyShip
     data: 
     objectReferenceParameter: {fileID: 0}
