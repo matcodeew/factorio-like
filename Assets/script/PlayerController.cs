@@ -81,6 +81,8 @@ public class PlayerController : MonoBehaviour
     public void MovingPlayer()
     {
         transform.LookAt(_targetPosition);
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x - 80, transform.rotation.eulerAngles.y - 180, transform.rotation.eulerAngles.z - 157);
+
         transform.position = Vector3.MoveTowards(transform.position, _targetPosition, Speed * Time.deltaTime);
 
         if (transform.position == _targetPosition)
@@ -88,4 +90,5 @@ public class PlayerController : MonoBehaviour
 
         Debug.DrawLine(transform.position, _targetPosition, Color.red);
     }
+
 }
