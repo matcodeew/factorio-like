@@ -28,7 +28,7 @@ public class InventoryPlayerManager : MonoBehaviour
         foreach(RessourceData ressource in _cheatAllInventoryRessource)
         {
             ressource.Id = ressource.Ressources.Id;
-            for(int i = 0; i < 100; i++)
+            for(int i = 0; i < ressource.StartQuantity; i++)
             {
                 CreateNewInventorySlot(ressource);
             }
@@ -43,7 +43,7 @@ public class InventoryPlayerManager : MonoBehaviour
             if(ressources.Id == item.Ressource.Id)
             {
                 _itemFounded = true;
-                item.Quantity += ressources.StartQuantity;
+                item.Quantity++;
                 break;
             }
         }

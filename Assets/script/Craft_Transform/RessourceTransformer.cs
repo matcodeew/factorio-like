@@ -23,10 +23,16 @@ public class RessourceTransformer : MonoBehaviour
     [SerializeField] private Transform _machineInput;
     private InvRessource _currentRessourceToTransform;
     [SerializeField] private Transform _parentSlot;
+    private bool CreateCaseOneTime = true;
     [SerializeField] private List<GameObject> _instantiateOutputList = new();
 
 
     private bool _isInAction = false;
+    //public void SetTypeOfMachine(BuildingRessourceAccessor data)
+    //{
+    //    _machineType = data.MachineType;
+    //    _processTime = data.ProcessTime;
+    //}
 
     private void Update()
     {
@@ -38,26 +44,15 @@ public class RessourceTransformer : MonoBehaviour
                 StartTransformation();
             }
         }
-        else if(_instantiateOutputList.Count >= 1)
+        else
         {
-            MoveOutputInInventory();
-
+            if(CheckIfAllOutputCaseIsEmpty())
+            {
+                _isInAction = false;
+                ActionWasCancelled = false;
+            }
         }
-    }
-
-    private void MoveOutputInInventory()
-    {
-        foreach (GameObject outputCase in _instantiateOutputList)
-        {
-            InvRessource ressource = outputCase.GetComponentInChildren<InvRessource>();
-            InventoryPlayerManager.Instance.CreateNewInventorySlot(new RessourceData(ressource.Ressource.Id, ressource.Ressource, ressource.Quantity));
-            DestroyAllChildren(outputCase.transform);
-            outputCase.tag = "Empty";
-            DeleteOutPutCase(outputCase);
-        }
-        _instantiateOutputList.Clear();
-        _isInAction = false;
-        ActionWasCancelled = false;
+        CheckEmptyCase();
     }
 
     private bool MachineInputNotNull()
@@ -101,18 +96,17 @@ public class RessourceTransformer : MonoBehaviour
                 yield return new WaitForSeconds(_processTime);
                 if (!ActionWasCancelled)
                 {
-                    //if (_machineInput.childCount == 0)
-                    //{
-                    //    ActionWasCancelled = true;
-                    //    break;
-                    //}
+                    if(_machineInput.childCount == 0)
+                    {
+                        ActionWasCancelled = true;
+                        break;
+                    }
                     transformRessource();
                     DisplayOutputPrefabs();
                 }
-                if (ActionWasCancelled) { break; }
+                if(ActionWasCancelled) { break; }
                 ActionWasCancelled = false;
             }
-            ActionWasCancelled = false;
         }
     }
 
@@ -166,15 +160,17 @@ public class RessourceTransformer : MonoBehaviour
             return;
         }
 
-        if (_currentRessourceToTransform.Quantity <= 0)
+        if(_currentRessourceToTransform.Quantity <= 0)
         {
             StopTransformation();
             DestroyAllChildren(_parentSlot);
+            CheckIfAllOutputCaseIsEmpty();
         }
-        if (_machineInput.childCount <= 0)
+        if(_parentSlot.childCount < 0)
         {
             StopTransformation();
             DestroyAllChildren(_parentSlot);
+            CheckIfAllOutputCaseIsEmpty();
         }
 
         if (FirstOutput != null)
@@ -194,23 +190,13 @@ public class RessourceTransformer : MonoBehaviour
 
     }
 
-    private void CreateAndAlignOutputPrefab(Scriptable_Ressources outputResource, string newTag)
+    private void CreateAndAlignOutputPrefab(Scriptable_Ressources outputResource, string newTag) ///// si le panel est désactiver le script est
+                                                                                                 ///// arrete de fonctionner et on ne peut pas relancer 
     {
+        DeleteOutPutCase();
         bool itemFound = false;
         foreach (GameObject item in _instantiateOutputList)
         {
-            if(item.tag == "Empty")
-            { 
-                itemFound = true;
-                Transform newImage = Instantiate(InventoryPlayerManager.Instance._globalPrefab.transform.GetChild(0), item.transform);
-                InvRessource invRessource = newImage.AddComponent<InvRessource>();
-                invRessource.Ressource = outputResource;
-                invRessource.Quantity = 1;
-                newImage.GetComponent<Image>().sprite = outputResource.Sprite;
-                item.tag = newTag;
-                break;
-            }
-
             InvRessource ressource = item.GetComponentInChildren<InvRessource>();
             if (ressource.Ressource.Id == outputResource.Id)
             {
@@ -230,16 +216,40 @@ public class RessourceTransformer : MonoBehaviour
             outputItem.tag = newTag;
         }
     }
-    private void DeleteOutPutCase(GameObject outputCase)
+    private void DeleteOutPutCase() // si on met une ressource dans l'inventaire en même temps qu'une transfo est faite ya une erreur 
     {
-        if (outputCase.tag == "Empty")
+        List<GameObject> CaseToRemove = new List<GameObject>();
+        foreach(GameObject outputCase in _instantiateOutputList)
         {
-            Destroy(outputCase);
+            if(outputCase.tag == "Empty")
+            {
+                Destroy(outputCase);
+                CaseToRemove.Add(outputCase);
+            }
+        }
+        if (CaseToRemove.Count > 0)
+        {
+            foreach(GameObject outputCase in CaseToRemove)
+            {
+                _instantiateOutputList.Remove(outputCase);
+            }
+            CaseToRemove.Clear();
+        }
+    }
+    private void CheckEmptyCase()
+    {
+        foreach(var output in _instantiateOutputList)
+        {
+            if(output.transform.childCount == 0)
+            {
+                output.tag = "Empty";
+            }
         }
     }
     private bool CheckIfAllOutputCaseIsEmpty()
     {
-        if (_instantiateOutputList.Count == 0)
+        DeleteOutPutCase();
+        if(_instantiateOutputList.Count == 0)
         {
             return true;
         }

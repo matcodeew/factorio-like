@@ -28,8 +28,6 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
     {
         ParentAfterDrag = transform.parent;
         transform.SetParent(InventoryBuildManager.Instance.ImageParentDrag);
-
-        ParentAfterDrag.tag = "Empty";
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -91,18 +89,18 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             bool isImageEnabled = itemImage != null && itemImage.enabled;
             Destroy(ParentAfterDrag.gameObject);
             ParentAfterDrag.tag = "Empty";
-            transform.SetParent(targetTransform);
-            transform.position = targetTransform.position;
+            transform.SetParent(targetTransform);  
+            transform.position = targetTransform.position; 
 
             if (itemImage != null)
             {
-                itemImage.enabled = isImageEnabled;
+                itemImage.enabled = isImageEnabled;  
             }
 
             DragUiElementInventory dragScript = gameObject.GetComponent<DragUiElementInventory>();
             if (dragScript != null)
             {
-                dragScript.enabled = true;
+                dragScript.enabled = true;  
             }
             targetTransform.tag = "InventorySlot";
         }
@@ -112,7 +110,7 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             transform.position = ParentAfterDrag.position;
         }
 
-        if (targetTransform != null && targetTransform.CompareTag("Panel"))
+        if (targetTransform.CompareTag("Panel"))
         {
             targetTransform = targetTransform.gameObject.transform;
             GameObject newItem = Instantiate(InventoryPlayerManager.Instance.EmptyPrefab, targetTransform);
@@ -129,7 +127,7 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             {
                 dragScript.enabled = true;
             }
-           // ParentAfterDrag.tag = "Empty";
+                ParentAfterDrag.tag = "Empty";
         }
     }
 

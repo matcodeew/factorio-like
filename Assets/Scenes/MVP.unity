@@ -577,7 +577,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &261402653
@@ -3732,7 +3732,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &897302411
@@ -5760,46 +5760,46 @@ MonoBehaviour:
   _cheatAllInventoryRessource:
   - Id: 0
     Ressources: {fileID: 11400000, guid: 59a13f0079aa80c4cbd6caf5ead21578, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   - Id: 0
     Ressources: {fileID: 11400000, guid: 6e09eb3f3eaa2c94aa4bdc172260fea0, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   - Id: 0
     Ressources: {fileID: 11400000, guid: b370b913ac98339458f6a2cf7607af88, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   - Id: 0
     Ressources: {fileID: 11400000, guid: f0078bb8393c0dc48adee180fd3eb013, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   - Id: 0
     Ressources: {fileID: 11400000, guid: 07798cfa844b833448217ebc5f3b3d4c, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   - Id: 0
     Ressources: {fileID: 11400000, guid: f4bf8295af713d94ea82c82987d9be30, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   - Id: 0
     Ressources: {fileID: 11400000, guid: 67208f63ace2cec4fa935e9e0757a42e, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   - Id: 0
     Ressources: {fileID: 11400000, guid: 93e3e1cf7bb79234c87e719af291967e, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   - Id: 0
     Ressources: {fileID: 11400000, guid: 9abd1b5bc50f80141899f6c406b56811, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   - Id: 0
     Ressources: {fileID: 11400000, guid: 9bb42eb2fa9f53b4cbe61cdee2d7f716, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   - Id: 0
     Ressources: {fileID: 11400000, guid: 6aa6676fdf6399647a1143f578d1856c, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   - Id: 0
     Ressources: {fileID: 11400000, guid: 6604ab217bc7ee740b29bee2c6fbae39, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   - Id: 0
     Ressources: {fileID: 11400000, guid: 180b266b46ed01d4eb5eeb38e7c22913, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   - Id: 0
     Ressources: {fileID: 11400000, guid: c32917aeb7d0caf4285e644e8d6c8389, type: 2}
-    StartQuantity: 1
+    StartQuantity: 100
   _inventoryParentSlot: {fileID: 566505470}
   SlotGameobjectList: []
   _globalPrefab: {fileID: 903418172691988424, guid: b0618175f0344cb4496995f3e954438d,

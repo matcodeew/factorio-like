@@ -71,7 +71,7 @@ public class ConnectBuilding : MonoBehaviour
         GameObject onTop = MapManager.Instance.AccessTileByPos(hit.point).OnTop;
         if(onTop != null && _generateEnergy != null)
         {
-            RessourceTransformer ressourceTransformer = onTop.GetComponent<RessourceTransformer>();
+            BuildingRessourceAccessor ressourceTransformer = onTop.GetComponent<BuildingRessourceAccessor>();
             if(_generateEnergy.CanConnectBuilding() && ressourceTransformer != null)
             {
                 _generateEnergy.TransformBuildingConnected.Add(onTop.GetComponent<BuildingReceivedEnergy>());
