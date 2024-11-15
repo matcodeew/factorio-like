@@ -4,7 +4,6 @@ using UnityEngine;
 public class RessourseSpot : MonoBehaviour
 {
     public float MiningTime;
-    public int Quantity;
     public Scriptable_RessourceSpot Spot;
     public Dictionary<int, RessourceData> AvailableResource = new();
 

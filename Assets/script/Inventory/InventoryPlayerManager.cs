@@ -28,7 +28,7 @@ public class InventoryPlayerManager : MonoBehaviour
         foreach(RessourceData ressource in _cheatAllInventoryRessource)
         {
             ressource.Id = ressource.Ressources.Id;
-            for(int i = 0; i < 100; i++)
+            for(int i = 0; i < 10; i++)
             {
                 CreateNewInventorySlot(ressource);
             }
