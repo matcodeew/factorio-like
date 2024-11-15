@@ -46,7 +46,7 @@ public class GenerateEnergy : MonoBehaviour, ISubscrireEvent
     }
     public void OnMouseDown()
     {
-        ActivePanel();
+        //ActivePanel();
         if(instance.CanDestroyBuilding)
         {
             Destroy(gameObject);

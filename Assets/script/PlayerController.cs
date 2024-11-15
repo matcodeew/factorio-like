@@ -45,7 +45,9 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(RIGHT_MOUSE_BUTTON) && hit.collider.CompareTag("Build"))
             {
+                _actualBuilding = hit.collider.gameObject;
                 SetTargetPosition();
+                _actualBuilding.transform.GetChild(0).gameObject.SetActive(true);
                 InventoryBuildManager.Instance.InventoryBuildPanel.SetActive(false);
                 InventoryBuildManager.Instance.InventoryButton.SetActive(true);
             }
@@ -55,7 +57,6 @@ public class PlayerController : MonoBehaviour
                 _actualBuilding = hit.collider.gameObject;
                 SetTargetPosition();
                 _actualBuilding.transform.GetChild(0).gameObject.SetActive(true);
-                //InventoryBuildManager.Instance.BuildStatPanel.SetActive(true);
 
                 InventoryBuildManager.Instance.InventoryBuildPanel.SetActive(false);
                 InventoryBuildManager.Instance.InventoryButton.SetActive(true);

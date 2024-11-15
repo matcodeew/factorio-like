@@ -18,8 +18,6 @@ public class BuildingManager : MonoBehaviour
     private GameObject _buildingInProgress;
 
 
-    private int _furnaceId = 0;
-    private int _solarPanelId = 0;
     private bool _isUpdatingEnergy;
     //Event
     public Action UpdateSharedEnergy;
