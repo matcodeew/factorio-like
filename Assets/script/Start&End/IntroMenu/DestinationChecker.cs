@@ -6,16 +6,18 @@ public class DestinationChecker : MonoBehaviour
 {
     [SerializeField] private GameObject _endCirclePanel;
     public Transform target;
-    public float arrivalThreshold = 1f; 
+    public float arrivalThreshold = 1f;
 
     void Update()
     {
-        float distance = Vector3.Distance(transform.position, target.position);
-
-        if (distance < arrivalThreshold)
+        if (Menu.Finish == true)
         {
-            StartCoroutine(EndCircle());
-            enabled = false; 
+            float distance = Vector3.Distance(transform.position, target.position);
+
+            if (distance < arrivalThreshold)
+            {
+                StartCoroutine(EndCircle());
+            }
         }
     }
 

@@ -514,7 +514,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: -2293242856236041288}
         m_TargetAssemblyTypeName: ConnectBuilding, Assembly-CSharp
         m_MethodName: ConnectLink
         m_Mode: 1

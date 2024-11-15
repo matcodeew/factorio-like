@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
+    ShipController _shipController;
     public static bool GameIsPaused { get; private set; }
+    public static bool Finish { get; set; }
     public void LaunchGame()
     {
         SceneManager.LoadScene("MVP");
@@ -44,5 +46,10 @@ public class Menu : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         GameIsPaused = true;
+    }
+
+    public void FinishTrue()
+    {
+        Finish = true;
     }
 }
