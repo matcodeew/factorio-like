@@ -6,6 +6,7 @@ public class Anim : MonoBehaviour
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _generator;
     [SerializeField] private GameObject _panelNoInteract;
+    [SerializeField] private GameObject _panelCircle;
 
     private void Start()
     {
@@ -34,8 +35,14 @@ public class Anim : MonoBehaviour
     {
         if (_player != null)
         {
+            _panelCircle.SetActive(false);
             _panelNoInteract.SetActive(false);
             _player.GetComponent<Animator>().enabled = false;
         }
+    }
+
+    public void DisablePlayer()
+    {
+        _player.SetActive(false);
     }
 }
