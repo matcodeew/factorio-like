@@ -40,4 +40,9 @@ public class Anim : MonoBehaviour
             _player.GetComponent<Animator>().enabled = false;
         }
     }
+
+    public void DisablePlayer()
+    {
+        _player.SetActive(false);
+    }
 }
