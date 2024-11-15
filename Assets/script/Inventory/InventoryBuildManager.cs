@@ -8,6 +8,8 @@ public class InventoryBuildManager : MonoBehaviour
     public static InventoryBuildManager Instance;
     [SerializeField] public Transform ImageParentDrag;
     [SerializeField] private RectTransform _panelBuildingParent;
+    [SerializeField] private RectTransform _parentToparent;
+    [SerializeField] private RectTransform _PrefabPanelInfo;
     private RectTransform BuildingPrefabItemsParent;
 
     public RectTransform TrashArea;
@@ -17,7 +19,7 @@ public class InventoryBuildManager : MonoBehaviour
     public GameObject InventoryBuildPanel;
    // public GameObject BuildStatPanel;
 
-    [SerializeField] private List<GameObject> _buildingPrefabs = new List<GameObject>();
+     public List<GameObject> _buildingPrefabs = new List<GameObject>();
     [SerializeField] private GameObject _inventoryCasePrefab;
 
     [SerializeField] private List<GameObject> _invSlots = new List<GameObject>();
@@ -43,11 +45,14 @@ public class InventoryBuildManager : MonoBehaviour
         for (int i = 0; i < _buildingPrefabs.Count; i++)
         {
             GameObject itemInstance = Instantiate(_inventoryCasePrefab, _panelBuildingParent);
-
+            itemInstance.tag = "Build";
+            RectTransform rectTransform = Instantiate(_PrefabPanelInfo, _parentToparent);
+            rectTransform.transform.position = itemInstance.transform.position;
+            TooltipScript.instance.objectsToTooltip.Add(rectTransform);
             if (itemInstance.transform.childCount > 0)
             {
-                GameObject child = itemInstance.transform.GetChild(0).gameObject;
 
+                GameObject child = itemInstance.transform.GetChild(0).gameObject;
                 DragUIElementBuild dragComponent = child.AddComponent<DragUIElementBuild>();
                 dragComponent.Initialize(_buildingPrefabs[i], child, itemInstance);
             }
