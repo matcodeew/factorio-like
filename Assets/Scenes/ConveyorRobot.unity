@@ -6078,6 +6078,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188048109}
   m_CullTransparentMesh: 1
+--- !u!1 &1190217048 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1798402654236293502, guid: 4733e71fef9fddb4db2d6e1b07876ad8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1476803112}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1195010334
 GameObject:
   m_ObjectHideFlags: 0
@@ -7136,6 +7142,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5938527042091553565, guid: 4733e71fef9fddb4db2d6e1b07876ad8,
+        type: 3}
+      propertyPath: _base
+      value: 
+      objectReference: {fileID: 1190217048}
     - target: {fileID: 5938527042091553565, guid: 4733e71fef9fddb4db2d6e1b07876ad8,
         type: 3}
       propertyPath: m_Enabled

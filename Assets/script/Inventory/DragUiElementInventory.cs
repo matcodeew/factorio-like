@@ -70,7 +70,6 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
         if (targetItem != null && targetItem.GetComponent<InvRessource>() != null && targetItem.GetComponent<InvRessource>().Ressource.Id == GetComponent<InvRessource>().Ressource.Id)
         {
             InventoryPlayerManager inventorySlot = targetItem.GetComponentInParent<InventoryPlayerManager>();
-
             if (inventorySlot != null)
             {
                 AddToQuantity(targetItem.GetComponent<InvRessource>());
@@ -128,8 +127,9 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             {
                 dragScript.enabled = true;
             }
-           // ParentAfterDrag.tag = "Empty";
+            ParentAfterDrag.tag = "Empty";
         }
+
     }
 
     public void AddToQuantity(InvRessource otherRessource)

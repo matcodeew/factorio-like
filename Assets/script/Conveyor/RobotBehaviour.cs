@@ -131,14 +131,18 @@ public class RobotBehaviour : MonoBehaviour
                         TakeRessource();
                     }
                 }
-                else
+                else if(_currentTarget == _secondPos)
                 {
                     yield return new WaitForSeconds(_waitingTime);
                     _currentTarget = _firstPos;
-                    if (!_actionExecuted)
+                    if(!_actionExecuted)
                     {
                         PoseRessource();
                     }
+                }
+                else if(_currentTarget == _base.transform.position)
+                {
+                    _currentTarget = _secondPos;
                 }
             }
         }
@@ -153,7 +157,6 @@ public class RobotBehaviour : MonoBehaviour
 
             print($"take ressource {_ressourceTransported.Ressource.Name} on quantity {_ressourceTransported.Quantity}");
         }
-
         _actionExecuted = true;
     }
     private void PoseRessource()
@@ -163,6 +166,7 @@ public class RobotBehaviour : MonoBehaviour
             if (_ressourceTransformer.CheckIfInputCaseIsEmpty())
             {
                 _ressourceTransformer.CreateInputCase(_ressourceTransported);
+                print($"pose ressource {_ressourceTransported.Ressource.Name} on quantity {_ressourceTransported.Quantity}");
             }
             else
             {
@@ -170,7 +174,6 @@ public class RobotBehaviour : MonoBehaviour
                 print($"transformers already has an input resource => {_ressourceTransformer.MachineInput}");
             }
         }
-        print($"pose ressource {_ressourceTransported.Ressource.Name} on quantity {_ressourceTransported.Quantity}");
         _actionExecuted = true;
     }
     public void TryToPoseRessourceAgain()
@@ -187,6 +190,7 @@ public class RobotBehaviour : MonoBehaviour
     private void CanceledAction()
     {
         _ActionWasCanceled = true;
+        StopAllCoroutines();
         StartCoroutine(MoveRobot());
     }
     private void StartAction() => _ActionWasCanceled = false;

@@ -22,7 +22,7 @@ public class RessourceTransformer : MonoBehaviour
     [HideInInspector] public Scriptable_Ressources ThirdOutput;
 
     [SerializeField] private Transform _machineInput;
-    public InvRessource _currentRessourceToTransform;
+    private InvRessource _currentRessourceToTransform;
     [SerializeField] private Transform _parentSlot;
     [SerializeField] private List<GameObject> _instantiateOutputList = new();
 
@@ -64,7 +64,7 @@ public class RessourceTransformer : MonoBehaviour
     private bool MachineInputNotNull()
     {
         MachineInput = _machineInput.GetComponentInChildren<InvRessource>().Ressource;
-
+        InventoryPlayerManager.Instance.SlotGameobjectList.Remove(_machineInput.GetComponentInChildren<InvRessource>());
         if (MachineInput == null)
         {
             return false;
@@ -202,6 +202,7 @@ public class RessourceTransformer : MonoBehaviour
         invRessource.Quantity = inputRessource.Quantity;
         newImage.GetComponent<Image>().sprite = inputRessource.Ressource.Sprite;
         _machineInput.tag = "InventorySlot";
+        MachineInput = invRessource.Ressource;
     }
 
     private void CreateAndAlignOutputPrefab(Scriptable_Ressources outputResource, string newTag)
