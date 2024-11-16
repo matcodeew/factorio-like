@@ -167,6 +167,7 @@ public class MapManager : MonoBehaviour
             else
             {
                 Destroy(_ressourceSpot.gameObject);
+                _ressourceSpot.IsEmpty = true;
                 AccessTileByPos(_ressourceSpot.transform.position).IsOccupied = false;
                 AccessTileByPos(_ressourceSpot.transform.position).OnTop = null;
                 break;

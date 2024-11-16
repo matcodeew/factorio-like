@@ -6,7 +6,7 @@ public class RessourseSpot : MonoBehaviour
     public float MiningTime;
     public Scriptable_RessourceSpot Spot;
     public Dictionary<int, RessourceData> AvailableResource = new();
-
+    public bool IsEmpty = false;
     private void Awake()
     {
         AddToList();

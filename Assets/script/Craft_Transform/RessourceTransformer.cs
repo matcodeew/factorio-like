@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using Unity.VisualScripting;
 using System.ComponentModel;
+using static UnityEditor.Progress;
 
 public class RessourceTransformer : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class RessourceTransformer : MonoBehaviour
     [HideInInspector] public Scriptable_Ressources ThirdOutput;
 
     [SerializeField] private Transform _machineInput;
-    private InvRessource _currentRessourceToTransform;
+    public InvRessource _currentRessourceToTransform;
     [SerializeField] private Transform _parentSlot;
     [SerializeField] private List<GameObject> _instantiateOutputList = new();
 
@@ -30,7 +31,7 @@ public class RessourceTransformer : MonoBehaviour
 
     private void Update()
     {
-        if (_machineInput.childCount > 0)
+        if (!CheckIfInputCaseIsEmpty())
         {
             if (!_isInAction && MachineInputNotNull())
             {
@@ -171,7 +172,7 @@ public class RessourceTransformer : MonoBehaviour
             StopTransformation();
             DestroyAllChildren(_machineInput);
         }
-        if (_machineInput.childCount <= 0)
+        if (CheckIfInputCaseIsEmpty())
         {
             StopTransformation();
             DestroyAllChildren(_machineInput);
@@ -192,6 +193,15 @@ public class RessourceTransformer : MonoBehaviour
             CreateAndAlignOutputPrefab(ThirdOutput, "OutputSlot");
         }
 
+    }
+    public void CreateInputCase(InvRessource inputRessource)
+    {
+        Transform newImage = Instantiate(InventoryPlayerManager.Instance._globalPrefab.transform.GetChild(0), _machineInput.transform);
+        InvRessource invRessource = newImage.AddComponent<InvRessource>();
+        invRessource.Ressource = inputRessource.Ressource;
+        invRessource.Quantity = inputRessource.Quantity;
+        newImage.GetComponent<Image>().sprite = inputRessource.Ressource.Sprite;
+        _machineInput.tag = "InventorySlot";
     }
 
     private void CreateAndAlignOutputPrefab(Scriptable_Ressources outputResource, string newTag)
@@ -239,15 +249,8 @@ public class RessourceTransformer : MonoBehaviour
             Destroy(outputCase);
         }
     }
-    private bool CheckIfAllOutputCaseIsEmpty()
-    {
-        if (_instantiateOutputList.Count == 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
+    public bool CheckIfInputCaseIsEmpty() => _machineInput.childCount <= 0? true: false;
+    private bool CheckIfAllOutputCaseIsEmpty() => _instantiateOutputList.Count == 0? true: false;
     private void DestroyAllChildren(Transform parentTransform)
     {
         foreach (Transform child in parentTransform)
