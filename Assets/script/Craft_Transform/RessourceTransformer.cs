@@ -6,6 +6,8 @@ using System;
 using Unity.VisualScripting;
 using System.ComponentModel;
 
+
+[RequireComponent(typeof(BuildingReceivedEnergy))]
 public class RessourceTransformer : MonoBehaviour
 {
     [Header("Machine data")]
@@ -25,8 +27,17 @@ public class RessourceTransformer : MonoBehaviour
     [SerializeField] private Transform _parentSlot;
     [SerializeField] private List<GameObject> _instantiateOutputList = new();
 
+    private BuildingReceivedEnergy _energyReceiver;
+
 
     private bool _isInAction = false;
+
+
+    void Start()
+    {
+        _energyReceiver = GetComponent<BuildingReceivedEnergy>();
+    }
+
 
     private void Update()
     {
@@ -38,7 +49,7 @@ public class RessourceTransformer : MonoBehaviour
                 StartTransformation();
             }
         }
-        else if(_instantiateOutputList.Count >= 1)
+        else if (_instantiateOutputList.Count >= 1)
         {
             MoveOutputInInventory();
 
@@ -80,7 +91,8 @@ public class RessourceTransformer : MonoBehaviour
     public void StartTransformation()
     {
         _currentRessourceToTransform = _machineInput.GetComponentInChildren<InvRessource>();
-        if (_currentRessourceToTransform != null)
+
+        if (_currentRessourceToTransform != null && _energyReceiver.IsPowered())
         {
             StartCoroutine(HandleProcessTime());
         }
@@ -199,8 +211,8 @@ public class RessourceTransformer : MonoBehaviour
         bool itemFound = false;
         foreach (GameObject item in _instantiateOutputList)
         {
-            if(item.tag == "Empty")
-            { 
+            if (item.tag == "Empty")
+            {
                 itemFound = true;
                 Transform newImage = Instantiate(InventoryPlayerManager.Instance._globalPrefab.transform.GetChild(0), item.transform);
                 InvRessource invRessource = newImage.AddComponent<InvRessource>();
