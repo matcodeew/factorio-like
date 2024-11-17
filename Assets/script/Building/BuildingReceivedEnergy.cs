@@ -22,7 +22,7 @@ public class BuildingReceivedEnergy : MonoBehaviour, ISubscrireEvent
         instance.UpdateBuildingEnergy += CalculateSumOfEnergy;
         CalculateSumOfEnergy();
     }
-    private void CalculateSumOfEnergy()
+    public void CalculateSumOfEnergy()
     {
         _sumOfEnergyReceived = 0;
         if (ConnectGenerator.Count > 0)
