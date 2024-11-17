@@ -56,7 +56,7 @@ public class RessourceTransformer : MonoBehaviour
         }
     }
 
-    private void MoveOutputInInventory()
+    public void MoveOutputInInventory()
     {
         foreach (GameObject outputCase in _instantiateOutputList)
         {
@@ -178,30 +178,30 @@ public class RessourceTransformer : MonoBehaviour
             return;
         }
 
-        if (_currentRessourceToTransform.Quantity <= 0)
+        if (_currentRessourceToTransform.Quantity == 0)
         {
             StopTransformation();
-            DestroyAllChildren(_parentSlot);
+            DestroyAllChildren(_machineInput);
         }
         if (_machineInput.childCount <= 0)
         {
             StopTransformation();
-            DestroyAllChildren(_parentSlot);
+            DestroyAllChildren(_machineInput);
         }
 
         if (FirstOutput != null)
         {
-            CreateAndAlignOutputPrefab(FirstOutput, "InventorySlot");
+            CreateAndAlignOutputPrefab(FirstOutput, "OutputSlot");
         }
 
         if (SecondOutput != null)
         {
-            CreateAndAlignOutputPrefab(SecondOutput, "InventorySlot");
+            CreateAndAlignOutputPrefab(SecondOutput, "OutputSlot");
         }
 
         if (ThirdOutput != null)
         {
-            CreateAndAlignOutputPrefab(ThirdOutput, "InventorySlot");
+            CreateAndAlignOutputPrefab(ThirdOutput, "OutputSlot");
         }
 
     }
@@ -233,6 +233,7 @@ public class RessourceTransformer : MonoBehaviour
         }
         if (!itemFound)
         {
+
             GameObject outputItem = Instantiate(InventoryPlayerManager.Instance._globalPrefab, _parentSlot);
             InvRessource invRessource = outputItem.transform.GetChild(0).AddComponent<InvRessource>();
             invRessource.Ressource = outputResource;
@@ -240,6 +241,7 @@ public class RessourceTransformer : MonoBehaviour
             outputItem.transform.GetChild(0).GetComponent<Image>().sprite = outputResource.Sprite;
             _instantiateOutputList.Add(outputItem);
             outputItem.tag = newTag;
+            outputItem.transform.GetChild(1).gameObject.SetActive(true);
         }
     }
     private void DeleteOutPutCase(GameObject outputCase)

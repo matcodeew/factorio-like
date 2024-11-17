@@ -8,11 +8,12 @@ public class BuildingData : MonoBehaviour
     public float NeededEnergy = 0.0f;
     public List<NeededRessource> NeededRessources;
 
-    [System.Serializable]
-    public struct NeededRessource
-    {
-        public Scriptable_Ressources Ressource;
-        public int Quantity;
-    }
+
 }
 
+[System.Serializable]
+public struct NeededRessource
+{
+    public Scriptable_Ressources Ressource;
+    public int Quantity;
+}

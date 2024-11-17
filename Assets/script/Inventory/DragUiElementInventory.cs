@@ -28,7 +28,6 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
     {
         ParentAfterDrag = transform.parent;
         transform.SetParent(InventoryBuildManager.Instance.ImageParentDrag);
-
         ParentAfterDrag.tag = "Empty";
     }
     public void OnDrag(PointerEventData eventData)

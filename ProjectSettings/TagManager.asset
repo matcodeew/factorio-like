@@ -10,6 +10,7 @@ TagManager:
   - Empty
   - Panel
   - Transformer
+  - OutputSlot
   layers:
   - Default
   - TransparentFX
