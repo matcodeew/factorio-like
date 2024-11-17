@@ -131,16 +131,16 @@ public class RobotBehaviour : MonoBehaviour
                         TakeRessource();
                     }
                 }
-                else if(_currentTarget == _secondPos)
+                else if (_currentTarget == _secondPos)
                 {
                     yield return new WaitForSeconds(_waitingTime);
                     _currentTarget = _firstPos;
-                    if(!_actionExecuted)
+                    if (!_actionExecuted)
                     {
                         PoseRessource();
                     }
                 }
-                else if(_currentTarget == _base.transform.position)
+                else if (_currentTarget == _base.transform.position)
                 {
                     _currentTarget = _secondPos;
                 }
@@ -167,11 +167,21 @@ public class RobotBehaviour : MonoBehaviour
             {
                 _ressourceTransformer.CreateInputCase(_ressourceTransported);
                 print($"pose ressource {_ressourceTransported.Ressource.Name} on quantity {_ressourceTransported.Quantity}");
+                _ressourceTransported.Ressource = null;
+
             }
             else
             {
-                CanceledAction();
-                print($"transformers already has an input resource => {_ressourceTransformer.MachineInput}");
+                if (_ressourceTransformer.CheckIfCanStackRessource(_ressourceTransported))
+                {
+                    _ressourceTransformer.AddRessource(_ressourceTransported);
+                    _ressourceTransported.Ressource = null;
+                }
+                else
+                {
+                    CanceledAction();
+                    print($"transformers already has an input resource => {_ressourceTransformer.MachineInput}");
+                }
             }
         }
         _actionExecuted = true;
@@ -180,7 +190,7 @@ public class RobotBehaviour : MonoBehaviour
     {
         if (_ActionWasCanceled)
         {
-            if(_ressourceTransformer.CheckIfInputCaseIsEmpty())
+            if (_ressourceTransformer.CheckIfInputCaseIsEmpty())
             {
                 _ActionWasCanceled = false;
                 StartCoroutine(MoveRobot());

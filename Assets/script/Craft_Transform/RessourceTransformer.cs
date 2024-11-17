@@ -196,13 +196,26 @@ public class RessourceTransformer : MonoBehaviour
     }
     public void CreateInputCase(InvRessource inputRessource)
     {
-        Transform newImage = Instantiate(InventoryPlayerManager.Instance._globalPrefab.transform.GetChild(0), _machineInput.transform);
-        InvRessource invRessource = newImage.AddComponent<InvRessource>();
-        invRessource.Ressource = inputRessource.Ressource;
-        invRessource.Quantity = inputRessource.Quantity;
-        newImage.GetComponent<Image>().sprite = inputRessource.Ressource.Sprite;
-        _machineInput.tag = "InventorySlot";
-        MachineInput = invRessource.Ressource;
+        bool _itemFounded = false;
+        InvRessource machineInput = _machineInput.GetComponentInChildren<InvRessource>();
+        if (machineInput != null)
+        {
+            if (inputRessource.Ressource.Id == machineInput.Ressource.Id)
+            {
+                _itemFounded = true;
+                machineInput.Quantity += inputRessource.Quantity;
+            }
+        }
+        if (!_itemFounded)
+        {
+            Transform newImage = Instantiate(InventoryPlayerManager.Instance._globalPrefab.transform.GetChild(0), _machineInput.transform);
+            InvRessource invRessource = newImage.AddComponent<InvRessource>();
+            invRessource.Ressource = inputRessource.Ressource;
+            invRessource.Quantity = inputRessource.Quantity;
+            newImage.GetComponent<Image>().sprite = inputRessource.Ressource.Sprite;
+            _machineInput.tag = "InventorySlot";
+            MachineInput = invRessource.Ressource;
+        }
     }
 
     private void CreateAndAlignOutputPrefab(Scriptable_Ressources outputResource, string newTag)
@@ -250,7 +263,13 @@ public class RessourceTransformer : MonoBehaviour
             Destroy(outputCase);
         }
     }
+    public void AddRessource(InvRessource invRessource)
+    {
+        _machineInput.GetComponentInChildren<InvRessource>().Quantity += invRessource.Quantity;
+    }
     public bool CheckIfInputCaseIsEmpty() => _machineInput.childCount <= 0? true: false;
+    public bool CheckIfCanStackRessource(InvRessource inputRessource)
+        => _machineInput.GetComponentInChildren<InvRessource>().Ressource.Id == inputRessource.Ressource.Id?true: false;
     private bool CheckIfAllOutputCaseIsEmpty() => _instantiateOutputList.Count == 0? true: false;
     private void DestroyAllChildren(Transform parentTransform)
     {

@@ -16,15 +16,6 @@ MonoBehaviour:
   Prefab: {fileID: 3792326885201706066, guid: 2cc8e84ed1e63d64a992523aa3f29974, type: 3}
   AvailableResource:
   - Id: 0
-    Ressources: {fileID: 11400000, guid: 07798cfa844b833448217ebc5f3b3d4c, type: 2}
-    StartQuantity: 10
-  - Id: 1
-    Ressources: {fileID: 11400000, guid: 93e3e1cf7bb79234c87e719af291967e, type: 2}
-    StartQuantity: 10
-  - Id: 2
-    Ressources: {fileID: 11400000, guid: 9abd1b5bc50f80141899f6c406b56811, type: 2}
-    StartQuantity: 10
-  - Id: 3
-    Ressources: {fileID: 11400000, guid: b370b913ac98339458f6a2cf7607af88, type: 2}
+    Ressources: {fileID: 11400000, guid: f4bf8295af713d94ea82c82987d9be30, type: 2}
     StartQuantity: 10
   MiningTime: 1.5
