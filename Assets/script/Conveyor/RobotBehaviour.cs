@@ -29,8 +29,7 @@ public class RobotBehaviour : MonoBehaviour
     [Header("Other")]
     [SerializeField] private GameObject _base;
 
-
-    private void Awake()
+    public void Init()
     {
         _ressourceTransported = this.gameObject.AddComponent<InvRessource>();
     }
@@ -174,7 +173,7 @@ public class RobotBehaviour : MonoBehaviour
             {
                 if (_ressourceTransformer.CheckIfCanStackRessource(_ressourceTransported))
                 {
-                    _ressourceTransformer.AddRessource(_ressourceTransported);
+                    _ressourceTransformer.AddInputRessource(_ressourceTransported);
                     _ressourceTransported.Ressource = null;
                 }
                 else

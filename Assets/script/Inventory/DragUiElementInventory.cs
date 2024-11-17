@@ -20,10 +20,6 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
             _quantityText.text = invRessource.Quantity.ToString();
         }
     }
-    private void Awake()
-    {
-        //ParentAfterDrag = InventoryBuildManager.Instance.ImageParentDrag;
-    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         ParentAfterDrag = transform.parent;
@@ -59,12 +55,12 @@ public class DragUiElementInventory : MonoBehaviour, IBeginDragHandler, IDragHan
                 targetItem = result.gameObject.GetComponent<DragUiElementInventory>();
                 break;
             }
-            else if (result.gameObject.CompareTag("Item") && result.gameObject != gameObject)
-            {
-                targetTransform = result.gameObject.transform.parent;
-                targetItem = result.gameObject.GetComponent<DragUiElementInventory>();
-                break;
-            }
+            //else if (result.gameObject.CompareTag("Item") && result.gameObject != gameObject)
+            //{
+            //    targetTransform = result.gameObject.transform.parent;
+            //    targetItem = result.gameObject.GetComponent<DragUiElementInventory>();
+            //    break;
+            //}
         }
 
         if (targetItem != null && targetItem.GetComponent<InvRessource>() != null && targetItem.GetComponent<InvRessource>().Ressource.Id == GetComponent<InvRessource>().Ressource.Id)
