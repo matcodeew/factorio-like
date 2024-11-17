@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(BuildingReceivedEnergy))]
 public class DroneRechargeStation : MonoBehaviour
 {
-    [SerializeField] private PurifierDroneController _connDrone;
+    [SerializeField] private DroneController _connDrone;
 
     [Header("Charge parameters")]
     [SerializeField] private float _timeUntilFullyCharged = 0.0f;
@@ -16,40 +12,36 @@ public class DroneRechargeStation : MonoBehaviour
     private BuildingReceivedEnergy _energyReceiver;
     private bool _isDroneDocked = false;
 
-
-    void Start()
+    public void Start()
     {
-        _energyReceiver = GetComponent<BuildingReceivedEnergy>();
-
-        // For testing purposes:
-        _energyReceiver.CalculateSumOfEnergy();
-
-
-
+        _connDrone.InitDrone();
     }
 
-    // NEEDS TO CHARGE WHEN BOT IS DOCKED
-    // CHARGE THE BOT ONLY WHEN POWERED
-    // SEND THE BOT AWAY WHEN IT IS FULLY CHARGED
 
+    // [ContextMenu("Test/Launch Production")]
+    public void InitRechargeStation()
+    {
+        _energyReceiver = GetComponent<BuildingReceivedEnergy>();
+    }
 
-    // Update is called once per frame
     void Update()
     {
         if (!_isDroneDocked || !_energyReceiver.IsPowered()) return;
 
         if (_connDrone.CurrentDroneCharge < _droneMaxCharge)
         {
+            Debug.Log("Charging...");
             _connDrone.CurrentDroneCharge = Mathf.Clamp
             (
                 _connDrone.CurrentDroneCharge + ((_droneMaxCharge / _timeUntilFullyCharged) * Time.deltaTime),
                 0.0f,
                 _droneMaxCharge
             );
-            Debug.Log($"Charging... Current charge: {_connDrone.CurrentDroneCharge}");
+
         }
         else
         {
+            Debug.Log("Undocking...");
             UndockDrone();
         }
     }

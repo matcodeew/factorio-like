@@ -14,6 +14,8 @@ public class BuildingReceivedEnergy : MonoBehaviour, ISubscrireEvent
     private BuildingData _buildingData;
 
     private BuildingManager instance;
+
+    [ContextMenu("Test/Setup Energy")]
     public void SubscrireEvent()
     {
         _buildingData = GetComponent<BuildingData>();
@@ -22,6 +24,7 @@ public class BuildingReceivedEnergy : MonoBehaviour, ISubscrireEvent
         instance.UpdateBuildingEnergy += CalculateSumOfEnergy;
         CalculateSumOfEnergy();
     }
+
     public void CalculateSumOfEnergy()
     {
         _sumOfEnergyReceived = 0;

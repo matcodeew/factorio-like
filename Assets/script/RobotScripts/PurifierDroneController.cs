@@ -1,13 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq.Expressions;
 using UnityEngine;
 
-public class PurifierDroneController : MonoBehaviour
+public class PurifierDroneController : DroneController
 {
-    [SerializeField] private DroneRechargeStation _rechargeStation;
-    private Transform _rechargeStationTrans;
     private Transform _droneTrans;
 
 
@@ -15,31 +11,20 @@ public class PurifierDroneController : MonoBehaviour
     [SerializeField] private float _droneSpeed = 5.0f;
     [SerializeField] private int _droneManhattanRange = 0;
     [SerializeField] private float _interactionDist = 0.5f;
-
-    [Header("Charge Stats")]
-    private float _droneMaxCharge = 100.0f;
-    public float CurrentDroneCharge = 100.0f;
-    [SerializeField] private float _timeUntilEmpty = 0.0f;
-    [SerializeField] private float _rechargeThreshold = 5.0f; // %
-    private bool _isDroneDocked = false;
-    private bool _lookForCharge = false;
     private bool _movingToNewTile = false;
-    private bool _isPurifying = false;
-    private bool _hasPurifiedAll = false;
 
 
     [Header("Purifier Variables")]
     [SerializeField] private List<TileData> _tiles = new List<TileData>();
-    private Vector3 _targetPos = Vector3.zero;
+    [SerializeField] private Vector3 _targetPos = Vector3.zero;
     [SerializeField] private float _timeUntilPurified = 0.0f;
     private float _maxPurifiedTileVal = 1.0f;
+    private bool _isPurifying = false;
+    private bool _hasPurifiedAll = false;
 
-
-    void Start()
+    protected override void InitDroneSpecialized()
     {
         _droneTrans = transform;
-        _rechargeStationTrans = _rechargeStation.transform;
-
         InitTileList();
     }
 
@@ -48,13 +33,12 @@ public class PurifierDroneController : MonoBehaviour
         for (int x = -_droneManhattanRange; x <= _droneManhattanRange; x++)
             for (int z = -_droneManhattanRange; z <= _droneManhattanRange; z++)
             {
-                if ((x + z) < _droneManhattanRange)
+                if ((x + z) <= _droneManhattanRange)
                 {
-                    TileData newTile = MapManager.Instance.AccessTileByPos(new Vector3(x, 0, z));
-                    if (newTile != null)
+                    Vector3 test = new Vector3(_rechargeStationTrans.position.x + x, 0, _rechargeStationTrans.position.z + z);
+                    TileData newTile = MapManager.Instance.AccessTileByPos(test);
+                    if (newTile != null && !_tiles.Contains(newTile) && !newTile.IsPurified)
                         _tiles.Add(newTile);
-
-
                 }
             }
         _hasPurifiedAll = _tiles.Count == 0;
@@ -64,12 +48,8 @@ public class PurifierDroneController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // go to target
-
-
         // if drone is docked -> charging
-        if (_isDroneDocked || _isPurifying || _hasPurifiedAll) return;
-
+        if (_isDroneDocked || _hasPurifiedAll || !_isDroneInit) return;
 
         // drone power consumption 
         CurrentDroneCharge = Mathf.Clamp
@@ -78,6 +58,8 @@ public class PurifierDroneController : MonoBehaviour
                 0.0f,
                 _droneMaxCharge
             );
+
+        if (_isPurifying) return;
 
         if (!_lookForCharge)
         {
@@ -89,7 +71,7 @@ public class PurifierDroneController : MonoBehaviour
                 _movingToNewTile = false;
 
                 _targetPos = _rechargeStationTrans.position;
-                _targetPos = new Vector3(_targetPos.x, transform.position.y, _targetPos.z);
+                _targetPos = new Vector3(_targetPos.x, _droneTrans.position.y, _targetPos.z);
             }
             else if (!_movingToNewTile)
             {
@@ -98,25 +80,29 @@ public class PurifierDroneController : MonoBehaviour
                 _movingToNewTile = true;
 
                 _targetPos = _tiles[Random.Range(0, _tiles.Count - 1)].transform.position;
-                _targetPos = new Vector3(_targetPos.x, transform.position.y, _targetPos.z);
+                _targetPos = new Vector3(_targetPos.x, _droneTrans.position.y, _targetPos.z);
             }
         }
-        if ((_droneTrans.position - _targetPos).magnitude <= _interactionDist)
+
+
+        if ((_targetPos - _droneTrans.position).magnitude <= _interactionDist)
         {
             if (_lookForCharge)
             {
-                //      if drone dist to station is under maxDist 
-                //          -> start charging up
+                // if drone dist to station is under maxDist 
+                //     -> start charging up
                 DockDrone();
             }
             else if (_movingToNewTile)
             {
+                _movingToNewTile = false;
                 StartCoroutine(PurifyCycle());
             }
         }
         else
         {
-            _droneTrans.position = Time.deltaTime * _droneSpeed * (_droneTrans.position - _targetPos).normalized;
+            // go to target
+            _droneTrans.position = Time.deltaTime * _droneSpeed * (_targetPos - _droneTrans.position).normalized + _droneTrans.position;
         }
     }
 
@@ -127,13 +113,17 @@ public class PurifierDroneController : MonoBehaviour
         _isPurifying = true;
         while (!targetTile.IsPurified)
         {
+            if (CurrentDroneCharge <= _rechargeThreshold)
+            {
+                break;
+            }
             for (int x = -1; x <= 1; ++x)
                 for (int z = -1; z <= 1; ++z)
                 {
                     TileData tile = MapManager.Instance.AccessTileByPos(new Vector3(_targetPos.x + x, 0, _targetPos.z + z));
-                    if (!_tiles.Contains(tile)) continue;
+                    if (tile == null) continue;
 
-                    targetTile.AddPurify((_maxPurifiedTileVal / _timeUntilPurified) * Time.deltaTime);
+                    tile.AddPurify((_maxPurifiedTileVal / _timeUntilPurified) * Time.deltaTime);
 
                     if (tile.IsPurified)
                         _tiles.Remove(tile);
@@ -142,23 +132,7 @@ public class PurifierDroneController : MonoBehaviour
         }
         _hasPurifiedAll = _tiles.Count == 0;
 
+        _isPurifying = false;
         yield return null;
     }
-
-
-
-
-    #region Charge
-
-    public void DockDrone()
-    {
-        _isDroneDocked = true;
-        _rechargeStation.DockDrone();
-    }
-
-    public void UndockDrone()
-    {
-        _isDroneDocked = false;
-    }
-    #endregion
 }

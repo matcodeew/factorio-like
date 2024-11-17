@@ -118,15 +118,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2380d36baedfa84496f372c0cecf791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rechargeStation: {fileID: 2007314252114798231}
-  _droneSpeed: 5
-  _droneManhattanRange: 5
-  _interactionDist: 0.5
-  CurrentDroneCharge: 100
-  _timeUntilEmpty: 10
+  CurrentDroneCharge: 0
+  _timeUntilEmpty: 45
   _rechargeThreshold: 5
+  _rechargeStation: {fileID: 2007314252114798231}
+  _droneSpeed: 3.5
+  _droneManhattanRange: 5
+  _interactionDist: 0.25
   _tiles: []
-  _timeUntilPurified: 3
+  _targetPos: {x: 0, y: 0, z: 0}
+  _timeUntilPurified: 15
 --- !u!1 &5092876964191376708
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,8 +252,16 @@ MonoBehaviour:
   Name: RechargeStation
   NeededEnergy: 0
   NeededRessources:
-  - Ressource: {fileID: 11400000, guid: 6e09eb3f3eaa2c94aa4bdc172260fea0, type: 2}
-    Quantity: 1
+  - Ressource: {fileID: 11400000, guid: 59a13f0079aa80c4cbd6caf5ead21578, type: 2}
+    Quantity: 5
+  - Ressource: {fileID: 11400000, guid: f4bf8295af713d94ea82c82987d9be30, type: 2}
+    Quantity: 3
+  - Ressource: {fileID: 11400000, guid: 07798cfa844b833448217ebc5f3b3d4c, type: 2}
+    Quantity: 3
+  - Ressource: {fileID: 11400000, guid: 6aa6676fdf6399647a1143f578d1856c, type: 2}
+    Quantity: 10
+  - Ressource: {fileID: 11400000, guid: b370b913ac98339458f6a2cf7607af88, type: 2}
+    Quantity: 10
 --- !u!114 &5274502853686676936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,4 +289,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _connDrone: {fileID: 5090671778100983066}
-  _timeUntilFullyCharged: 10
+  _timeUntilFullyCharged: 45

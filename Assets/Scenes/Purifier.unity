@@ -5740,6 +5740,7 @@ MonoBehaviour:
   - {fileID: 6634538959374061348, guid: 56e9bc4b78e3944438c3b705570bf642, type: 3}
   - {fileID: 6634538959374061348, guid: 12a7c8ad3e45b88448a85fe28f1f7235, type: 3}
   - {fileID: 5330380428058016937, guid: 48dc8661875df9f44ba7145523ff6fc4, type: 3}
+  - {fileID: 5092876964191376708, guid: 2efde226947d11e40b90821365828532, type: 3}
   _inventoryCasePrefab: {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4,
     type: 3}
   _invSlots: []
