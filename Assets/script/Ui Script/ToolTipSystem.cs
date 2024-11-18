@@ -67,25 +67,17 @@ public class TooltipScript : MonoBehaviour
             {
                 repeice.Add(new InvRessource(ressource.Ressource, ressource.Quantity));
             }
-            //foreach(var repeiceImage in RequireRessources)
-            //{
-            //    foreach(var ressourceNeeded in repeice)
-            //    {
-            //        repeiceImage.GetComponentInChildren<Image>().sprite = ressourceNeeded.Ressource.Sprite;
-            //        repeiceImage.transform.GetComponentInChildren<TextMeshProUGUI>().text = "x " + ressourceNeeded.Quantity.ToString();
-            //    }
-            //}
             for (int i = 0; i < RequireRessources.Count; i++)
             {
                 if (i < repeice.Count)
                 {
+                    RequireRessources[i].SetActive(true);
                     RequireRessources[i].transform.GetChild(0).GetComponent<Image>().sprite = repeice[i].Ressource.Sprite;
                     RequireRessources[i].transform.GetComponentInChildren<TextMeshProUGUI>().text = "x " + repeice[i].Quantity.ToString();
                 }
                 else
                 {
-                    RequireRessources[i].transform.GetChild(0).GetComponent<Image>().sprite = null;
-                    RequireRessources[i].transform.GetComponentInChildren<TextMeshProUGUI>().text = "none";
+                    RequireRessources[i].SetActive(false);
                 }
             }
         }
