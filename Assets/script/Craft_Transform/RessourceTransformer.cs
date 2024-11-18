@@ -43,7 +43,6 @@ public class RessourceTransformer : MonoBehaviour
         {
             if (!_isInAction && MachineInputNotNull())
             {
-                print(_isInAction + "can start?");
                 _isInAction = true;
                 StartTransformation();
             }

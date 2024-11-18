@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9049863544590146463}
   - component: {fileID: 7723940322965766434}
   m_Layer: 0
-  m_Name: BuildingEolienne
+  m_Name: StartingGenerator
   m_TagString: Build
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 558226571162503250}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -84,13 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Eolienne
   NeededEnergy: 0
-  NeededRessources:
-  - Ressource: {fileID: 11400000, guid: f4bf8295af713d94ea82c82987d9be30, type: 2}
-    Quantity: 3
-  - Ressource: {fileID: 11400000, guid: c32917aeb7d0caf4285e644e8d6c8389, type: 2}
-    Quantity: 5
-  - Ressource: {fileID: 11400000, guid: fb13e054b4aae554b9fee71c5a8ac3f5, type: 2}
-    Quantity: 2
+  NeededRessources: []
 --- !u!65 &7723940322965766434
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -110,8 +104,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 3.692884, z: 1}
-  m_Center: {x: 0, y: 1.653558, z: 0}
+  m_Size: {x: 1, y: 1.8287072, z: 1}
+  m_Center: {x: 0, y: 0.72146964, z: 0}
 --- !u!1 &4281120961652791278
 GameObject:
   m_ObjectHideFlags: 0

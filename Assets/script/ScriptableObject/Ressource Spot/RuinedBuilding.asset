@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0722afde6c298f439361c99e8c85a1a, type: 3}
-  m_Name: Building
+  m_Name: RuinedBuilding
   m_EditorClassIdentifier: 
-  Name: Building
-  Prefab: {fileID: 827657833508366288, guid: bbbcd873de6dec940846ff0109a76bd5, type: 3}
+  Name: RuinedBuilding
+  Prefab: {fileID: 7118745657753030339, guid: 78e846f0cfd2804498bb0adb33497459, type: 3}
   AvailableResource:
   - Id: 0
-    Ressources: {fileID: 11400000, guid: c32917aeb7d0caf4285e644e8d6c8389, type: 2}
+    Ressources: {fileID: 11400000, guid: f0078bb8393c0dc48adee180fd3eb013, type: 2}
     StartQuantity: 15
   - Id: 1
-    Ressources: {fileID: 11400000, guid: f0078bb8393c0dc48adee180fd3eb013, type: 2}
-    StartQuantity: 25
+    Ressources: {fileID: 11400000, guid: c32917aeb7d0caf4285e644e8d6c8389, type: 2}
+    StartQuantity: 10
+  - Id: 2
+    Ressources: {fileID: 11400000, guid: 67208f63ace2cec4fa935e9e0757a42e, type: 2}
+    StartQuantity: 10
   MiningTime: 2

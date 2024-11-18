@@ -1,12 +1,18 @@
 using UnityEngine;
 
-
+public enum TileBuildingOnTop
+{
+    Dumpster = 0,
+    RuinedBuilding = 1,
+    AbandonedPowerStation = 2,
+    None = -1,
+}
 public class TileData : MonoBehaviour
 {
     public int ID;
     public bool IsOccupied;
     public GameObject OnTop;
-    public ChunkState ChunkState;
+    public TileBuildingOnTop TileState = TileBuildingOnTop.None;
 
 
     [SerializeField, Range(0.0f, 1.0f)] public float PurifiedValue; // value that vary between 0.0 and 1.0

@@ -10,21 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0722afde6c298f439361c99e8c85a1a, type: 3}
-  m_Name: Dumpster
+  m_Name: AbandonedPowerStation
   m_EditorClassIdentifier: 
-  Name: Dumpster
-  Prefab: {fileID: 5017776171935841040, guid: 69d4b2622f64cf14392b38b7cd9e4630, type: 3}
+  Name: 'AbandonedPowerStation '
+  Prefab: {fileID: 7617087446528919729, guid: 2873a5ea5919b2c4f9e1b7afd7d88f1f, type: 3}
   AvailableResource:
   - Id: 0
-    Ressources: {fileID: 11400000, guid: c32917aeb7d0caf4285e644e8d6c8389, type: 2}
-    StartQuantity: 15
+    Ressources: {fileID: 11400000, guid: 67208f63ace2cec4fa935e9e0757a42e, type: 2}
+    StartQuantity: 20
   - Id: 1
     Ressources: {fileID: 11400000, guid: f4bf8295af713d94ea82c82987d9be30, type: 2}
-    StartQuantity: 15
-  - Id: 2
-    Ressources: {fileID: 11400000, guid: 180b266b46ed01d4eb5eeb38e7c22913, type: 2}
-    StartQuantity: 15
-  - Id: 3
-    Ressources: {fileID: 11400000, guid: 07798cfa844b833448217ebc5f3b3d4c, type: 2}
-    StartQuantity: 15
-  MiningTime: 1.5
+    StartQuantity: 20
+  - Id: 1
+    Ressources: {fileID: 11400000, guid: f0078bb8393c0dc48adee180fd3eb013, type: 2}
+    StartQuantity: 10
+  MiningTime: 2.5

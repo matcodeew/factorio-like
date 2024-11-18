@@ -25,7 +25,7 @@ public class Anim : MonoBehaviour
         if (_player != null)
         {
             GameObject newGo = Instantiate(_generator);
-            newGo.transform.position = new Vector3(15, 2, 15);
+            newGo.transform.position = new Vector3(15, 1, 15);
             newGo.GetComponent<ISubscrireEvent>().SubscrireEvent();
             _player.SetActive(true);
         }

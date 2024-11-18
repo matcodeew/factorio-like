@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 13
   Name: Gold
-  Sprite: {fileID: 21300000, guid: bfbfc929eaeca1a40bc21f6c213ab570, type: 3}
+  Sprite: {fileID: 21300000, guid: ec77a9c953f358d4b85c1dc6e5ec0b70, type: 3}
   IsPure: 1
   GrinderOutput: {fileID: 0}
   FurnaceOutput: {fileID: 11400000, guid: 35be24d5b5415b94dac57e0a921118ea, type: 2}

@@ -83,7 +83,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Furnace
   NeededEnergy: 5
-  NeededRessources: []
+  NeededRessources:
+  - Ressource: {fileID: 11400000, guid: b370b913ac98339458f6a2cf7607af88, type: 2}
+    Quantity: 10
+  - Ressource: {fileID: 11400000, guid: f4bf8295af713d94ea82c82987d9be30, type: 2}
+    Quantity: 1
+  - Ressource: {fileID: 11400000, guid: f0078bb8393c0dc48adee180fd3eb013, type: 2}
+    Quantity: 3
 --- !u!114 &3338213766747360255
 MonoBehaviour:
   m_ObjectHideFlags: 0

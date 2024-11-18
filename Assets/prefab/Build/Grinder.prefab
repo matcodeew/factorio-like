@@ -319,7 +319,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Grinder
   NeededEnergy: 5
-  NeededRessources: []
+  NeededRessources:
+  - Ressource: {fileID: 11400000, guid: 180b266b46ed01d4eb5eeb38e7c22913, type: 2}
+    Quantity: 6
+  - Ressource: {fileID: 11400000, guid: 67208f63ace2cec4fa935e9e0757a42e, type: 2}
+    Quantity: 2
 --- !u!114 &8020941708058547641
 MonoBehaviour:
   m_ObjectHideFlags: 0

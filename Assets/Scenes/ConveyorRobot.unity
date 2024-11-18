@@ -3396,11 +3396,11 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
-  m_StartAxis: 1
+  m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 50, y: 40}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_Constraint: 1
+  m_ConstraintCount: 5
 --- !u!1001 &702590045
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5582,7 +5582,7 @@ MonoBehaviour:
   SolarForcePercent: 75
   SolarPanelEnergy: 20
   WindForcePercent: 50
-  WindTurbineEnergy: 10
+  WindTurbineEnergy: 20
 --- !u!114 &1169801918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5598,9 +5598,12 @@ MonoBehaviour:
   _tilePrefab: {fileID: 2838385887705197276, guid: d95afd866212aab409a4eb1d48720a90,
     type: 3}
   _groundParent: {fileID: 545659474}
-  _dumpsterPrefab: {fileID: 3792326885201706066, guid: 2cc8e84ed1e63d64a992523aa3f29974,
-    type: 3}
   PickingRessource: 0
+  _prefabToInstantiate:
+  - {fileID: 5017776171935841040, guid: 69d4b2622f64cf14392b38b7cd9e4630, type: 3}
+  - {fileID: 7118745657753030339, guid: 78e846f0cfd2804498bb0adb33497459, type: 3}
+  - {fileID: 7617087446528919729, guid: 2873a5ea5919b2c4f9e1b7afd7d88f1f, type: 3}
+  _maxSpotOnMap: 15
   _ProgressBarDecontamination: {fileID: 1136513864}
   _ProgressBarValue: {fileID: 702590046}
   _endShipGameObject: {fileID: 1805985960}
@@ -8262,7 +8265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _starShip: {fileID: 0}
   _player: {fileID: 1421549088}
-  _generator: {fileID: 2242581259668139721, guid: 6ba9bef5af9c70347aaabf833f40a6b8,
+  _generator: {fileID: 558226571162503250, guid: 8f410ada86c1d094a8d154b47270c8c4,
     type: 3}
   _panelNoInteract: {fileID: 1918113645}
   _panelCircle: {fileID: 1802920763}

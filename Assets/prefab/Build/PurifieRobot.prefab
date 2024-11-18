@@ -104,7 +104,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Purifier Drone
   NeededEnergy: 10
-  NeededRessources: []
+  NeededRessources:
+  - Ressource: {fileID: 11400000, guid: f4bf8295af713d94ea82c82987d9be30, type: 2}
+    Quantity: 5
+  - Ressource: {fileID: 11400000, guid: 35be24d5b5415b94dac57e0a921118ea, type: 2}
+    Quantity: 5
+  - Ressource: {fileID: 11400000, guid: a6c4e4e23bf17af42b58f78749d42238, type: 2}
+    Quantity: 5
+  - Ressource: {fileID: 11400000, guid: fb13e054b4aae554b9fee71c5a8ac3f5, type: 2}
+    Quantity: 5
 --- !u!114 &5275744681429980694
 MonoBehaviour:
   m_ObjectHideFlags: 0
