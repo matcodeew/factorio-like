@@ -25,6 +25,7 @@ public class RobotBehaviour : MonoBehaviour
     private bool _actionExecuted;
     private bool _robotIsMoving;
     private bool _ActionWasCanceled;
+    private BuildingReceivedEnergy _recieveEnergy;
 
     [Header("Other")]
     [SerializeField] private GameObject _base;
@@ -32,15 +33,18 @@ public class RobotBehaviour : MonoBehaviour
     public void Init()
     {
         _ressourceTransported = this.gameObject.AddComponent<InvRessource>();
+        _recieveEnergy = GetComponent<BuildingReceivedEnergy>();
     }
     private void Update()
     {
         HandleTargetSelection();
+        if (!_recieveEnergy.IsPowered()) { return; }
 
-        if (_robotIsMoving)
+        if (_robotIsMoving && _recieveEnergy.IsPowered())
         {
             StartCoroutine(MoveRobot());
         }
+
     }
 
     public void SetFirstTargetMode() => _firstTargetChosen = false;
@@ -54,6 +58,7 @@ public class RobotBehaviour : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit) && Input.GetMouseButtonDown(0))
             {
+                print(hit.collider.gameObject.name);
                 if (!_firstTargetChosen)
                 {
                     _ressourceSpot = hit.collider.GetComponent<RessourseSpot>();
@@ -109,7 +114,7 @@ public class RobotBehaviour : MonoBehaviour
 
     private IEnumerator MoveRobot()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _currentTarget, _moveSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, _currentTarget + new Vector3(0, 1, 0), _moveSpeed * Time.deltaTime);
         if (_ActionWasCanceled)
         {
             _currentTarget = _base.transform.position;

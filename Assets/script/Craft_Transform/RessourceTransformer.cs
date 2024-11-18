@@ -43,7 +43,6 @@ public class RessourceTransformer : MonoBehaviour
         {
             if (!_isInAction && MachineInputNotNull())
             {
-                print(_isInAction + "can start?");
                 _isInAction = true;
                 StartTransformation();
             }
@@ -340,7 +339,6 @@ public class RessourceTransformer : MonoBehaviour
     {
         if(_machineInput.childCount > 0)
         {
-
             InvRessource invRessource = _machineInput.GetComponentInChildren<InvRessource>();
             InventoryPlayerManager.Instance.CreateNewInventorySlot(new RessourceData(invRessource.Ressource.Id, invRessource.Ressource, invRessource.Quantity));
             DestroyAllChildren(_machineInput);

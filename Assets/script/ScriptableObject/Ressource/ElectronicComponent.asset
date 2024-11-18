@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd6940f605d832428031185754f8d05, type: 3}
   m_Name: ElectronicComponent
   m_EditorClassIdentifier: 
-  Id: 9
+  Id: 10
   Name: Electronic component
   Sprite: {fileID: 21300000, guid: 78d8381a42fafc24a8fa306bcf94baa7, type: 3}
   IsPure: 0
@@ -20,5 +20,5 @@ MonoBehaviour:
   FurnaceOutput: {fileID: 0}
   DisassemblerOutputs:
   - {fileID: 11400000, guid: 93e3e1cf7bb79234c87e719af291967e, type: 2}
-  - {fileID: 11400000, guid: 9bb42eb2fa9f53b4cbe61cdee2d7f716, type: 2}
+  - {fileID: 11400000, guid: c32917aeb7d0caf4285e644e8d6c8389, type: 2}
   - {fileID: 11400000, guid: 07798cfa844b833448217ebc5f3b3d4c, type: 2}

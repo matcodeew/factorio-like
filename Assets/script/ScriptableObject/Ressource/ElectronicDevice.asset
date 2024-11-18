@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd6940f605d832428031185754f8d05, type: 3}
   m_Name: ElectronicDevice
   m_EditorClassIdentifier: 
-  Id: 10
+  Id: 11
   Name: Electronic device
   Sprite: {fileID: 21300000, guid: 270c02578e36b6e459ee4b655642028e, type: 3}
   IsPure: 0

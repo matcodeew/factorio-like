@@ -389,10 +389,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5c4f54099eb2c43babe39af7cd5630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GenType: 0
+  MaxConnection: 5
+  Energy: 0
   TransformBuildingConnected: []
   _linkConnect: []
-  MaxConnection: 2
-  Energy: 0
+  _eolienne: {fileID: 0}
+  _speedRotate: 0
 --- !u!114 &1075250652447334358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,13 +423,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: SolarPanel
+  NeededEnergy: 0
   NeededRessources:
   - Ressource: {fileID: 11400000, guid: 59a13f0079aa80c4cbd6caf5ead21578, type: 2}
     Quantity: 10
   - Ressource: {fileID: 11400000, guid: 6e09eb3f3eaa2c94aa4bdc172260fea0, type: 2}
-    Quantity: 10
+    Quantity: 3
   - Ressource: {fileID: 11400000, guid: b370b913ac98339458f6a2cf7607af88, type: 2}
-    Quantity: 10
+    Quantity: 2
 --- !u!1 &7038392137004496550
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,7 +449,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7162005860082061278
 RectTransform:
   m_ObjectHideFlags: 0

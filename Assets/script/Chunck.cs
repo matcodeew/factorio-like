@@ -6,7 +6,6 @@ using UnityEngine;
 public class Chunk // : MonoBehaviour
 {
     public Dictionary<Vector3, TileData> Tiles = new Dictionary<Vector3, TileData>();
-    public ChunkState state = ChunkState.None;
     public float ChunckDecontaminationValue; // value that vary between 0.0 and 1.0
 
     public float UpdateChunkDecontaminationValue()
@@ -14,13 +13,4 @@ public class Chunk // : MonoBehaviour
         ChunckDecontaminationValue = Tiles.Values.Average(tile => tile.PurifiedValue);
         return ChunckDecontaminationValue;
     }
-}
-
-public enum ChunkState
-{
-    IndustrialZone,
-    UrbanZone,
-    Forest,
-    Career,
-    None,
 }
