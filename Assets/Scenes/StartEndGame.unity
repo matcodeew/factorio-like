@@ -6003,8 +6003,11 @@ MonoBehaviour:
     type: 3}
   _groundParent: {fileID: 545659474}
   PickingRessource: 0
-  _prefabToInstantiate: []
-  _maxSpotOnMap: 0
+  _prefabToInstantiate:
+  - {fileID: 5017776171935841040, guid: 69d4b2622f64cf14392b38b7cd9e4630, type: 3}
+  - {fileID: 7118745657753030339, guid: 78e846f0cfd2804498bb0adb33497459, type: 3}
+  - {fileID: 7617087446528919729, guid: 2873a5ea5919b2c4f9e1b7afd7d88f1f, type: 3}
+  _maxSpotOnMap: 15
   _ProgressBarDecontamination: {fileID: 702590048}
   _ProgressBarValue: {fileID: 702590046}
   _endShipGameObject: {fileID: 1805985960}
@@ -12993,9 +12996,9 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 545659475}
   - {fileID: 2035219153}
-  - {fileID: 1169801919}
   - {fileID: 1420994791}
   - {fileID: 1603394787}
   - {fileID: 953332459}
   - {fileID: 1736082914}
+  - {fileID: 1169801919}
   - {fileID: 1183143636}
