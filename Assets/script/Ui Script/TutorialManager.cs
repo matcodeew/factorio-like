@@ -124,19 +124,6 @@ public class TutorialManager : MonoBehaviour
             obj.SetActive(false);
         }
     }
-
-    public void SkipTutorial()
-    {
-        if (tutorialCoroutine != null)
-        {
-            StopCoroutine(tutorialCoroutine);  
-        }
-
-        panel.SetActive(false);
-        tutorialText.gameObject.SetActive(false);
-
-        currentIndex = tutorialObjects.Length;  
-    }
 }
 
 
