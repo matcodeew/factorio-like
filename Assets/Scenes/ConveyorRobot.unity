@@ -3396,11 +3396,11 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
-  m_StartAxis: 1
+  m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 50, y: 40}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_Constraint: 1
+  m_ConstraintCount: 5
 --- !u!1001 &702590045
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5493,6 +5493,18 @@ RectTransform:
   m_AnchoredPosition: {x: -1, y: 1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0}
+--- !u!114 &1136513864 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1778150089622880231, guid: 754b9bbd05c51684c9da4b5905df5830,
+    type: 3}
+  m_PrefabInstance: {fileID: 702590045}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1138805579
 GameObject:
   m_ObjectHideFlags: 0
@@ -5570,7 +5582,7 @@ MonoBehaviour:
   SolarForcePercent: 75
   SolarPanelEnergy: 20
   WindForcePercent: 50
-  WindTurbineEnergy: 10
+  WindTurbineEnergy: 20
 --- !u!114 &1169801918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5586,9 +5598,15 @@ MonoBehaviour:
   _tilePrefab: {fileID: 2838385887705197276, guid: d95afd866212aab409a4eb1d48720a90,
     type: 3}
   _groundParent: {fileID: 545659474}
-  _dumpsterPrefab: {fileID: 3792326885201706066, guid: 2cc8e84ed1e63d64a992523aa3f29974,
-    type: 3}
   PickingRessource: 0
+  _prefabToInstantiate:
+  - {fileID: 5017776171935841040, guid: 69d4b2622f64cf14392b38b7cd9e4630, type: 3}
+  - {fileID: 7118745657753030339, guid: 78e846f0cfd2804498bb0adb33497459, type: 3}
+  - {fileID: 7617087446528919729, guid: 2873a5ea5919b2c4f9e1b7afd7d88f1f, type: 3}
+  _maxSpotOnMap: 15
+  _ProgressBarDecontamination: {fileID: 1136513864}
+  _ProgressBarValue: {fileID: 702590046}
+  _endShipGameObject: {fileID: 1805985960}
 --- !u!4 &1169801919
 Transform:
   m_ObjectHideFlags: 0
@@ -5780,6 +5798,10 @@ MonoBehaviour:
   - A furnace is a device used to heat materials to high temperatures.
   - A grinder is a tool used to crush or grind materials, such as herbs or spices,
     into smaller pieces.
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   RequireRessources:
@@ -6692,7 +6714,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 8256e6ae2c0d41c40a31c6db873ae163,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6789,7 +6811,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b1604cc132f3b994989cc523363e17a6,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8187,7 +8209,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 7700140cc72a1c0499e72ec98b7fe735,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8243,7 +8265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _starShip: {fileID: 0}
   _player: {fileID: 1421549088}
-  _generator: {fileID: 2242581259668139721, guid: 6ba9bef5af9c70347aaabf833f40a6b8,
+  _generator: {fileID: 558226571162503250, guid: 8f410ada86c1d094a8d154b47270c8c4,
     type: 3}
   _panelNoInteract: {fileID: 1918113645}
   _panelCircle: {fileID: 1802920763}
@@ -11301,11 +11323,13 @@ MonoBehaviour:
   TrashAreaGameObject: {fileID: 146238813}
   InventoryBuildPanel: {fileID: 172132716}
   _buildingPrefabs:
-  - {fileID: 6634538959374061348, guid: 7f5570a0d6926f0419067b0310e68987, type: 3}
-  - {fileID: 6634538959374061348, guid: 56e9bc4b78e3944438c3b705570bf642, type: 3}
-  - {fileID: 6634538959374061348, guid: 12a7c8ad3e45b88448a85fe28f1f7235, type: 3}
+  - {fileID: 4185745873042574825, guid: fc9bfabf7e048324d929f4dde73b9adf, type: 3}
+  - {fileID: 1409881507025082468, guid: 3ca5c977049756a4cb790adf9d61e114, type: 3}
+  - {fileID: 8768688640123268020, guid: d3f07307e12ae2443b859ace54646cc0, type: 3}
   - {fileID: 5330380428058016937, guid: 48dc8661875df9f44ba7145523ff6fc4, type: 3}
-  - {fileID: 1798402654236293502, guid: 4733e71fef9fddb4db2d6e1b07876ad8, type: 3}
+  - {fileID: 558226571162503250, guid: f3256dff8ecdb0b429b24584243c3722, type: 3}
+  - {fileID: 7875142188188349898, guid: 789da634b900ace4ab517485c477574a, type: 3}
+  - {fileID: 2688752190026921899, guid: 9114ee0d4a52e724d8cec8ffb0f59d99, type: 3}
   _inventoryCasePrefab: {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4,
     type: 3}
   _invSlots: []

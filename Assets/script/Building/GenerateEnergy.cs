@@ -1,18 +1,27 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using Unity.VisualScripting;
 using UnityEngine;
 
+public enum TypeOfGenerator
+{
+    eolienne,
+    solarPannel,
+}
 public class GenerateEnergy : MonoBehaviour, ISubscrireEvent
 {
-    public List<BuildingReceivedEnergy> TransformBuildingConnected = new List<BuildingReceivedEnergy>();
-    public List<GameObject> _linkConnect = new List<GameObject>();
+    private BuildingManager instance;
+
+    [Header("Energy utils")]
+    [SerializeField] private TypeOfGenerator GenType;
     [SerializeField, Min(1.0f)] public int MaxConnection = 2;
     public int Energy;
-    private BuildingManager instance;
+    public List<BuildingReceivedEnergy> TransformBuildingConnected = new List<BuildingReceivedEnergy>();
+    public List<GameObject> _linkConnect = new List<GameObject>();
     private bool _isActive;
+
+    [Header("eolienne Anim")]
+    [SerializeField] private GameObject _eolienne;
+    [SerializeField] private float _speedRotate = 100;
+
     public bool CanConnectBuilding() { return TransformBuildingConnected.Count < MaxConnection; }
     public void SubscrireEvent()
     {
@@ -21,23 +30,29 @@ public class GenerateEnergy : MonoBehaviour, ISubscrireEvent
     }
     private void UpdateEnergy()
     {
-        //if(CompareTag("SolarPanel"))
-        //{
-        //    Energy = instance.GenerateSolarEnergy();
-        //}
-        //else
-        //{
-        //    Energy = instance.GenerateWindEnergy();
-        //}
-        Energy = instance.GenerateSolarEnergy();
-        //Debug.Log($"energy send by {gameObject.name} is : {Energy}");   
+        if (GenType == TypeOfGenerator.solarPannel)
+        {
+            Energy = instance.GenerateSolarEnergy();
+        }
+        else
+        {
+            Energy = instance.GenerateWindEnergy();
+        }
         instance.UpdateBuildingEnergy?.Invoke();
+    }
+    private void Update()
+    {
+        if(_linkConnect.Count <= 0) { return;}
+        else
+        {
+            _eolienne.transform.Rotate(0, 0, -(_speedRotate * Time.deltaTime));
+        }
     }
     public void AddGenToList()
     {
-        foreach(BuildingReceivedEnergy energy in TransformBuildingConnected)
+        foreach (BuildingReceivedEnergy energy in TransformBuildingConnected)
         {
-            if(!energy.ConnectGenerator.Contains(this))
+            if (!energy.ConnectGenerator.Contains(this))
             {
                 energy.ConnectGenerator.Add(this);
                 //instance.UpdateSharedEnergy?.Invoke();
@@ -47,7 +62,7 @@ public class GenerateEnergy : MonoBehaviour, ISubscrireEvent
     public void OnMouseDown()
     {
         //ActivePanel();
-        if(instance.CanDestroyBuilding)
+        if (instance.CanDestroyBuilding)
         {
             InventoryBuildManager.Instance.AddOnDestroy(this.gameObject);
             Destroy(gameObject);
@@ -62,16 +77,16 @@ public class GenerateEnergy : MonoBehaviour, ISubscrireEvent
 
     private void DestroyGenerator()
     {
-        foreach(var transformer in TransformBuildingConnected)
+        foreach (var transformer in TransformBuildingConnected)
         {
-            if(transformer.ConnectGenerator.Contains(this))
+            if (transformer.ConnectGenerator.Contains(this))
             {
                 transformer.ConnectGenerator.Remove(this);
             }
 
-            foreach(GameObject link in _linkConnect)
+            foreach (GameObject link in _linkConnect)
             {
-                if(_linkConnect.Contains(link))
+                if (_linkConnect.Contains(link))
                 {
                     _linkConnect.Remove(link);
                     Destroy(link);

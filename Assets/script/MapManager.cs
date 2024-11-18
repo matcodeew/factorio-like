@@ -13,17 +13,20 @@ public class MapManager : MonoBehaviour
 
     [SerializeField] private GameObject _tilePrefab;
     [SerializeField] private GameObject _groundParent;
-    [SerializeField] private GameObject _dumpsterPrefab;
 
     public static MapManager Instance;
     public bool PickingRessource;
-    private bool _createDumpster = true;
 
     private int _id;
     private int _mapSize = 32;
     private int _chunckSize = 8;
     private RessourseSpot _currentMiningSpot;
     private int _currentPlacedSpot;
+
+    [Header("Map Ressource Spot")]
+    [SerializeField] private List<GameObject> _prefabToInstantiate;
+    private List<TileData> _spotToRandomize = new();
+    [SerializeField] private int _maxSpotOnMap;
 
     [Header("Win Conditions")]
     [SerializeField] private Image _ProgressBarDecontamination;
@@ -55,7 +58,7 @@ public class MapManager : MonoBehaviour
                 newTile.transform.parent = _groundParent.transform;
                 newTile.name = "Tile (" + x + " , " + y + ")";
                 newTile.GetComponent<TileData>().ID = _id;
-                CreateDumpster(newTile.GetComponent<TileData>());
+                AlocateTileState(newTile.GetComponent<TileData>());
 
                 int i = x / _chunckSize;
                 int j = y / _chunckSize;
@@ -70,21 +73,57 @@ public class MapManager : MonoBehaviour
                 _id++;
             }
         }
+        PlaceRandomBuildings();
         UpdateProgressBar();
     }
 
-    public void CreateDumpster(TileData tile)
+    private void AlocateTileState(TileData tile)
     {
-        if (_createDumpster == true)
+        int randomValue = UnityEngine.Random.Range(0, 100);
+
+        if (randomValue < 94) // 94 % de chance
         {
-            GameObject newGo = Instantiate(_dumpsterPrefab);
-            newGo.transform.parent = _groundParent.transform;
-            newGo.transform.position = tile.transform.position + new Vector3(0, 1.5f, 0);
-            tile.OnTop = newGo;
-            tile.IsOccupied = true;
-            _createDumpster = false;
+            tile.TileState = TileBuildingOnTop.None;
+            return;
         }
+        else if (randomValue < 96)
+        {
+            tile.TileState = TileBuildingOnTop.Dumpster;
+        }
+        else if (randomValue < 98)
+        {
+            tile.TileState = TileBuildingOnTop.RuinedBuilding;
+        }
+        else 
+        {
+            tile.TileState = TileBuildingOnTop.AbandonedPowerStation;
+        }
+        _spotToRandomize.Add(tile);
     }
+    private void PlaceRandomBuildings()
+    {
+        int count = Mathf.Min(_spotToRandomize.Count, _maxSpotOnMap);
+        var randomElements = _spotToRandomize.OrderBy(x => Guid.NewGuid()).Take(count).ToList();
+        List<GameObject> objectPlaced = new();
+        foreach (var tile in randomElements)
+        {
+            if (objectPlaced.Any(spot => spot.transform.position == tile.transform.position))
+                continue;
+
+            int index = (int)tile.TileState;
+            if (index <= _prefabToInstantiate.Count - 1)
+            {
+                GameObject newGo = Instantiate(_prefabToInstantiate[index]);
+                newGo.transform.parent = _groundParent.transform;
+                newGo.transform.position = tile.transform.position + new Vector3(0, 1, 0);
+                tile.OnTop = newGo;
+                tile.IsOccupied = true;
+                objectPlaced.Add(newGo);
+            }
+        }
+        _spotToRandomize.Clear();
+    }
+
 
     #endregion
 
@@ -146,7 +185,7 @@ public class MapManager : MonoBehaviour
             int resourceIndex = _ressourceSpot.PickRandomRessource();
             if (resourceIndex != -1)
             {
-                if(_ressourceSpot.AvailableResource[resourceIndex].StartQuantity > 0)
+                if (_ressourceSpot.AvailableResource[resourceIndex].StartQuantity > 0)
                 {
                     RessourceData ressourceTransfered = new RessourceData(_ressourceSpot.AvailableResource[resourceIndex].Id,
                         _ressourceSpot.AvailableResource[resourceIndex].Ressources, 1);
@@ -204,54 +243,5 @@ public class MapManager : MonoBehaviour
         // Fire an event that will be listened by every tiles
         TogglePurifyViewEvent?.Invoke();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // public void UpdateProgressBar()
-    // {
-    //     _ProgressBarDecontamination.fillAmount = CalculPourcentageDecontaminationChunck();
-    //     float progressPercentage = Mathf.Round(_ProgressBarDecontamination.fillAmount * 100);
-    //     _ProgressBarValue.text = progressPercentage.ToString() + "%";
-    //     if (_ProgressBarDecontamination.fillAmount >= 1) // ou 100%
-    //     {
-    //         _endShipGameObject.SetActive(true);
-    //     }
-    // }
-
-    // public float CalculPourcentageDecontaminationChunck()
-    // {
-    //     float totalDecontamination = 0;
-
-    //     foreach (Chunck chunck in Chuncks.Values)
-    //     {
-    //         float chunkDecontamination = 0;
-    //         // Additionne la valeur de d�contamination pour chaque tuile du chunk
-    //         foreach (TileData tileData in chunck.TileChunk.Values)
-    //         {
-    //             chunkDecontamination += tileData.ProgressValue;
-    //         }
-
-    //         // Calcule la moyenne de d�contamination pour ce chunk
-    //         float AverrageChunckDecontamination = chunkDecontamination / chunck.TileChunk.Count;
-    //         // Ajoute la moyenne du chunk au total
-    //         totalDecontamination += AverrageChunckDecontamination;
-    //     }
-
-    //     // Calcule la moyenne sur tous les chunks et retourne en pourcentage
-    //     return (totalDecontamination / Chuncks.Count) / 100;
-    // }
-
     #endregion
 }
