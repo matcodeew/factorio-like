@@ -53,7 +53,11 @@ public class BuildingReceivedEnergy : MonoBehaviour, ISubscrireEvent
                 gen.TransformBuildingConnected.Remove(this);
             foreach (GameObject link in gen._linkConnect)
             {
-                if (link.GetComponent<LineRenderer>().GetPosition(1) == transform.position)
+                Vector3 LinkNormalizePos = new Vector3(link.GetComponent<LineRenderer>().GetPosition(1).x,
+                    0, (link.GetComponent<LineRenderer>().GetPosition(1).z));
+                Vector3 NormalizePos = new Vector3(transform.position.x, 0, transform.position.z);
+
+                if (LinkNormalizePos == NormalizePos)
                 {
                     gen._linkConnect.Remove(link);
                     Destroy(link);
