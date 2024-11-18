@@ -57,7 +57,7 @@ public class InventoryPlayerManager : MonoBehaviour
             invRessource.Quantity = 1;
         }
     }
-    public IEnumerator UpdateProgressBar()
+    public IEnumerator UpdateProgressBar()      // A supp
     {
         while (_ProgressBarDecontamination.fillAmount < 100)
         {
