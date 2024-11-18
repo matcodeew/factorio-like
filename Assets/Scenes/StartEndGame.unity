@@ -1789,11 +1789,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ZoomSpeed: 25
   MinZoom: 30
-  MaxZoom: 120
-  MinX: 10
-  MaxX: 50
-  MinY: 10
-  MaxY: 50
+  MaxZoom: 60
+  MinX: 0
+  MaxX: 30
+  MinZ: -15
+  MaxZ: 15
 --- !u!1001 &333316150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6248,6 +6248,7 @@ MonoBehaviour:
   - {fileID: 1782936037}
   - {fileID: 1782936037}
   - {fileID: 1305370578}
+  - {fileID: 1782936037}
   - {fileID: 2089161397}
   - {fileID: 1101978311}
   - {fileID: 1528056764}
@@ -6260,6 +6261,7 @@ MonoBehaviour:
   - Here is your command interface. Use the icons and buttons to navigate, interact
     with your surroundings, and manage your resources.
   - Your goal is to purify the Earth completely and fill the progress bar to 100%.
+  - "You can also check which tiles are not yet purified by pressing \u201CSpace\"."
   - You can check your objective at any time in the info panel on the side of the
     screen.
   - Here is the main button of the game
@@ -12419,9 +12421,17 @@ MonoBehaviour:
   - {fileID: 6634538959374061348, guid: 7f5570a0d6926f0419067b0310e68987, type: 3}
   - {fileID: 6634538959374061348, guid: 56e9bc4b78e3944438c3b705570bf642, type: 3}
   - {fileID: 6634538959374061348, guid: 12a7c8ad3e45b88448a85fe28f1f7235, type: 3}
-  - {fileID: 5330380428058016937, guid: 48dc8661875df9f44ba7145523ff6fc4, type: 3}
+  - {fileID: 7185904808133047282, guid: d3017c1beb23d49428161f4b5a43f47d, type: 3}
   - {fileID: 1798402654236293502, guid: 4733e71fef9fddb4db2d6e1b07876ad8, type: 3}
   - {fileID: 5092876964191376708, guid: 2efde226947d11e40b90821365828532, type: 3}
+  _buildingImage:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 21300000, guid: 23834b1828e7c434186a0dfa3f127482, type: 3}
+  - {fileID: 21300000, guid: b8902d64470047442bfecc8168b18628, type: 3}
+  - {fileID: 21300000, guid: cd251cefbf31bbd499bb0e4524e4b8c0, type: 3}
+  - {fileID: 21300000, guid: 081e7d66d5c0efa4b9d7d257cd702b18, type: 3}
+  - {fileID: 21300000, guid: 9f550bdb5b659934891e2c7c3e701531, type: 3}
   _inventoryCasePrefab: {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4,
     type: 3}
   _invSlots: []
@@ -12512,11 +12522,11 @@ RectTransform:
   - {fileID: 702590047}
   - {fileID: 1918113648}
   - {fileID: 1904393805}
-  - {fileID: 1802920764}
   - {fileID: 2089161401}
   - {fileID: 1905424982}
   - {fileID: 1782936038}
   - {fileID: 1240607936}
+  - {fileID: 1802920764}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

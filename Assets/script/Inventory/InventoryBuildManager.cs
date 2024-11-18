@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using static BuildingData;
 
 public class InventoryBuildManager : MonoBehaviour
@@ -20,6 +21,7 @@ public class InventoryBuildManager : MonoBehaviour
     // public GameObject BuildStatPanel;
 
     public List<GameObject> _buildingPrefabs = new List<GameObject>();
+    public List<Sprite> _buildingImage = new List<Sprite>();
     [SerializeField] private GameObject _inventoryCasePrefab;
 
     [SerializeField] private List<GameObject> _invSlots = new List<GameObject>();
@@ -52,12 +54,11 @@ public class InventoryBuildManager : MonoBehaviour
             TooltipScript.instance.objectsToTooltip.Add(rectTransform, _buildingPrefabs[i]);
             if (itemInstance.transform.childCount > 0)
             {
-
                 GameObject child = itemInstance.transform.GetChild(0).gameObject;
                 DragUIElementBuild dragComponent = child.AddComponent<DragUIElementBuild>();
                 dragComponent.Initialize(_buildingPrefabs[i], child, itemInstance);
             }
-
+            itemInstance.GetComponent<Image>().sprite = _buildingImage[i];
             _invSlots.Add(itemInstance);
         }
     }

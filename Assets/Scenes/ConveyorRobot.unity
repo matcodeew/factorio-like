@@ -1711,8 +1711,8 @@ MonoBehaviour:
   MaxZoom: 120
   MinX: 10
   MaxX: 50
-  MinY: 10
-  MaxY: 50
+  MinZ: 0
+  MaxZ: 0
 --- !u!1001 &333316150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6895,6 +6895,7 @@ MonoBehaviour:
     type: 3}
   _panelNoInteract: {fileID: 1918113645}
   _panelCircle: {fileID: 1802920763}
+  startTutorial: 0
 --- !u!95 &1421549092
 Animator:
   serializedVersion: 5
@@ -8269,6 +8270,7 @@ MonoBehaviour:
     type: 3}
   _panelNoInteract: {fileID: 1918113645}
   _panelCircle: {fileID: 1802920763}
+  startTutorial: 0
 --- !u!1 &1654824776
 GameObject:
   m_ObjectHideFlags: 0
@@ -11326,10 +11328,11 @@ MonoBehaviour:
   - {fileID: 4185745873042574825, guid: fc9bfabf7e048324d929f4dde73b9adf, type: 3}
   - {fileID: 1409881507025082468, guid: 3ca5c977049756a4cb790adf9d61e114, type: 3}
   - {fileID: 8768688640123268020, guid: d3f07307e12ae2443b859ace54646cc0, type: 3}
-  - {fileID: 5330380428058016937, guid: 48dc8661875df9f44ba7145523ff6fc4, type: 3}
+  - {fileID: 7185904808133047282, guid: d3017c1beb23d49428161f4b5a43f47d, type: 3}
   - {fileID: 558226571162503250, guid: f3256dff8ecdb0b429b24584243c3722, type: 3}
   - {fileID: 7875142188188349898, guid: 789da634b900ace4ab517485c477574a, type: 3}
   - {fileID: 2688752190026921899, guid: 9114ee0d4a52e724d8cec8ffb0f59d99, type: 3}
+  _buildingImage: []
   _inventoryCasePrefab: {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4,
     type: 3}
   _invSlots: []
