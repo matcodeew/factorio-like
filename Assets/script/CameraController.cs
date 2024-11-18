@@ -5,14 +5,14 @@ public class CameraController : MonoBehaviour
     public float ZoomSpeed;
     public float MinZoom;
     public float MaxZoom;
-    public float MinX, MaxX, MinY, MaxY;
+    public float MinX, MaxX, MinZ, MaxZ;
 
     private float _maxSpeed = 50f;
     private float _accelerationRate = 20f;
     private float _speed = 30f;
     private float _border = 50.0f; // La zone de la bordure où la caméra commence à se déplacer
     private float _accelerationX = 5f;
-    private float _accelerationY = 5f;
+    private float _accelerationZ = 5f;
 
     private Camera _cam;
 
@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
         {
             Vector3 newPosition = _cam.transform.position;
 
-            // Vérification du bord droit
+            // Vérification du bord droit (mouvement à droite)
             if (Input.mousePosition.x >= Screen.width - _border)
             {
                 _accelerationX += _accelerationRate * Time.deltaTime;
@@ -63,7 +63,7 @@ public class CameraController : MonoBehaviour
 
                 newPosition.x += _accelerationX * Time.deltaTime;
             }
-            // Vérification du bord gauche
+            // Vérification du bord gauche (mouvement à gauche)
             else if (Input.mousePosition.x <= _border)
             {
                 _accelerationX += _accelerationRate * Time.deltaTime;
@@ -76,30 +76,30 @@ public class CameraController : MonoBehaviour
                 _accelerationX = 0f;
             }
 
-            // Vérification du bord du haut
+            // Vérification du bord du haut (mouvement vers l'avant sur l'axe Z)
             if (Input.mousePosition.y >= Screen.height - _border)
             {
-                _accelerationY += _accelerationRate * Time.deltaTime;
-                _accelerationY = Mathf.Min(_accelerationY, _maxSpeed);
+                _accelerationZ += _accelerationRate * Time.deltaTime;
+                _accelerationZ = Mathf.Min(_accelerationZ, _maxSpeed);
 
-                newPosition.z += _accelerationY * Time.deltaTime;
+                newPosition.z += _accelerationZ * Time.deltaTime;
             }
-            // Vérification du bord du bas
+            // Vérification du bord du bas (mouvement vers l'arrière sur l'axe Z)
             else if (Input.mousePosition.y <= _border)
             {
-                _accelerationY += _accelerationRate * Time.deltaTime;
-                _accelerationY = Mathf.Min(_accelerationY, _maxSpeed);
+                _accelerationZ += _accelerationRate * Time.deltaTime;
+                _accelerationZ = Mathf.Min(_accelerationZ, _maxSpeed);
 
-                newPosition.z -= _accelerationY * Time.deltaTime;
+                newPosition.z -= _accelerationZ * Time.deltaTime;
             }
             else
             {
-                _accelerationY = 0f;
+                _accelerationZ = 0f;
             }
 
             // Clamper les limites de la caméra pour éviter de sortir de la zone définie
             newPosition.x = Mathf.Clamp(newPosition.x, MinX, MaxX);
-            newPosition.y = Mathf.Clamp(newPosition.y, MinY, MaxY);
+            newPosition.z = Mathf.Clamp(newPosition.z, MinZ, MaxZ);
 
             _cam.transform.position = newPosition;
         }

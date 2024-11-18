@@ -1789,11 +1789,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ZoomSpeed: 25
   MinZoom: 30
-  MaxZoom: 120
-  MinX: 10
-  MaxX: 50
-  MinY: 10
-  MaxY: 50
+  MaxZoom: 60
+  MinX: 0
+  MaxX: 30
+  MinZ: -15
+  MaxZ: 15
 --- !u!1001 &333316150
 PrefabInstance:
   m_ObjectHideFlags: 0
