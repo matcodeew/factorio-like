@@ -42,10 +42,13 @@ public class GenerateEnergy : MonoBehaviour, ISubscrireEvent
     }
     private void Update()
     {
-        if(_linkConnect.Count <= 0) { return;}
-        else
+        if (GenType == TypeOfGenerator.eolienne)
         {
-            _eolienne.transform.Rotate(0, 0, -(_speedRotate * Time.deltaTime));
+            if (_linkConnect.Count <= 0) { return; }
+            else
+            {
+                _eolienne.transform.Rotate(0, 0, -(_speedRotate * Time.deltaTime));
+            }
         }
     }
     public void AddGenToList()

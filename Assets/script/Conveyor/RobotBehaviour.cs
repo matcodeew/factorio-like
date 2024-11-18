@@ -29,22 +29,26 @@ public class RobotBehaviour : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private GameObject _base;
+    private RobotStation _dock;
 
     public void Init()
     {
         _ressourceTransported = this.gameObject.AddComponent<InvRessource>();
         _recieveEnergy = GetComponent<BuildingReceivedEnergy>();
+        _dock = _base.GetComponent<RobotStation>();
     }
     private void Update()
     {
-        HandleTargetSelection();
-        if (!_recieveEnergy.IsPowered()) { return; }
-
-        if (_robotIsMoving && _recieveEnergy.IsPowered())
+        if(_dock.BuildPosed)
         {
-            StartCoroutine(MoveRobot());
-        }
+            HandleTargetSelection();
+            if (!_recieveEnergy.IsPowered()) { return; }
 
+            if (_robotIsMoving && _recieveEnergy.IsPowered())
+            {
+                StartCoroutine(MoveRobot());
+            }
+        }
     }
 
     public void SetFirstTargetMode() => _firstTargetChosen = false;
