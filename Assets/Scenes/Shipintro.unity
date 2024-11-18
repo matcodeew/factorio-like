@@ -1464,7 +1464,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Planet Name: Terre\n\n X: 145.9, Y: -320.7, Z: 27.3\n\nDescription: A
+  m_text: "Planet Name: Earth\n\n X: 145.9, Y: -320.7, Z: 27.3\n\nDescription: A
     polluted, abandoned planet with gray dunes, toxic mountains, and lifeless, dried
     oceans.\n\nCondition: Uninhabitable, with poisoned soil and an unbreathable atmosphere.\n\nLife:
     None. All colonists have left."

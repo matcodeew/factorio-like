@@ -12512,11 +12512,11 @@ RectTransform:
   - {fileID: 702590047}
   - {fileID: 1918113648}
   - {fileID: 1904393805}
-  - {fileID: 1802920764}
   - {fileID: 2089161401}
   - {fileID: 1905424982}
   - {fileID: 1782936038}
   - {fileID: 1240607936}
+  - {fileID: 1802920764}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
