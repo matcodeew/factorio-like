@@ -11,6 +11,7 @@ TagManager:
   - Panel
   - Transformer
   - OutputSlot
+  - InputSlot
   layers:
   - Default
   - TransparentFX

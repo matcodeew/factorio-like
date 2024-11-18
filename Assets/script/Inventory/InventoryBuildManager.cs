@@ -47,8 +47,9 @@ public class InventoryBuildManager : MonoBehaviour
             GameObject itemInstance = Instantiate(_inventoryCasePrefab, _panelBuildingParent);
             itemInstance.tag = "Build";
             RectTransform rectTransform = Instantiate(_PrefabPanelInfo, _parentToparent);
+            rectTransform.gameObject.tag = "Build";
             rectTransform.transform.position = itemInstance.transform.position;
-            TooltipScript.instance.objectsToTooltip.Add(rectTransform);
+            TooltipScript.instance.objectsToTooltip.Add(rectTransform, _buildingPrefabs[i]);
             if (itemInstance.transform.childCount > 0)
             {
 

@@ -7,8 +7,11 @@ using UnityEngine.UI;
 
 public class InventoryPlayerManager : MonoBehaviour
 {
+    [SerializeField] private GameObject _endShipGameObject;
     public static InventoryPlayerManager Instance;
-
+    [Header("Progress Bar")]
+    [SerializeField] private Image _ProgressBarDecontamination;
+    [SerializeField] private TextMeshProUGUI _ProgressBarValue;
     [Header("Inventory")]
     [SerializeField] private List<RessourceData> _cheatAllInventoryRessource = new();
     public RectTransform _inventoryParentSlot;
@@ -25,7 +28,7 @@ public class InventoryPlayerManager : MonoBehaviour
         foreach (RessourceData ressource in _cheatAllInventoryRessource)
         {
             ressource.Id = ressource.Ressources.Id;
-            for(int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 CreateNewInventorySlot(ressource);
             }
@@ -54,13 +57,28 @@ public class InventoryPlayerManager : MonoBehaviour
             invRessource.Quantity = 1;
         }
     }
-
-
-
-
+    public IEnumerator UpdateProgressBar()      // A supp
+    {
+        while (_ProgressBarDecontamination.fillAmount < 100)
+        {
+            _ProgressBarDecontamination.fillAmount = MapManager.Instance.CalculPourcentageDecontaminationChunck();
+            float progressPercentage = Mathf.Round(_ProgressBarDecontamination.fillAmount * 100);
+            _ProgressBarValue.text = progressPercentage.ToString() + "%";
+            if (_ProgressBarDecontamination.fillAmount >= 1) // ou 100%
+            {
+                _endShipGameObject.SetActive(true);
+            }
+            yield return new WaitForSeconds(3f);
+        }
+    }
 }
 public class InvRessource : MonoBehaviour
 {
     public Scriptable_Ressources Ressource;
     public int Quantity;
+    public InvRessource(Scriptable_Ressources ressources, int quantity)
+    {
+        Ressource = ressources;
+        Quantity = quantity;
+    }
 }

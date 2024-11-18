@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
-using Unity.VisualScripting;
-using System.ComponentModel;
 
 
 [RequireComponent(typeof(BuildingReceivedEnergy))]
@@ -30,7 +28,7 @@ public class RessourceTransformer : MonoBehaviour
     private BuildingReceivedEnergy _energyReceiver;
 
 
-    private bool _isInAction = false;
+    public bool _isInAction = false;
 
 
     void Start()
@@ -41,7 +39,7 @@ public class RessourceTransformer : MonoBehaviour
 
     private void Update()
     {
-        if (_machineInput.childCount > 0)
+        if (!CheckIfInputCaseIsEmpty())
         {
             if (!_isInAction && MachineInputNotNull())
             {
@@ -51,8 +49,7 @@ public class RessourceTransformer : MonoBehaviour
         }
         else if (_instantiateOutputList.Count >= 1)
         {
-            MoveOutputInInventory();
-
+            ActionWasCancelled = false;
         }
     }
 
@@ -67,14 +64,13 @@ public class RessourceTransformer : MonoBehaviour
             DeleteOutPutCase(outputCase);
         }
         _instantiateOutputList.Clear();
-        _isInAction = false;
         ActionWasCancelled = false;
     }
 
     private bool MachineInputNotNull()
     {
         MachineInput = _machineInput.GetComponentInChildren<InvRessource>().Ressource;
-
+        InventoryPlayerManager.Instance.SlotGameobjectList.Remove(_machineInput.GetComponentInChildren<InvRessource>());
         if (MachineInput == null)
         {
             return false;
@@ -88,8 +84,9 @@ public class RessourceTransformer : MonoBehaviour
     }
 
     public bool ActionWasCancelled;
-    public void StartTransformation()
+    private void StartTransformation()
     {
+        print($"Action Executed for {_machineInput.GetComponentInChildren<InvRessource>().Ressource}");
         _currentRessourceToTransform = _machineInput.GetComponentInChildren<InvRessource>();
 
         if (_currentRessourceToTransform != null && _energyReceiver.IsPowered())
@@ -101,7 +98,6 @@ public class RessourceTransformer : MonoBehaviour
     public void StopTransformation()
     {
         ActionWasCancelled = true;
-        _isInAction = false;
     }
 
     private IEnumerator HandleProcessTime()
@@ -113,11 +109,11 @@ public class RessourceTransformer : MonoBehaviour
                 yield return new WaitForSeconds(_processTime);
                 if (!ActionWasCancelled)
                 {
-                    //if (_machineInput.childCount == 0)
-                    //{
-                    //    ActionWasCancelled = true;
-                    //    break;
-                    //}
+                    if (_machineInput.childCount == 0)
+                    {
+                        StopTransformation();
+                        break;
+                    }
                     transformRessource();
                     DisplayOutputPrefabs();
                 }
@@ -182,8 +178,9 @@ public class RessourceTransformer : MonoBehaviour
         {
             StopTransformation();
             DestroyAllChildren(_machineInput);
+            _machineInput.gameObject.tag = "Empty";
         }
-        if (_machineInput.childCount <= 0)
+        if (CheckIfInputCaseIsEmpty())
         {
             StopTransformation();
             DestroyAllChildren(_machineInput);
@@ -204,6 +201,29 @@ public class RessourceTransformer : MonoBehaviour
             CreateAndAlignOutputPrefab(ThirdOutput, "OutputSlot");
         }
 
+    }
+    public void CreateInputCase(InvRessource inputRessource)
+    {
+        bool _itemFounded = false;
+        InvRessource machineInput = _machineInput.GetComponentInChildren<InvRessource>();
+        if (machineInput != null)
+        {
+            if (inputRessource.Ressource.Id == machineInput.Ressource.Id)
+            {
+                _itemFounded = true;
+                machineInput.Quantity += inputRessource.Quantity;
+            }
+        }
+        if (!_itemFounded)
+        {
+            Transform newImage = Instantiate(InventoryPlayerManager.Instance._globalPrefab.transform.GetChild(0), _machineInput.transform);
+            InvRessource invRessource = newImage.AddComponent<InvRessource>();
+            invRessource.Ressource = inputRessource.Ressource;
+            invRessource.Quantity = inputRessource.Quantity;
+            newImage.GetComponent<Image>().sprite = inputRessource.Ressource.Sprite;
+            _machineInput.tag = "InventorySlot";
+            MachineInput = invRessource.Ressource;
+        }
     }
 
     private void CreateAndAlignOutputPrefab(Scriptable_Ressources outputResource, string newTag)
@@ -251,13 +271,38 @@ public class RessourceTransformer : MonoBehaviour
             Destroy(outputCase);
         }
     }
+    public void AddInputRessource(InvRessource invRessource)
+    {
+        _machineInput.GetComponentInChildren<InvRessource>().Quantity += invRessource.Quantity;
+    }
+    public bool CheckIfInputCaseIsEmpty() => _machineInput.childCount <= 0? true: false;
+    public bool CheckIfCanStackRessource(InvRessource inputRessource)
+        => _machineInput.GetComponentInChildren<InvRessource>().Ressource.Id == inputRessource.Ressource.Id?true: false;
     private bool CheckIfAllOutputCaseIsEmpty()
     {
         if (_instantiateOutputList.Count == 0)
-        {
             return true;
-        }
-        return false;
+
+        if (_instantiateOutputList.Count != _machineInput.GetComponentInChildren<InvRessource>().Ressource.DisassemblerOutputs.Count)
+            return false;
+
+        bool allMatch = _instantiateOutputList.TrueForAll(item =>
+        {
+            if (item.tag == "Empty")
+                return true;
+
+            // Récupérez la ressource contenue
+            var ressource = item.GetComponentInChildren<InvRessource>();
+            if (ressource == null)
+                return false;
+
+            // Vérifiez si l'ID correspond à l'une des sorties
+            return ressource.Ressource.Id == FirstOutput?.Id ||
+                   ressource.Ressource.Id == SecondOutput?.Id ||
+                   ressource.Ressource.Id == ThirdOutput?.Id;
+        });
+
+        return allMatch;
     }
 
     private void DestroyAllChildren(Transform parentTransform)

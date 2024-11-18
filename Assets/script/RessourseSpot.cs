@@ -6,7 +6,8 @@ public class RessourseSpot : MonoBehaviour
     public float MiningTime;
     public Scriptable_RessourceSpot Spot;
     public Dictionary<int, RessourceData> AvailableResource = new();
-
+    [SerializeField] private List<RessourceData> DebugRessource = new();
+    public bool IsEmpty = false;
     private void Awake()
     {
         AddToList();
@@ -42,6 +43,7 @@ public class RessourseSpot : MonoBehaviour
         {
             RessourceData newRessource = new RessourceData(a.Ressources.Id, a.Ressources, a.StartQuantity);
             AvailableResource.Add(a.Ressources.Id , newRessource);
+            DebugRessource.Add(newRessource);
         }
     }
 }
