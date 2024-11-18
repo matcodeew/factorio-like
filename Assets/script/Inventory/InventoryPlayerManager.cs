@@ -61,7 +61,7 @@ public class InventoryPlayerManager : MonoBehaviour
     {
         while (_ProgressBarDecontamination.fillAmount < 100)
         {
-            _ProgressBarDecontamination.fillAmount = MapManager.Instance.CalculPourcentageDecontaminationChunck();
+            //_ProgressBarDecontamination.fillAmount = MapManager.Instance.CalculPourcentageDecontaminationChunck();
             float progressPercentage = Mathf.Round(_ProgressBarDecontamination.fillAmount * 100);
             _ProgressBarValue.text = progressPercentage.ToString() + "%";
             if (_ProgressBarDecontamination.fillAmount >= 1) // ou 100%
