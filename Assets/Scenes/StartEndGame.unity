@@ -6249,7 +6249,7 @@ MonoBehaviour:
   - {fileID: 1101978311}
   - {fileID: 1528056764}
   - {fileID: 172132716}
-  - {fileID: 269592446}
+  - {fileID: 1138805579}
   - {fileID: 586208053}
   - {fileID: 1782936037}
   tutorialMessages:
@@ -6267,6 +6267,7 @@ MonoBehaviour:
   - An information panel that contains the glossary of all known materials on the
     planet to date.
   - The presentation is complete, I wish you the best of luck on your quest!
+  _activeShowButton: {fileID: 1101978311}
 --- !u!1 &1188048109
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,8 @@ public class TutorialManager : MonoBehaviour
     private Transform[] originalParents;
     private Coroutine tutorialCoroutine;
 
+    [SerializeField] private GameObject _activeShowButton;
+
     void Awake()
     {
         if (instance == null)
@@ -79,6 +81,7 @@ public class TutorialManager : MonoBehaviour
                 }
                 else
                 {
+                    _activeShowButton.gameObject.SetActive(true);
                     panel.SetActive(false);
                     tutorialText.gameObject.SetActive(false);
                     tutorialCoroutine = null;  
