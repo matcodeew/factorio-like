@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class Anim : MonoBehaviour
 {
+
     [SerializeField] private GameObject _starShip;
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _generator;
     [SerializeField] private GameObject _panelNoInteract;
     [SerializeField] private GameObject _panelCircle;
+
+    public bool startTutorial = false;
 
     private void Start()
     {
@@ -44,5 +47,11 @@ public class Anim : MonoBehaviour
     public void DisablePlayer()
     {
         _player.SetActive(false);
+    }
+
+    public void LaunchTuto()
+    {
+        TutorialManager.instance.StartTutorial();
+        startTutorial = false;
     }
 }
