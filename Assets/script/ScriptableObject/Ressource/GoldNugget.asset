@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fdd6940f605d832428031185754f8d05, type: 3}
-  m_Name: Iron
+  m_Name: GoldNugget
   m_EditorClassIdentifier: 
-  Id: 4
-  Name: Iron
-  Sprite: {fileID: 21300000, guid: 3be8122cbb789e74096f967c29a3bf3c, type: 3}
+  Id: 13
+  Name: Gold
+  Sprite: {fileID: 21300000, guid: bfbfc929eaeca1a40bc21f6c213ab570, type: 3}
   IsPure: 1
   GrinderOutput: {fileID: 0}
-  FurnaceOutput: {fileID: 0}
+  FurnaceOutput: {fileID: 11400000, guid: 35be24d5b5415b94dac57e0a921118ea, type: 2}
   DisassemblerOutputs: []

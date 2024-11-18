@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fdd6940f605d832428031185754f8d05, type: 3}
-  m_Name: Sand
+  m_Name: CopperNugget
   m_EditorClassIdentifier: 
-  Id: 6
-  Name: Sand
-  Sprite: {fileID: 21300000, guid: e68e2154d1089bd438a95b61a7de7468, type: 3}
+  Id: 9
+  Name: Copper
+  Sprite: {fileID: 21300000, guid: bcdcd273d60fef941a0982f15f9fd2f0, type: 3}
   IsPure: 1
   GrinderOutput: {fileID: 0}
-  FurnaceOutput: {fileID: 11400000, guid: 9ef743fe313fef74ab6d82606d2695c1, type: 2}
+  FurnaceOutput: {fileID: 11400000, guid: fb13e054b4aae554b9fee71c5a8ac3f5, type: 2}
   DisassemblerOutputs: []

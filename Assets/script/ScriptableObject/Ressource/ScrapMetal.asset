@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd6940f605d832428031185754f8d05, type: 3}
   m_Name: ScrapMetal
   m_EditorClassIdentifier: 
-  Id: 12
+  Id: 16
   Name: Scrap metal
   Sprite: {fileID: 21300000, guid: 7b37be0e6af529844ab9561618d333fb, type: 3}
   IsPure: 0
