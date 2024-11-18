@@ -1464,10 +1464,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Planet Name: Solania\n\n X: 145.9, Y: -320.7, Z: 27.3\n\nDescription:
-    A polluted, abandoned planet with gray dunes, toxic mountains, and lifeless,
-    dried oceans.\n\nCondition: Uninhabitable, with poisoned soil and an unbreathable
-    atmosphere.\n\nLife: None. All colonists have left."
+  m_text: "Planet Name: Terre\n\n X: 145.9, Y: -320.7, Z: 27.3\n\nDescription: A
+    polluted, abandoned planet with gray dunes, toxic mountains, and lifeless, dried
+    oceans.\n\nCondition: Uninhabitable, with poisoned soil and an unbreathable atmosphere.\n\nLife:
+    None. All colonists have left."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc6ada1e623215c4b915e9ed371e3c9d, type: 2}
   m_sharedMaterial: {fileID: 3537745083738773955, guid: dc6ada1e623215c4b915e9ed371e3c9d,
