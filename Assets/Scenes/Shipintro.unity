@@ -265,7 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _endCirclePanel: {fileID: 1954373974}
   target: {fileID: 1651803808}
-  arrivalThreshold: 700
+  arrivalThreshold: 600
 --- !u!1 &357527897
 GameObject:
   m_ObjectHideFlags: 0
