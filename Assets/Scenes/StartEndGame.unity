@@ -6248,6 +6248,7 @@ MonoBehaviour:
   - {fileID: 1782936037}
   - {fileID: 1782936037}
   - {fileID: 1305370578}
+  - {fileID: 1782936037}
   - {fileID: 2089161397}
   - {fileID: 1101978311}
   - {fileID: 1528056764}
@@ -6260,6 +6261,7 @@ MonoBehaviour:
   - Here is your command interface. Use the icons and buttons to navigate, interact
     with your surroundings, and manage your resources.
   - Your goal is to purify the Earth completely and fill the progress bar to 100%.
+  - "You can also check which tiles are not yet purified by pressing \u201CSpace\"."
   - You can check your objective at any time in the info panel on the side of the
     screen.
   - Here is the main button of the game

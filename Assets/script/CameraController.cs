@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
         HandleZoom();
 
         // Toggle Purified View
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             MapManager.Instance.FireTogglePurifyViewEvent();
         }
