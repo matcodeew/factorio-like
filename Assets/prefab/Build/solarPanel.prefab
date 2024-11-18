@@ -390,7 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5c4f54099eb2c43babe39af7cd5630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GenType: 0
+  GenType: 1
   MaxConnection: 5
   Energy: 0
   TransformBuildingConnected: []
