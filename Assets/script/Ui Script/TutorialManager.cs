@@ -10,7 +10,6 @@ public class TutorialManager : MonoBehaviour
     public TextMeshProUGUI tutorialText;
     public GameObject[] tutorialObjects;
     public string[] tutorialMessages;
-    public float highlightDuration = 3f;
 
     private int currentIndex = 0;
     private Color[] originalColors;
@@ -19,7 +18,7 @@ public class TutorialManager : MonoBehaviour
     private Coroutine tutorialCoroutine;
 
     void Awake()
-    {      
+    {
         if (instance == null)
         {
             instance = this;
@@ -54,7 +53,7 @@ public class TutorialManager : MonoBehaviour
 
     public void StartTutorial()
     {
-        if (tutorialCoroutine == null) 
+        if (tutorialCoroutine == null)
         {
             tutorialCoroutine = StartCoroutine(ShowTutorial());
         }
@@ -64,18 +63,31 @@ public class TutorialManager : MonoBehaviour
     {
         panel.SetActive(true);
         tutorialText.gameObject.SetActive(true);
-
+        HighlightObject(currentIndex);
+        tutorialText.text = tutorialMessages[currentIndex];
         while (currentIndex < tutorialObjects.Length)
         {
-            HighlightObject(currentIndex);
-            tutorialText.text = tutorialMessages[currentIndex];
-            yield return new WaitForSeconds(highlightDuration);
-            RemoveHighlight();
-            currentIndex++;
+            if (Input.GetMouseButtonDown(0))  
+            {
+                RemoveHighlight();
+                currentIndex++;
+
+                if (currentIndex < tutorialObjects.Length)
+                {
+                    HighlightObject(currentIndex);
+                    tutorialText.text = tutorialMessages[currentIndex];
+                }
+                else
+                {
+                    panel.SetActive(false);
+                    tutorialText.gameObject.SetActive(false);
+                    tutorialCoroutine = null;  
+                    break;
+                }
+            }
+
+            yield return null;  
         }
-        panel.SetActive(false);
-        tutorialText.gameObject.SetActive(false);
-        tutorialCoroutine = null;
     }
 
     void HighlightObject(int index)
@@ -113,19 +125,20 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    // Function to skip the tutorial
     public void SkipTutorial()
     {
         if (tutorialCoroutine != null)
         {
-            StopCoroutine(tutorialCoroutine);  // Stop the tutorial coroutine
+            StopCoroutine(tutorialCoroutine);  
         }
 
-        // Immediately hide the tutorial UI elements
         panel.SetActive(false);
         tutorialText.gameObject.SetActive(false);
 
-        // Optionally reset the tutorial index and other states if you want to restart later
-        currentIndex = tutorialObjects.Length;
+        currentIndex = tutorialObjects.Length;  
     }
 }
+
+
+
+
