@@ -349,7 +349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &35730056
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2559,6 +2559,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 485227347}
   m_CullTransparentMesh: 1
+--- !u!1 &494855775 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 903418172691988424, guid: b0618175f0344cb4496995f3e954438d,
+    type: 3}
+  m_PrefabInstance: {fileID: 333316150}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &509169923
 GameObject:
   m_ObjectHideFlags: 0
@@ -5386,6 +5392,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1145794021 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 903418172691988424, guid: b0618175f0344cb4496995f3e954438d,
+    type: 3}
+  m_PrefabInstance: {fileID: 476192023}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1169801916
 GameObject:
   m_ObjectHideFlags: 0
@@ -5621,7 +5633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipText: {fileID: 1013998944}
   tooltipPanel: {fileID: 1904393804}
-  objectsToTooltip:
+  _objectToAddToDictionary:
   - {fileID: 702590047}
   infoTexts:
   - A planet decontamination gauge that shows a percentage, decreasing as the planet
@@ -5633,9 +5645,12 @@ MonoBehaviour:
     into smaller pieces.
   - 
   - 
-  RequireRessources: []
-  fixedPosition: {x: 162, y: 500}
-  _RepicePanel: {fileID: 35730055}
+  RequireRessources:
+  - {fileID: 1145794021}
+  - {fileID: 494855775}
+  - {fileID: 1399426423}
+  fixedPosition: {x: 100, y: 250}
+  RepeicePanel: {fileID: 35730055}
 --- !u!4 &1183143636
 Transform:
   m_ObjectHideFlags: 0
@@ -6294,6 +6309,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388001902}
   m_CullTransparentMesh: 1
+--- !u!1 &1399426423 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 903418172691988424, guid: b0618175f0344cb4496995f3e954438d,
+    type: 3}
+  m_PrefabInstance: {fileID: 807110081}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1420994791
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -25,10 +25,10 @@ public class InventoryPlayerManager : MonoBehaviour
     }
     private void Start()
     {
-        foreach(RessourceData ressource in _cheatAllInventoryRessource)
+        foreach (RessourceData ressource in _cheatAllInventoryRessource)
         {
             ressource.Id = ressource.Ressources.Id;
-            for(int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
                 CreateNewInventorySlot(ressource);
             }
@@ -38,16 +38,16 @@ public class InventoryPlayerManager : MonoBehaviour
     {
         bool _itemFounded = false;
 
-        foreach(var item in SlotGameobjectList)
+        foreach (var item in SlotGameobjectList)
         {
-            if(ressources.Id == item.Ressource.Id)
+            if (ressources.Id == item.Ressource.Id)
             {
                 _itemFounded = true;
                 item.Quantity += ressources.StartQuantity;
                 break;
             }
         }
-        if(!_itemFounded)
+        if (!_itemFounded)
         {
             GameObject newSlot = Instantiate(_globalPrefab, _inventoryParentSlot.transform);
             InvRessource invRessource = newSlot.transform.GetChild(0).AddComponent<InvRessource>();
@@ -76,4 +76,9 @@ public class InvRessource : MonoBehaviour
 {
     public Scriptable_Ressources Ressource;
     public int Quantity;
+    public InvRessource(Scriptable_Ressources ressources, int quantity)
+    {
+        Ressource = ressources;
+        Quantity = quantity;
+    }
 }
