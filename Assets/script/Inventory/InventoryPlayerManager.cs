@@ -54,7 +54,7 @@ public class InventoryPlayerManager : MonoBehaviour
             SlotGameobjectList.Add(invRessource);
             invRessource.Ressource = ressources.Ressources;
             newSlot.transform.GetChild(0).GetComponent<Image>().sprite = ressources.Ressources.Sprite;
-            invRessource.Quantity = 1;
+            invRessource.Quantity = ressources.StartQuantity;
         }
     }
     public IEnumerator UpdateProgressBar()      // A supp

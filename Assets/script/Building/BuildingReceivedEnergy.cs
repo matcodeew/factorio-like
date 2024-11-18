@@ -68,6 +68,7 @@ public class BuildingReceivedEnergy : MonoBehaviour, ISubscrireEvent
     {
         if (instance.CanDestroyBuilding)
         {
+            InventoryBuildManager.Instance.AddOnDestroy(this.gameObject);
             Destroy(gameObject);
             DestroyTransformer();
         }

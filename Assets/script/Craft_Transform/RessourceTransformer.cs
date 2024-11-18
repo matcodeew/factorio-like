@@ -43,13 +43,19 @@ public class RessourceTransformer : MonoBehaviour
         {
             if (!_isInAction && MachineInputNotNull())
             {
+                print(_isInAction + "can start?");
                 _isInAction = true;
                 StartTransformation();
             }
         }
-        else if (_instantiateOutputList.Count >= 1)
+        else
         {
-            ActionWasCancelled = false;
+            _isInAction = false;
+            if (_instantiateOutputList.Count >= 1)
+            {
+                ActionWasCancelled = false;
+
+            }
         }
     }
 
@@ -310,6 +316,36 @@ public class RessourceTransformer : MonoBehaviour
         foreach (Transform child in parentTransform)
         {
             Destroy(child.gameObject);
+        }
+    }
+
+    public List<InvRessource> TakeRessourceFromInput()
+    {
+        List<InvRessource> ressources = new List<InvRessource>();
+        if (_machineInput.childCount != 0)
+        {
+            ressources.Add(_machineInput.GetComponentInChildren<InvRessource>());
+        }
+        if (_instantiateOutputList.Count != 0)
+        {
+            foreach (var output in _instantiateOutputList)
+            {
+                ressources.Add(output.GetComponentInChildren<InvRessource>());
+            }
+        }
+        return ressources;
+    }
+
+    public void AddItemInputInInventory()
+    {
+        if(_machineInput.childCount > 0)
+        {
+
+            InvRessource invRessource = _machineInput.GetComponentInChildren<InvRessource>();
+            InventoryPlayerManager.Instance.CreateNewInventorySlot(new RessourceData(invRessource.Ressource.Id, invRessource.Ressource, invRessource.Quantity));
+            DestroyAllChildren(_machineInput);
+            _isInAction = false;
+            _machineInput.gameObject.tag = "Empty";
         }
     }
 }

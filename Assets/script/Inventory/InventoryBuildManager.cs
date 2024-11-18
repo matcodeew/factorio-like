@@ -17,9 +17,9 @@ public class InventoryBuildManager : MonoBehaviour
     public GameObject InventoryButton;
     public GameObject TrashAreaGameObject;
     public GameObject InventoryBuildPanel;
-   // public GameObject BuildStatPanel;
+    // public GameObject BuildStatPanel;
 
-     public List<GameObject> _buildingPrefabs = new List<GameObject>();
+    public List<GameObject> _buildingPrefabs = new List<GameObject>();
     [SerializeField] private GameObject _inventoryCasePrefab;
 
     [SerializeField] private List<GameObject> _invSlots = new List<GameObject>();
@@ -31,7 +31,7 @@ public class InventoryBuildManager : MonoBehaviour
     }
 
     void Start()
-    {   
+    {
         InitializeBuildInventory();
 
         if (_uiCanvasGroup == null)
@@ -97,11 +97,42 @@ public class InventoryBuildManager : MonoBehaviour
         UpdateBuildingCase();
     }
 
+    public void AddOnDestroy(GameObject buildingData)
+    {
+        Dictionary<Scriptable_Ressources, int> invRessources = InventoryPlayerManager.Instance.SlotGameobjectList
+           .ToDictionary(ressource => ressource.Ressource, ressource => ressource.Quantity);
+
+        foreach (NeededRessource needed in buildingData.GetComponent<BuildingData>().NeededRessources)
+        {
+            if (invRessources.ContainsKey(needed.Ressource))
+            {
+                invRessources[needed.Ressource] += needed.Quantity;
+            }
+        }
+        foreach (InvRessource ressource in InventoryPlayerManager.Instance.SlotGameobjectList)
+        {
+            if (invRessources.ContainsKey(ressource.Ressource))
+            {
+                ressource.Quantity = invRessources[ressource.Ressource];
+            }
+        }
+
+        RessourceTransformer ressourceTransformer = buildingData?.GetComponent<RessourceTransformer>();
+        if (ressourceTransformer != null)
+        {
+            foreach (var needed in ressourceTransformer.TakeRessourceFromInput())
+            {
+                InventoryPlayerManager.Instance.CreateNewInventorySlot(new RessourceData(needed.Ressource.Id, needed.Ressource, needed.Quantity));
+            }
+        }
+        UpdateBuildingCase();
+    }
+
     public void FadeUIElement(float targetAlpha)
     {
         if (_uiCanvasGroup != null)
         {
-           _uiCanvasGroup.alpha = targetAlpha;
+            _uiCanvasGroup.alpha = targetAlpha;
         }
     }
     private void CanBuild()
@@ -113,7 +144,7 @@ public class InventoryBuildManager : MonoBehaviour
         Dictionary<Scriptable_Ressources, int> invRessources = new();
         foreach (InvRessource ressource in InventoryPlayerManager.Instance.SlotGameobjectList)
         {
-               invRessources.Add(ressource.Ressource, ressource.Quantity);
+            invRessources.Add(ressource.Ressource, ressource.Quantity);
         }
         for (int i = 0; i < _buildingPrefabs.Count; i++)
         {

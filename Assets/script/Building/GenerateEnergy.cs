@@ -49,6 +49,7 @@ public class GenerateEnergy : MonoBehaviour, ISubscrireEvent
         //ActivePanel();
         if(instance.CanDestroyBuilding)
         {
+            InventoryBuildManager.Instance.AddOnDestroy(this.gameObject);
             Destroy(gameObject);
             DestroyGenerator();
         }
