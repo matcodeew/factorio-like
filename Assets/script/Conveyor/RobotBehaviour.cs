@@ -4,8 +4,8 @@ using UnityEngine;
 public class RobotBehaviour : MonoBehaviour
 {
     [Header("Target Data")]
-    private Vector3 _firstPos;
-    private Vector3 _secondPos;
+    [SerializeField] private Vector3 _firstPos;
+    [SerializeField] private Vector3 _secondPos;
     private Vector3 _currentTarget;
     private bool _firstTargetChosen = true;
     private bool _secondTargetChosen = true;
@@ -34,12 +34,13 @@ public class RobotBehaviour : MonoBehaviour
     public void Init()
     {
         _ressourceTransported = this.gameObject.AddComponent<InvRessource>();
-        _recieveEnergy = GetComponent<BuildingReceivedEnergy>();
+        _recieveEnergy = _base.GetComponent<BuildingReceivedEnergy>();
         _dock = _base.GetComponent<RobotStation>();
     }
     private void Update()
     {
-        if(_dock.BuildPosed)
+        if(_dock == null) { return; }
+        if (_dock.BuildPosed)
         {
             HandleTargetSelection();
             if (!_recieveEnergy.IsPowered()) { return; }
@@ -103,7 +104,7 @@ public class RobotBehaviour : MonoBehaviour
         {
             currentButton?.SetActive(false);
             nextButton?.SetActive(true);
-            return target.transform.position;
+            return target.transform.position + new Vector3(0,2,0);
         }
 
         ResetTargetSelection();
@@ -118,7 +119,7 @@ public class RobotBehaviour : MonoBehaviour
 
     private IEnumerator MoveRobot()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _currentTarget + new Vector3(0, 1, 0), _moveSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, _currentTarget, _moveSpeed * Time.deltaTime);
         if (_ActionWasCanceled)
         {
             _currentTarget = _base.transform.position;

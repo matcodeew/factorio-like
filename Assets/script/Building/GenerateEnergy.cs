@@ -58,7 +58,7 @@ public class GenerateEnergy : MonoBehaviour, ISubscrireEvent
             if (!energy.ConnectGenerator.Contains(this))
             {
                 energy.ConnectGenerator.Add(this);
-                //instance.UpdateSharedEnergy?.Invoke();
+                instance.UpdateSharedEnergy?.Invoke();
             }
         }
     }

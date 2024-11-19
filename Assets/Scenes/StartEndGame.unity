@@ -372,7 +372,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -89, y: 258}
+  m_AnchoredPosition: {x: -133, y: 183}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &35730057
@@ -388,17 +388,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 20
+    m_Left: 10
     m_Right: 0
     m_Top: 35
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
-  m_StartAxis: 0
+  m_StartAxis: 1
   m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 40, y: 0}
+  m_Spacing: {x: 35, y: 10}
   m_Constraint: 2
-  m_ConstraintCount: 3
+  m_ConstraintCount: 2
 --- !u!1 &85455511
 GameObject:
   m_ObjectHideFlags: 0
@@ -5374,7 +5374,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -48.679688, y: 0, z: -46.779907, w: 297.8593}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5985,8 +5985,8 @@ MonoBehaviour:
   CanDestroyBuilding: 0
   SolarForcePercent: 75
   SolarPanelEnergy: 20
-  WindForcePercent: 50
-  WindTurbineEnergy: 10
+  WindForcePercent: 100
+  WindTurbineEnergy: 20
 --- !u!114 &1169801918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6196,16 +6196,26 @@ MonoBehaviour:
   _objectToAddToDictionary:
   - {fileID: 702590047}
   infoTexts:
-  - A planet decontamination gauge that shows a percentage, decreasing as the planet
-    becomes cleaner and increasing as pollution rises.
-  - A material disassembler is a machine designed to break down complex structures
-    into their individual components.
-  - A furnace is a device used to heat materials to high temperatures.
-  - A grinder is a tool used to crush or grind materials, such as herbs or spices,
-    into smaller pieces.
-  - 
-  - 
-  - 
+  - The decontamination gauge of the parcel that has been assigned to you. It shows
+    a percentage, increasing as the planet becomes cleaner and decreasing as pollution
+    rises.
+  - A material disassembler is a new-age machine designed to break down complex structures
+    into their less-complex components.
+  - "The furnace works just as you\u2019d expect: heat up materials to high temperatures
+    and smelt them to obtain purer materials. "
+  - A grinder is a machine used to crush or grind materials into smaller pieces.
+  - Harvest the pure energy of the sun with the Solar Panel. Its energy output is
+    subject to variations due to meteorological events.
+  - Transform mechanical movement caused by a force of nature into energy with the
+    Wind Turbine. Its energy output is subject to variations due to meteorological
+    events.
+  - 'The purifier drone has only one objective: purify every tile in the range of
+    its recharge bay. The drone can operate on its own even when not powered but
+    will need energy to recharge, in which case it will not be able to leave the
+    recharge bay until fully charged.'
+  - 'The conveyor Drone can process only one instruction at a time and is really
+    limited:                       - Go to first waypoint                      -
+    Pick up materials             - Go to last waypoint                - Repeat'
   RequireRessources:
   - {fileID: 686197394}
   - {fileID: 1149246896}
@@ -6213,7 +6223,7 @@ MonoBehaviour:
   - {fileID: 368816987}
   - {fileID: 1751269005}
   - {fileID: 301986198}
-  fixedPosition: {x: 162, y: 500}
+  fixedPosition: {x: 200, y: 500}
   RepeicePanel: {fileID: 35730055}
 --- !u!4 &1183143636
 Transform:
@@ -7322,6 +7332,7 @@ MonoBehaviour:
   RotationSpeed: 20
   _mapManager: {fileID: 1169801918}
   _actualBuilding: {fileID: 0}
+  PlayerRange: 0
 --- !u!114 &1421549091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9718,7 +9729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1802920764
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10643,7 +10654,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1904393805
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10663,8 +10674,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1, y: -195}
-  m_SizeDelta: {x: -1600, y: -410}
+  m_AnchoredPosition: {x: 0, y: -200}
+  m_SizeDelta: {x: -1500, y: -400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1904393806
 MonoBehaviour:
@@ -12390,6 +12401,18 @@ MonoBehaviour:
   - Id: 0
     Ressources: {fileID: 11400000, guid: c32917aeb7d0caf4285e644e8d6c8389, type: 2}
     StartQuantity: 1
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: 9ef743fe313fef74ab6d82606d2695c1, type: 2}
+    StartQuantity: 1
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: 35be24d5b5415b94dac57e0a921118ea, type: 2}
+    StartQuantity: 1
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: a6c4e4e23bf17af42b58f78749d42238, type: 2}
+    StartQuantity: 1
+  - Id: 0
+    Ressources: {fileID: 11400000, guid: fb13e054b4aae554b9fee71c5a8ac3f5, type: 2}
+    StartQuantity: 1
   _inventoryParentSlot: {fileID: 2027058426}
   SlotGameobjectList: []
   _globalPrefab: {fileID: 903418172691988424, guid: b0618175f0344cb4496995f3e954438d,
@@ -12418,20 +12441,21 @@ MonoBehaviour:
   TrashAreaGameObject: {fileID: 146238813}
   InventoryBuildPanel: {fileID: 172132716}
   _buildingPrefabs:
-  - {fileID: 6634538959374061348, guid: 7f5570a0d6926f0419067b0310e68987, type: 3}
-  - {fileID: 6634538959374061348, guid: 56e9bc4b78e3944438c3b705570bf642, type: 3}
-  - {fileID: 6634538959374061348, guid: 12a7c8ad3e45b88448a85fe28f1f7235, type: 3}
+  - {fileID: 4185745873042574825, guid: fc9bfabf7e048324d929f4dde73b9adf, type: 3}
+  - {fileID: 1409881507025082468, guid: 3ca5c977049756a4cb790adf9d61e114, type: 3}
+  - {fileID: 8768688640123268020, guid: d3f07307e12ae2443b859ace54646cc0, type: 3}
   - {fileID: 7185904808133047282, guid: d3017c1beb23d49428161f4b5a43f47d, type: 3}
-  - {fileID: 1798402654236293502, guid: 4733e71fef9fddb4db2d6e1b07876ad8, type: 3}
-  - {fileID: 5092876964191376708, guid: 2efde226947d11e40b90821365828532, type: 3}
+  - {fileID: 558226571162503250, guid: f3256dff8ecdb0b429b24584243c3722, type: 3}
+  - {fileID: 2688752190026921899, guid: 9114ee0d4a52e724d8cec8ffb0f59d99, type: 3}
+  - {fileID: 7875142188188349898, guid: 789da634b900ace4ab517485c477574a, type: 3}
   _buildingImage:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 21300000, guid: 23834b1828e7c434186a0dfa3f127482, type: 3}
   - {fileID: 21300000, guid: b8902d64470047442bfecc8168b18628, type: 3}
   - {fileID: 21300000, guid: cd251cefbf31bbd499bb0e4524e4b8c0, type: 3}
-  - {fileID: 21300000, guid: 081e7d66d5c0efa4b9d7d257cd702b18, type: 3}
   - {fileID: 21300000, guid: 9f550bdb5b659934891e2c7c3e701531, type: 3}
+  - {fileID: 21300000, guid: 081e7d66d5c0efa4b9d7d257cd702b18, type: 3}
   _inventoryCasePrefab: {fileID: 6452082070084242488, guid: 65b22155cd5fa204cbefb286235ba0c4,
     type: 3}
   _invSlots: []

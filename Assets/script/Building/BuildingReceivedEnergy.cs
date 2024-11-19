@@ -8,8 +8,7 @@ public class BuildingReceivedEnergy : MonoBehaviour, ISubscrireEvent
 {
     public List<GenerateEnergy> ConnectGenerator = new();
     public bool IsLinked;
-    private float _sumOfEnergyReceived;
-
+    [SerializeField] private float _sumOfEnergyReceived;
     private bool _isPowered = false;
     private BuildingData _buildingData;
 
@@ -18,13 +17,16 @@ public class BuildingReceivedEnergy : MonoBehaviour, ISubscrireEvent
     [ContextMenu("Test/Setup Energy")]
     public void SubscrireEvent()
     {
+        RobotStation? _station = GetComponent<RobotStation>();
+        if(_station != null)
+        {
+            _station.Init();
+        }
         _buildingData = GetComponent<BuildingData>();
-
         instance = BuildingManager.Instance;
         instance.UpdateBuildingEnergy += CalculateSumOfEnergy;
         CalculateSumOfEnergy();
     }
-
     public void CalculateSumOfEnergy()
     {
         _sumOfEnergyReceived = 0;
@@ -70,11 +72,12 @@ public class BuildingReceivedEnergy : MonoBehaviour, ISubscrireEvent
     }
     private void OnMouseDown()
     {
-        if (instance.CanDestroyBuilding)
-        {
-            InventoryBuildManager.Instance.AddOnDestroy(this.gameObject);
-            Destroy(gameObject);
-            DestroyTransformer();
-        }
+        if (instance != null) { 
+            if (instance.CanDestroyBuilding)
+            {
+                InventoryBuildManager.Instance.AddOnDestroy(this.gameObject);
+                Destroy(gameObject);
+                DestroyTransformer();
+            } }
     }
 }

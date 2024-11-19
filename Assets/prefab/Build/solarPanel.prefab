@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 913226335750897149}
   - component: {fileID: 8722903216040327073}
   m_Layer: 0
-  m_Name: SolarPanel
+  m_Name: solarPanel
   m_TagString: Build
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5c4f54099eb2c43babe39af7cd5630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GenType: 0
+  GenType: 1
   MaxConnection: 5
   Energy: 0
   TransformBuildingConnected: []
@@ -470,7 +470,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7632986853489858095}
         m_TargetAssemblyTypeName: ConnectBuilding, Assembly-CSharp
         m_MethodName: ConnectLink
         m_Mode: 1
@@ -513,7 +513,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: aac4028ba0950b34fa738e98b0c16a37,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aac4028ba0950b34fa738e98b0c16a37,
         type: 3}

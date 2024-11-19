@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private MapManager _mapManager;
 
     public GameObject _actualBuilding;
+    public float PlayerRange;
 
     void Start()
     {
@@ -37,7 +38,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(RIGHT_MOUSE_BUTTON))
         {
             SetTargetPosition();
-            if(_actualBuilding != null)
+            if (_actualBuilding != null)
                 _actualBuilding.transform.GetChild(0).gameObject.SetActive(false);
         }
 
@@ -47,42 +48,59 @@ public class PlayerController : MonoBehaviour
             {
                 _actualBuilding = hit.collider.gameObject;
                 SetTargetPosition();
+
                 _actualBuilding.transform.GetChild(0).gameObject.SetActive(true);
                 InventoryBuildManager.Instance.InventoryBuildPanel.SetActive(false);
                 InventoryBuildManager.Instance.InventoryButton.SetActive(true);
+
             }
 
             if (Input.GetMouseButtonDown(RIGHT_MOUSE_BUTTON) && hit.collider.CompareTag("Transformer"))
             {
                 _actualBuilding = hit.collider.gameObject;
                 SetTargetPosition();
-                _actualBuilding.transform.GetChild(0).gameObject.SetActive(true);
 
+                _actualBuilding.transform.GetChild(0).gameObject.SetActive(true);
                 InventoryBuildManager.Instance.InventoryBuildPanel.SetActive(false);
                 InventoryBuildManager.Instance.InventoryButton.SetActive(true);
+
             }
-        }      
-            if (_isMoving)
+        }
+        if (_isMoving)
             MovingPlayer();
+    }
+
+    private bool IsInRangeOfTarget()
+    {
+        float distance = (_clikedTarget - transform.position).magnitude;
+        return distance <= PlayerRange;
     }
 
     public void SetTargetPosition()
     {
-        Plane plane = new Plane(Vector3.up, transform.position);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float point = 0f;
+        RaycastHit hit;
 
-        if (plane.Raycast(ray, out point))
-            _targetPosition = ray.GetPoint(point);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 2f);
+            _targetPosition = hit.point;
+            _clikedTarget = new Vector3(_targetPosition.x, 0, _targetPosition.z);
 
-        _clikedTarget = _targetPosition;
-        _clikedTarget = new Vector3(_clikedTarget.x, 0, _clikedTarget.z);
-        MapManager.Instance.PickingRessource = false;
+            MapManager.Instance.PickingRessource = false;
+            MapManager.Instance.CheckRessourceOnClick(_clikedTarget, hit);
 
-        MapManager.Instance.CheckRessourceOnClick(_clikedTarget);
-
-        _isMoving = true;
+            _isMoving = true;
+            Debug.Log($"Raycast hit at: {_targetPosition}");
+        }
+        else
+        {
+            Debug.LogWarning("Raycast did not hit anything.");
+        }
     }
+
+
+
 
     public void MovingPlayer()
     {

@@ -30,6 +30,7 @@ public class DragUIElementBuild : MonoBehaviour, IBeginDragHandler, IDragHandler
         if (_prefabToInstantiate != null)
         {
             _previewPrefabToInstantiate = Instantiate(_prefabToInstantiate);
+            _previewPrefabToInstantiate.name = "Preview " + _prefabToInstantiate.name;
         }
         InventoryBuildManager.Instance.FadeUIElement(0f);
     }
@@ -63,8 +64,8 @@ public class DragUIElementBuild : MonoBehaviour, IBeginDragHandler, IDragHandler
 
         if (_previewPrefabToInstantiate != null)
         {
-            TryPlaceObject(eventData);
             Destroy(_previewPrefabToInstantiate);
+            TryPlaceObject(eventData);
         }
         InventoryBuildManager.Instance.FadeUIElement(1f);
     }
@@ -83,7 +84,7 @@ public class DragUIElementBuild : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
         int x = Mathf.RoundToInt(position.x);
         int z = Mathf.RoundToInt(position.z);
-        return new Vector3(x, _previewPrefabToInstantiate.transform.position.y, z);
+        return new Vector3(x, 1, z);
     }
 
     private void TryPlaceObject(PointerEventData eventData)
@@ -94,7 +95,7 @@ public class DragUIElementBuild : MonoBehaviour, IBeginDragHandler, IDragHandler
         {
             Vector3 snappedPosition = SnapToGrid(hit.point);
             BuildingData data = _prefabToInstantiate.GetComponent<BuildingData>();
-            InventoryBuildManager.Instance.CreateObjectOnMap(_prefabToInstantiate,snappedPosition,data);
+            InventoryBuildManager.Instance.CreateObjectOnMap(_prefabToInstantiate, snappedPosition, data);
         }
     }
 

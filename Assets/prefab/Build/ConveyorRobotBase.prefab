@@ -733,6 +733,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7945069727173170559}
   - component: {fileID: 3502205850443522399}
+  - component: {fileID: 7324928440334726885}
   - component: {fileID: 2476588061155914714}
   - component: {fileID: 796324947002389246}
   m_Layer: 0
@@ -773,6 +774,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _robotConveyor: {fileID: 0}
+  BuildPosed: 0
+--- !u!114 &7324928440334726885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7875142188188349898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5d8807d05b0df44fa729878b0acd37d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConnectGenerator: []
+  IsLinked: 0
+  _sumOfEnergyReceived: 0
 --- !u!114 &2476588061155914714
 MonoBehaviour:
   m_ObjectHideFlags: 0

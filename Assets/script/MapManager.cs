@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -94,7 +95,7 @@ public class MapManager : MonoBehaviour
         {
             tile.TileState = TileBuildingOnTop.RuinedBuilding;
         }
-        else 
+        else
         {
             tile.TileState = TileBuildingOnTop.AbandonedPowerStation;
         }
@@ -155,26 +156,33 @@ public class MapManager : MonoBehaviour
 
     #region Gather Ressources
 
-    public void CheckRessourceOnClick(Vector3 _clikedTarget)
+    public void CheckRessourceOnClick(Vector3 _clikedTarget, RaycastHit hit)
     {
-        TileData clickedTile = AccessTileByPos(_clikedTarget);
-        if (clickedTile != null && clickedTile.IsOccupied)
+        RessourseSpot newSpot = hit.collider.gameObject.GetComponent<RessourseSpot>();
+        if (newSpot == null)
         {
-            RessourseSpot newSpot = clickedTile.OnTop.GetComponent<RessourseSpot>();
-
+            TileData clickedTile = AccessTileByPos(_clikedTarget);
+            if (clickedTile != null && clickedTile.IsOccupied)
+            {
+                newSpot = clickedTile.OnTop.GetComponent<RessourseSpot>();
+            }
+        }
+        else
+        {
             if (newSpot != null && _currentMiningSpot != newSpot)
             {
                 StopAllCoroutines();
                 _currentMiningSpot = newSpot;
                 StartCoroutine(StillRessource(newSpot));
             }
+            else
+            {
+                StopAllCoroutines();
+                PickingRessource = false;
+                _currentMiningSpot = null;
+            }
         }
-        else
-        {
-            StopAllCoroutines();
-            PickingRessource = false;
-            _currentMiningSpot = null;
-        }
+
     }
     private IEnumerator StillRessource(RessourseSpot _ressourceSpot)
     {

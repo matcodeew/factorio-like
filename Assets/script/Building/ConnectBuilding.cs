@@ -26,7 +26,7 @@ public class ConnectBuilding : MonoBehaviour
         _currentLine = Instantiate(_electricLink);
         _lineRenderer = _currentLine.GetComponent<LineRenderer>();
 
-        FirstPos = this.transform.position;
+        FirstPos = this.transform.position + new Vector3(0, 1, 0);
         _lineRenderer.SetPosition(0, FirstPos);
 
         _updateSecondPos = true;
@@ -71,7 +71,7 @@ public class ConnectBuilding : MonoBehaviour
         GameObject onTop = MapManager.Instance.AccessTileByPos(hit.point).OnTop;
         if(onTop != null && _generateEnergy != null)
         {
-            RessourceTransformer ressourceTransformer = onTop.GetComponent<RessourceTransformer>();
+            BuildingReceivedEnergy ressourceTransformer = onTop.GetComponent<BuildingReceivedEnergy>();
             if(_generateEnergy.CanConnectBuilding() && ressourceTransformer != null)
             {
                 _generateEnergy.TransformBuildingConnected.Add(onTop.GetComponent<BuildingReceivedEnergy>());

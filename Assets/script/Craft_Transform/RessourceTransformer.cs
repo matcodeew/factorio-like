@@ -39,7 +39,7 @@ public class RessourceTransformer : MonoBehaviour
 
     private void Update()
     {
-        if (!CheckIfInputCaseIsEmpty())
+        if (!CheckIfInputCaseIsEmpty() && CheckIfAllOutputCaseIsEmpty())
         {
             if (!_isInAction && MachineInputNotNull())
             {
@@ -78,6 +78,7 @@ public class RessourceTransformer : MonoBehaviour
         InventoryPlayerManager.Instance.SlotGameobjectList.Remove(_machineInput.GetComponentInChildren<InvRessource>());
         if (MachineInput == null)
         {
+            _isInAction = false;
             return false;
         }
 
@@ -85,6 +86,7 @@ public class RessourceTransformer : MonoBehaviour
         {
             return true;
         }
+        _isInAction = false;
         return false;
     }
 
@@ -98,6 +100,10 @@ public class RessourceTransformer : MonoBehaviour
         {
             StartCoroutine(HandleProcessTime());
         }
+        else
+        {
+            _isInAction = false;
+        }
     }
 
     public void StopTransformation()
@@ -107,26 +113,23 @@ public class RessourceTransformer : MonoBehaviour
 
     private IEnumerator HandleProcessTime()
     {
-        if (CheckIfAllOutputCaseIsEmpty())
+        while (_currentRessourceToTransform.Quantity > 0)
         {
-            while (_currentRessourceToTransform.Quantity > 0)
+            yield return new WaitForSeconds(_processTime);
+            if (!ActionWasCancelled)
             {
-                yield return new WaitForSeconds(_processTime);
-                if (!ActionWasCancelled)
+                if (_machineInput.childCount == 0)
                 {
-                    if (_machineInput.childCount == 0)
-                    {
-                        StopTransformation();
-                        break;
-                    }
-                    transformRessource();
-                    DisplayOutputPrefabs();
+                    StopTransformation();
+                    break;
                 }
-                if (ActionWasCancelled) { break; }
-                ActionWasCancelled = false;
+                transformRessource();
+                DisplayOutputPrefabs();
             }
+            if (ActionWasCancelled) { break; }
             ActionWasCancelled = false;
         }
+        ActionWasCancelled = false;
     }
 
     private void transformRessource()
@@ -280,9 +283,9 @@ public class RessourceTransformer : MonoBehaviour
     {
         _machineInput.GetComponentInChildren<InvRessource>().Quantity += invRessource.Quantity;
     }
-    public bool CheckIfInputCaseIsEmpty() => _machineInput.childCount <= 0? true: false;
+    public bool CheckIfInputCaseIsEmpty() => _machineInput.childCount <= 0 ? true : false;
     public bool CheckIfCanStackRessource(InvRessource inputRessource)
-        => _machineInput.GetComponentInChildren<InvRessource>().Ressource.Id == inputRessource.Ressource.Id?true: false;
+        => _machineInput.GetComponentInChildren<InvRessource>().Ressource.Id == inputRessource.Ressource.Id ? true : false;
     private bool CheckIfAllOutputCaseIsEmpty()
     {
         if (_instantiateOutputList.Count == 0)
@@ -337,7 +340,7 @@ public class RessourceTransformer : MonoBehaviour
 
     public void AddItemInputInInventory()
     {
-        if(_machineInput.childCount > 0)
+        if (_machineInput.childCount > 0)
         {
             InvRessource invRessource = _machineInput.GetComponentInChildren<InvRessource>();
             InventoryPlayerManager.Instance.CreateNewInventorySlot(new RessourceData(invRessource.Ressource.Id, invRessource.Ressource, invRessource.Quantity));
